@@ -1,0 +1,36 @@
+@{
+    ViewBag.Title = "Switch Button";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Switch Button Features:</h2>
+<br/>
+<li> Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+              <h2>Switch Button</h2>
+            <div style="display:flex; align-items:center;">
+    <label id="switch-label" for="switch" style="display:inline-block; padding: 10px 20px 10px 0;">USB Tethering</label>
+    <ejs-switch id="switch" checked="true"></ejs-switch>
+</div>
+<style>
+    #switch-label {
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif";
+        font-size: 13px;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+			<br />
+    <style>
+        .frame {
+            width: 30%;
+        }
+        td {
+            padding: 10px;
+        }
+        .spltspan{
+            width:50px;
+        }
+    </style>
+</div>

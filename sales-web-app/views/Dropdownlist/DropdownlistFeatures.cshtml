@@ -1,0 +1,15 @@
+@{
+    ViewBag.Title = "Dropdownlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Newtonsoft.Json
+<h2>Dropdownlist Features:</h2>
+<br/>
+<li> Dropdownlist Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion" style="width:18%">
+             <ejs-dropdownlist id="games" dataSource="@ViewBag.data" placeholder="Select a game" index="2" popupHeight="220px">
+    <e-dropdownlist-fields text="Game" value="Id"></e-dropdownlist-fields>
+</ejs-dropdownlist>
+</div>

@@ -1,0 +1,93 @@
+﻿@model saleswebapp.Controllers.DateValue
+@{
+    ViewBag.Title = "DatePicker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>DatePicker Features:</h2>
+<br/>
+<li> DatePickerFor</li>
+<li> Globalization - German</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class=" control-section">
+    <div id="wrapper" class="datepicker-section">
+        <div id="datepicker-control">
+            <form method="post">
+                <ejs-datepicker id="datepick" name="value" 
+              ejs-for="@Model.value"
+           format="dd-MMM-yy" placeholder="Choose a Date" width="250px"></ejs-datepicker>
+              <div id="errorMessage">
+                    <span asp-validation-for="value"></span>
+                </div>
+                <div id="submitbutton">
+                    <ejs-button id="submitButton" content="Submit"></ejs-button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+             <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        datepicker = document.getElementById('datepick').ej2_instances[0];
+        var L10n = ej.base.L10n;
+        L10n.load({
+            'de': {
+                'datepicker': {
+                    placeholder: 'Wählen Sie ein Datum',
+                    today: 'heute'
+                }
+            }
+        });
+        loadCultureFiles('de');
+        datepicker.locale = 'de';
+    });
+    function loadCultureFiles(name) {
+        var files = ['ca-gregorian.json', 'numbers.json', 'timeZoneNames.json'];
+        if (name === 'ar') {
+            files.push('numberingSystems.json');
+        }
+        var loader = ej.base.loadCldr;
+        var loadCulture = function (prop) {
+            var val, ajax;
+            if (name === 'ar' && prop === files.length - 1) {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/DatePicker/cldr-data/supplemental/' + files[prop], 'GET', false);
+            } else {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/DatePicker/cldr-data/main/' + name + '/' + files[prop], 'GET', false);
+            }
+            ajax.onSuccess = function (value) {
+                val = value;
+            };
+            ajax.send();
+            loader(JSON.parse(val));
+        };
+        for (var prop = 0; prop < files.length; prop++) {
+            loadCulture(prop);
+        }
+    }
+</script>
+<style>
+    #date_label {
+        display: block;
+        width: 248px;
+        color: rgba(0, 0, 0, 0.58);
+        margin-left: 5px;
+    }
+    #datepicker-control {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    #wrapper {
+        max-width: 246px;
+        margin: 0px auto;
+    }
+    #submitbutton {
+        margin: 10px auto;
+        text-align: center;
+    }
+    #errorMessage {
+        color: red;
+        text-align: center
+    }
+</style>

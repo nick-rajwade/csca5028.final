@@ -1,0 +1,70 @@
+@{
+    ViewBag.Title = "ListView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>ListView Features:</h2>
+<br/>
+<li> ListView Samples - Template</li>
+<li> CheckBox</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+              @{ var template = "<div class='settings'>"
+        + "<div id='postContainer'><div id='postImg'>"
+        + "<img src=${image} style='height:35px;width:35px;border-radius:50%; border: 1px solid #ccc;' /></div>"
+        + "<div id='content'>"
+        + "<div class='name'>${Name}</div>"
+        + "<div id='info'>${contact}</div>"
+        + "</div>"
+        + "</div>";}
+<div class="control-section">
+    <ejs-listview enable="true" id="List" dataSource="ViewBag.dataSource" 
+              showCheckBox="true"
+                  headerTitle="Employees" template=@template showHeader="true">
+    </ejs-listview>
+</div>
+<style>
+    #List {
+        display: block;
+        margin: auto;
+        border: 1px solid;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.12);
+        width: 400px;
+    }
+        #List .settings {
+            height: auto;
+        }
+        #List .e-list-item {
+            height: auto;
+            padding: 0;
+            cursor: pointer;
+            box-sizing: border-box;
+            border: 0.1px solid #ccc;
+        }
+        #List .e-list-header .e-text {
+            font-family: sans-serif;
+            font-size: 18px;
+            line-height: 26px;
+        }
+        #List #content {
+            margin: 3px;
+        }
+        #List .name {
+            font-size: 12px;
+            line-height: 25px;
+        }
+    #info {
+        line-height: 20px;
+        font-size: 12px;
+    }
+    #postImg {
+        margin: 9px;
+    }
+    #postContainer {
+        width: inherit;
+        margin: auto;
+        display: inline-flex;
+    }
+</style>
+</div>

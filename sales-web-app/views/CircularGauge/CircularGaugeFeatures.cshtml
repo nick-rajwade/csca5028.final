@@ -1,0 +1,42 @@
+@{
+    ViewBag.Title = "CircularGauge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2.CircularGauge
+@{
+    var font = new CircularGaugeFont
+    {
+        FontFamily = "Roboto",
+        Size = "12px",
+        FontWeight = "Regular"
+    };
+}
+<h2>CircularGauge Features:</h2>
+<br/>
+<li> Enable Tooltip</li>
+<li> Enable Drag</li>
+<li> Axis Direction - ClockWise</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id="ControlRegion">
+<div class="col-lg-9 control-section">
+    <div class="circular">
+        <ejs-circulargauge id="circular" 
+               enablePointerDrag="true"
+           >
+               <e-circulargauge-tooltip enable="true"></e-circulargauge-tooltip>
+            <e-circulargauge-axes>
+                <e-circulargauge-axis startAngle="230" 
+               direction="ClockWise"
+           endAngle="130" minimum="0" maximum="100" radius="80%">
+                    <e-axis-linestyle width="8" color="#E0E0E0"></e-axis-linestyle>
+                    <e-axis-labelstyle offset="-5" font="font">                        
+                    </e-axis-labelstyle>
+                    <e-axis-majorticks color="transparent"></e-axis-majorticks>
+                    <e-axis-minorticks color="transparent"></e-axis-minorticks>
+                </e-circulargauge-axis>
+            </e-circulargauge-axes>
+        </ejs-circulargauge>
+    </div>
+</div>
+</div>

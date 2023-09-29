@@ -1,0 +1,78 @@
+@using Syncfusion.EJ2
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var asyncSettings = new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = "/Upload/Save", RemoveUrl = "/Upload/Remove" };
+}
+<h2>Upload Features:</h2>
+<br/>
+<li> Upload Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+              <div class="col-lg-8 control-section">
+        <div class="control_wrapper">
+            <ejs-uploader id="UploadFiles" removing="onFileRemove" dropArea=".control-fluid" asyncSettings="@asyncSettings">
+            </ejs-uploader>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div id="property" title="Properties">
+            <div style="margin-left: 50px; padding-top:25px;">
+                <ejs-checkbox id="checkAutoUpload" label="Auto Upload" checked="true" change="onChange"></ejs-checkbox>
+            </div>
+        </div>
+    </div>
+<style>
+		.control_wrapper 
+		{
+			max-width: 251px;
+			margin-left: 46px;
+			padding-top:19px;
+		}
+        .control-section 
+		{
+			width: 368px;
+			margin-left:10px;
+			padding-top:3px;
+		}
+        .property-section 
+		{
+            float: left;
+            width:241px;
+            margin-left:373px;
+            margin-top:-78px;
+            position:relative;
+        }
+        .e-upload .e-control-wrapper .e-lib .e-keyboard
+        {
+            width:202px;
+        }
+        .e-css .e-btn
+        {
+            margin-left:30px;
+        }
+        .e-upload .e-file-select-wrap, .e-bigger.e-small .e-upload .e-file-select-wrap 
+		{
+            padding:23px 0px 23px 70px
+        }
+        #ControlRegion
+        {
+            height:18rem;
+            width:786px;
+        }
+</style>
+<script>
+    function onFileRemove(args) {
+        args.postRawFile = false;
+    }
+    var dropElement = document.getElementsByClassName('control-fluid')[0];
+    function onChange (args) {
+        var uploadObj = document.getElementById("UploadFiles")
+        uploadObj.ej2_instances[0].autoUpload = args.checked;
+        uploadObj.ej2_instances[0].clearAll();
+    }
+</script>
+</div>

@@ -1,0 +1,52 @@
+@{
+    ViewBag.Title = "LinearGauge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>LinearGauge Features:</h2>
+<br/>
+<li> Enable Tooltip</li>
+<li> Axis Inversed</li>
+<li> Axis Opposed</li>
+<li> Orientation - Horizontal</li>
+<li> Container Type - Normal</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="col-md-8 control-section">
+    <div class="content-wrapper">
+        <ejs-lineargauge id="linear" 
+               orientation="Horizontal"
+           load="gaugeLoad">            
+             <e-lineargauge-container type="Normal"></e-lineargauge-container>
+               <e-lineargauge-tooltip enable="true"></e-lineargauge-tooltip>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis 
+               isInversed="true"
+               opposedPosition="true"
+          >                    
+                    <e-axis-labelstyle offset="48"></e-axis-labelstyle>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>            
+        </ejs-lineargauge>
+    </div>
+</div>
+</div>
+<script>
+    var gauge;
+    window.gaugeLoad = function (args) {
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        gauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        gauge.tooltip = {
+            enable: true,
+        };
+        axis.pointers = [{
+            type: 'Bar',
+            value: 30,
+            offset: 15,
+            color: '#ff66b3'
+        }];
+    }
+</script>

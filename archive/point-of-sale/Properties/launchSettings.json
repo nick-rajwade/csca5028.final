@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "point-of-sale": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

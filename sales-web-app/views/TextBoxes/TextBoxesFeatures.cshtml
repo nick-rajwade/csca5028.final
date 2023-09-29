@@ -1,0 +1,123 @@
+@{
+    ViewBag.Title = "TextBoxes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>TextBoxes Features:</h2>
+<br/>
+<li> TextBoxes Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+             <div id="target" class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6"><b>Default Inputs</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group">
+                    <input class="e-input" type="text" placeholder="Enter Name">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group e-rtl">
+                    <input class="e-input" type="text" placeholder="Last Name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group">
+                    <input class="e-input" type="password" placeholder="Password" value="password">
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group">
+                    <input class="e-input" type="email" placeholder="Enter Email">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <b>Input with Icons</b>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group">
+                    <input class="e-input" placeholder="Date of Birth" type="text">
+                    <span id="DOB" class="e-input-group-icon e-input-calendar"></span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="e-input-group e-float-icon-left">
+                    <span class="e-input-group-icon e-input-picture"></span>
+                    <div class="e-input-in-wrap">
+                        <input class="e-input" placeholder="Upload Picture" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var inputObject = {};
+    var input = document.querySelectorAll('.e-input-group .e-input,.e-float-input.e-input-group input');
+    var inputIcon = document.querySelectorAll('.e-input-group-icon');
+    var focusFn = function (index) {
+        return function () {
+            getParentNode(input[index]).classList.add('e-input-focus');
+        };
+    };
+    var blurFn = function (index) {
+        return function () {
+            getParentNode(input[index]).classList.remove('e-input-focus');
+        };
+    };
+    var mouseupFn = function () {
+        var ele = this;
+        setTimeout(function () { ele.classList.remove('e-input-btn-ripple'); }, 500);
+    };
+    for (var i = 0; i < input.length; i++) {
+        //Focus Event binding for input component
+        input[i].addEventListener('focus', focusFn(i));
+        //Blur Event binding for input component
+        input[i].addEventListener('blur', blurFn(i));
+    }
+    for (var j = 0; j < inputIcon.length; j++) {
+        inputIcon[j].addEventListener('mousedown', function () {
+            this.classList.add('e-input-btn-ripple');
+        });
+        inputIcon[j].addEventListener('mouseup', mouseupFn);
+    }
+    function getParentNode(element) {
+        var parentNode = element.parentNode;
+        if (parentNode.classList.contains('e-input-in-wrap')) {
+            return parentNode.parentNode;
+        }
+        return parentNode;
+    }
+</script>
+<style>
+    input {
+        max-width: 100%;
+    }
+    .e-input-picture:before {
+        content: '\e7b3';
+        font-family: e-icons;
+    }
+    .e-input-calendar:before {
+        content: "";
+        font-family: e-icons;
+        font-size: 13px;
+    }
+    .content-wrapper {
+        width: 90%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+        .content-wrapper div.row {
+            padding: 15px 0px;
+        }
+</style>
+</div>

@@ -1,0 +1,23 @@
+@{
+    ViewBag.Title = "Kanban";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2;
+<h2>Kanban Features:</h2>
+<br/>
+<li> Features - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+				<div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@ViewBag.data">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="In Review" keyField="Review"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings headerField="Id" contentField="Summary"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+</div>

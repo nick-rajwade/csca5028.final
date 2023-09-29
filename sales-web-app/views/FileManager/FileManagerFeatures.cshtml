@@ -1,0 +1,38 @@
+@{
+    ViewBag.Title = "FileManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="default"> <b>Default Sample</b></div>
+<div id = "ControlRegion">
+<div class="col-lg-12 control-section">
+    <div class="control_wrapper">
+        <ejs-filemanager id="file" toolbarClick="onCustomToolbar" created="onCreated" >
+             <e-filemanager-ajaxsettings url="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/FileOperations"
+                                        downloadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Download"
+                                        uploadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Upload"
+                                        getImageUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/GetImage"></e-filemanager-ajaxsettings>
+            <e-filemanager-uploadSettings autoUpload="true"></e-filemanager-uploadSettings>
+            <e-filemanager-toolbarSettings items="ViewBag.items" visible="true"></e-filemanager-toolbarSettings>
+        </ejs-filemanager>
+    </div>
+</div>
+</div>
+<script>
+    function onCreated(args) {
+        var custom_toolbar = document.getElementById('file_tb_custom toolbar');
+        var spanTag = document.createElement("span");
+        spanTag.className = "e-btn-icon e-icons e-fe-newfolder e-icon-left";
+        custom_toolbar.insertBefore(spanTag, custom_toolbar.firstChild);
+    }
+    function onCustomToolbar(args) {
+        if (args.item.properties.id === "file_tb_custom toolbar") {
+            alert("Custom Toolbar Item added");
+        }
+    }
+</script>
+<style>
+    .default {
+        margin-top: 10px;
+        padding: 10px;
+    }
+</style>

@@ -1,0 +1,66 @@
+@using Syncfusion.EJ2.Maps;
+@{
+    var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping> {
+new MapsColorMapping{ Value = "Trump", Color = "#D84444" },
+new MapsColorMapping{ Value = "Clinton", Color = "#316DB5" }
+};
+    var titleStyle = new MapsFont
+    {
+        Size = "16px"
+    };
+}
+@{
+    var maparea = new Syncfusion.EJ2.Maps.MapsMapsAreaSettings {};            
+}
+@{
+    ViewBag.Title = "Maps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+	var propertyPath = new[] { "name" };
+}
+<h2>Maps Features:</h2>
+<br/>
+<li> Legend Alignment - Center</li>
+<li> Legend Position - Top</li>
+<li> Legend Type - Default</li>
+<li> Projection - Mercator</li>
+<li> Show Marker</li>
+<li> Show Data Label</li>
+<li> Enable Tooltip</li>
+<li> Enable Highlight</li>
+<li> Enable Selection</li>
+<li> Enable Zooming</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="col-lg-9 control-section">
+    <div id="container" class="row">
+		<div style="width:500px">
+			<ejs-maps id="maps" 
+               projectionType="Mercator"
+           mapsArea="maparea">
+				<e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="USA Election Results - 2016" textStyle="titleStyle"></e-maps-titlesettings>
+               <e-maps-zoomsettings enable="true"></e-maps-zoomsettings>
+				<e-maps-legendsettings visible="true" 
+               mode="Default"
+               position="Top"
+               alignment="Center"
+           height="20px">
+					<e-legendsettings-textstyle fontWeight="400" size="14px"></e-legendsettings-textstyle>
+				</e-maps-legendsettings>
+				<e-maps-layers>
+					<e-maps-layer dataSource="ViewBag.electiondata" shapeData="ViewBag.usmap" shapeDataPath="State" shapePropertyPath="propertyPath">
+                    <e-layersettings-markers>
+                        <e-layersettings-marker visible="true" fill="darkgray" shape="Balloon" width="15" height="25" animationDuration="0" dataSource="ViewBag.marker"></e-layersettings-marker>
+                    </e-layersettings-markers>
+               <e-layersettings-datalabelsettings visible="true" labelPath="State" smartLabelMode="@Syncfusion.EJ2.Maps.SmartLabelMode.Trim"></e-layersettings-datalabelsettings>
+               <e-layersettings-tooltipsettings visible="true" valuePath="State"></e-layersettings-tooltipsettings>
+						<e-layersettings-shapesettings colorMapping="colormapping" colorValuePath="Winner"></e-layersettings-shapesettings>
+               <e-layersettings-highlightsettings enable="true" fill="#A3B0D0"></e-layersettings-highlightsettings>
+               <e-layersettings-selectionsettings enable="true" fill="#4C515B" opacity="1"></e-layersettings-selectionsettings>
+					</e-maps-layer>
+				</e-maps-layers>
+			</ejs-maps>
+		</div>
+    </div>
+</div>
+</div>

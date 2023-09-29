@@ -1,0 +1,21 @@
+@{
+    ViewBag.Title = "DropdownTree";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Newtonsoft.Json
+@using Syncfusion.EJ2.DropDowns
+<h2>DropdownTree Features:</h2>
+<br/>
+<li> Checkbox</li>
+<li> Multiple Selection</li>
+<li> Filtering</li>
+<li> Template</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div style="margin:0 auto; width:250px;">
+    <ejs-dropdowntree id="ddtree" placeholder="Select a item(s)" showCheckBox="true" allowMultiSelection="true" allowFiltering="true" filterBarPlaceholder="Search" itemTemplate="@Html.Raw("${Name}${if(Code)} - ${Code}${/if}")" >
+        <e-dropdowntree-fields dataSource="ViewBag.dataSource" value="Id" text="Name" parentValue="Pid" hasChildren="HasChild"></e-dropdowntree-fields>
+    </ejs-dropdowntree>
+</div>
+</div>

@@ -1,0 +1,32 @@
+@{
+    ViewBag.Title = "Radio Button";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Radio Button Features:</h2>
+<br/>
+<li> Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<h2>Radio Button</h2>
+<div id = "ControlRegion">
+            <ejs-radiobutton id="radiobtn1" name="sex" checked="true" label="Male"></ejs-radiobutton>
+    <ejs-radiobutton id="radiobtn2" name="sex" label="Female"></ejs-radiobutton>
+            <br />
+    <style>
+        .frame {
+            width: 30%;
+        }
+        td {
+            padding: 10px;
+        }
+        .spltspan{
+            width:50px;
+        }
+		#ControlRegion {
+            width: 178px;
+        }
+        .e-radio-wrapper {
+            margin: 10px;
+        }
+    </style>
+</div>

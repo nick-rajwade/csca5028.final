@@ -1,0 +1,83 @@
+@{
+    ViewBag.Title = "Tooltip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2
+<h2>Tooltip Features:</h2>
+<br/>
+<li> Tooltip Samples - Position</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+    <div class="control-section">
+        <!-- Tooltip element -->
+        <ejs-tooltip id="tooltip" content="Lets go green & Save Earth" position=TopCenter created="onCreated" showTipPointer="true">
+            <e-content-template>
+                <ejs-button id="btn" content="Show Tooltip"></ejs-button>
+            </e-content-template>
+        </ejs-tooltip>
+    </div>
+    <div>
+        <div class="property-section">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td style="width: 50px;padding-right: 10px">
+                            <div>Position</div>
+                        </td>
+                        <td style="width: 150px;padding-right: 10px">
+                            <div>
+                                <!-- Options for Tooltip position selection -->
+                                <select id="positions" class="form-control">
+                                    <option value="TopLeft">Top Left</option>
+                                    <option value="TopCenter" selected="">Top Center</option>
+                                    <option value="TopRight">Top Right</option>
+                                    <option value="BottomLeft">Bottom Left</option>
+                                    <option value="BottomCenter">Bottom Center</option>
+                                    <option value="BottomRight">Bottom Right</option>
+                                    <option value="LeftTop">Left Top</option>
+                                    <option value="LeftCenter">Left Center</option>
+                                    <option value="LeftBottom">Left Bottom</option>
+                                    <option value="RightTop">Right Top</option>
+                                    <option value="RightCenter">Right Center</option>
+                                    <option value="RightBottom">Right Bottom</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <style type="text/css">
+                .control-section {
+                    display: inline-block;
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: auto;
+                    height: auto;
+                    margin: 60px 0;
+                }
+                .property-section {
+                    display: inline-block;
+                    position: relative;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: auto;
+                    height: auto;
+                }
+            </style>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var tooltipObj;
+    function onCreated() {
+        //Handle tooltip position based on drop-down value change
+        tooltipObj = document.getElementById('tooltip').ej2_instances[0];
+        document.getElementById("positions").addEventListener("change", onChange);
+    }
+    function onChange() {
+        tooltipObj.position = this.value;
+    }
+</script>
+</div>

@@ -1,0 +1,16 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Schedule;
+@{
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Schedule Features:</h2>
+<br/>
+<li> Schedule Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<ejs-schedule id="schedule" height="550px" selectedDate="new DateTime(2018, 2, 15)">
+    <e-schedule-eventsettings dataSource="@ViewBag.datasource"></e-schedule-eventsettings>
+</ejs-schedule>
+</div>

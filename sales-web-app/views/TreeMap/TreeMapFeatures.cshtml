@@ -1,0 +1,60 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.TreeMap;
+@{
+    ViewBag.Title = "TreeMap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var leafBorder = new TreeMapBorder { Color = "transparent", Width = 1 };
+}
+<h2>TreeMap Features:</h2>
+<br/>
+<li> Legend Alignment - Center</li>
+<li> Legend Position - Top</li>
+<li> Data Label Intersect Types - Trim</li>
+<li> Legend Type - Default</li>
+<li> Layout Type - Squarified</li>
+<li> Enable Label</li>
+<li> Enable Tooltip</li>
+<li> Enable Highlight</li>
+<li> Enable Selection</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="col-lg-9 control-section">
+    <div id="container">
+        <ejs-treemap id="container" load="treeMapLoad" 
+               layoutType="Squarified"
+           dataSource="ViewBag.dataSource" weightValuePath="Population" rangeColorValuePath="Population" equalColorValuePath="Winner" format="n" useGroupingSeparator="true">
+               <e-treemap-selectionsettings enable="true"></e-treemap-selectionsettings>
+               <e-treemap-highlightsettings enable="true"></e-treemap-highlightsettings>
+            <e-treemap-titlesettings text="US presidential election result - 2016"></e-treemap-titlesettings>
+            <e-treemap-leafitemsettings 
+               interSectAction="Trim"
+               showLabels="true" 
+           labelPath="State" fill="#6699cc" border="leafBorder">
+	        <e-leafitemsettings-colormappings>
+                    <e-leafitemsettings-colormapping color="@("#D84444")" value="Trump"></e-leafitemsettings-colormapping>
+                    <e-leafitemsettings-colormapping color="@("#316DB5")" value="Clinton"></e-leafitemsettings-colormapping>
+                </e-leafitemsettings-colormappings>
+	    </e-treemap-leafitemsettings>
+            <e-treemap-legendsettings visible="true" 
+               mode="Default"
+               alignment="Center"
+               position="@LegendPosition.Top"
+           shape="@LegendShape.Rectangle"></e-treemap-legendsettings>
+               <e-treemap-tooltipsettings visible="true" format="<b>${Winner}<b><br>State : ${State}<br>Trump : ${Trump} %<br>Clinton : ${Clinton} %"></e-treemap-tooltipsettings>
+        </ejs-treemap>
+    </div>
+</div>
+</div>
+<script>
+    var treemap;
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        treemap = args.treemap;
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+</script>

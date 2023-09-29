@@ -1,0 +1,25 @@
+@{
+    ViewBag.Title = "DropDown Button";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>DropDown Button Features:</h2>
+<br/>
+<li> Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+              <h2>DropDown Button</h2>
+            <ejs-dropdownbutton id="dropdownbtn" content="Copy" items="ViewBag.items"></ejs-dropdownbutton>
+            <br />
+    <style>
+        .frame {
+            width: 30%;
+        }
+        td {
+            padding: 10px;
+        }
+        .spltspan{
+            width:50px;
+        }
+    </style>
+</div>

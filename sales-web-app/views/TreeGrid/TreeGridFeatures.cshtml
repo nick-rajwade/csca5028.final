@@ -1,0 +1,41 @@
+@{
+    ViewBag.Title = "TreeGrid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>TreeGrid Features:</h2>
+<br/>
+<li> Sorting</li>
+<li> Paging</li>
+<li> Selection</li>
+<li> Aggregate</li>
+<li> Editing - Cell</li>
+<li> Filtering Hierarchy Mode - Parent</li>
+<li> Search Hierarchy Mode - Parent</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="control-section">
+    <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowSelection="true" allowFiltering="true" allowSorting="true" allowPaging="true" childMapping="Children" treeColumnIndex="1" toolbar="@(new List<string>() { "Add","Edit", "Delete", "Update", "Cancel", "Search" })">
+        <e-treegrid-filtersettings type="@Syncfusion.EJ2.TreeGrid.FilterType.FilterBar" hierarchyMode="Parent" mode="Immediate"></e-treegrid-filtersettings>
+        <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+        <e-treegrid-searchsettings hierarchyMode="Parent"></e-treegrid-searchsettings>
+        <e-treegrid-selectionsettings type="Multiple" mode="Row"></e-treegrid-selectionsettings>
+        <e-treegrid-editsettings allowAdding="true" mode="Cell" allowEditing="true" allowDeleting="true" newRowPosition="Below"></e-treegrid-editsettings>
+        <e-treegrid-aggregates>
+            <e-treegrid-aggregate showChildSummary="false">
+                <e-treegrid-aggregate-columns>
+                    <e-treegrid-aggregate-column field="Approved" type="TrueCount" columnName="Approved" footerTemplate="Approved: ${TrueCount}"></e-treegrid-aggregate-column>
+                </e-treegrid-aggregate-columns>
+            </e-treegrid-aggregate>
+        </e-treegrid-aggregates>
+        <e-treegrid-columns>
+            <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-treegrid-column>
+            <e-treegrid-column field="TaskName" headerText="Task Name" width="200" validationRules="@(new { required=true, number=false})"></e-treegrid-column>
+            <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="100" validationRules="@(new { required=true})"></e-treegrid-column>
+            <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" type="date" width="100"></e-treegrid-column>
+            <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="120" validationRules="@(new { number=true})"></e-treegrid-column>
+            <e-treegrid-column field="Approved" headerText="Approved" textAlign="Right" width="90" type="boolean" editType="booleanedit"></e-treegrid-column>
+        </e-treegrid-columns>
+    </ejs-treegrid>
+</div>
+</div>

@@ -1,0 +1,61 @@
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Calendar Features:</h2>
+<br/>
+<li> DateRange</li>
+<li> Globalization - German</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+    <div class="control">
+        <ejs-calendar id="calendar" 
+             min="ViewBag.minDate" max="ViewBag.maxDate"
+           ></ejs-calendar>
+    </div>
+</div>
+              <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        calendarObject = document.getElementById('calendar').ej2_instances[0];
+        var L10n = ej.base.L10n;
+        L10n.load({
+            "de": {
+                "calendar": {
+                    today: 'heute'
+                }
+            }
+        });
+        loadCultureFiles('de');
+        calendarObject.locale = 'de';
+    });
+    function loadCultureFiles(name) {
+        var files = ['ca-gregorian.json', 'numbers.json', 'timeZoneNames.json'];
+        if (name === 'ar') {
+            files.push('numberingSystems.json');
+        }
+        var loader = ej.base.loadCldr;
+        var loadCulture = function (prop) {
+            var val, ajax;
+            if (name === 'ar' && prop === files.length - 1) {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/Calendar/cldr-data/supplemental/' + files[prop], 'GET', false);
+            } else {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/Calendar/cldr-data/main/' + name + '/' + files[prop], 'GET', false);
+            }
+            ajax.onSuccess = function (value) {
+                val = value;
+            };
+            ajax.send();
+            loader(JSON.parse(val));
+        };
+        for (var prop = 0; prop < files.length; prop++) {
+            loadCulture(prop);
+        }
+    }
+</script>
+<style>
+    .align {
+        margin: 0 auto;
+        width: 300px;
+    }
+</style>

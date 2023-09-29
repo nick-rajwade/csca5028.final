@@ -1,0 +1,44 @@
+﻿@using saleswebapp.Controllers
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "MultiSelect";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>MultiSelect Features:</h2>
+<br/>
+<li> MultiSelect Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+             <div id='content'>
+    <div>
+        <h4> Default Mode</h4>
+			<div class="default-sports">
+				<ejs-multiselect id="default" dataSource="@ViewBag.data" placeholder="Favorite Sports" mode="Default"></ejs-multiselect>
+			</div>
+    </div>
+    <div class="control-styles">
+        <h4>Box Mode</h4>
+			<div class="box-sports">
+				<ejs-multiselect id="box" dataSource="@ViewBag.data" placeholder="Favorite Sports" mode="Box"></ejs-multiselect>
+			</div>
+    </div>
+    <div class="control-styles">
+        <h4>Delimiter Mode</h4>
+			<div class="delimitter-sports">
+				<ejs-multiselect id="delimiter" dataSource="@ViewBag.data" placeholder="Favorite Sports" mode="Delimiter"></ejs-multiselect>
+			</div>
+    </div>
+	<style>
+        .default-sports {
+            max-width: 181px;
+        }
+        .box-sports {
+            max-width: 181px;
+        }
+        .delimitter-sports {
+            max-width: 181px;
+        }
+        </style>
+</div>
+</div>  

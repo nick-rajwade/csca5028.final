@@ -1,0 +1,66 @@
+@{
+    ViewBag.Title = "Skeleton";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Notifications
+<h2>Skeleton Features:</h2>
+<br/>
+<li> Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div class="control-section">
+    <table cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <label>Circle</label>
+                    <ejs-skeleton id="skeletonCircleSmall" shape="Circle" width="3rem"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonCircleMedium" shape="Circle" width="48px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonCircleLarge" shape="Circle" width="64px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonCircleLarger" shape="Circle" width="80px"></ejs-skeleton>
+                </td>
+                <td>
+                    <label>Square</label>
+                    <ejs-skeleton id="skeletonSquareSmall" shape="Square" width="3rem"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonSquareMedium" shape="Square" width="48px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonSquareLarge" shape="Square" width="64px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonSquareLarger" shape="Square" width="80px"></ejs-skeleton>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Text</label>
+                    <ejs-skeleton id="skeletonText" shape="Text" width="100%" height="15px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonTextMedium" width="30%" height="15px"></ejs-skeleton>
+                    <br />
+                    <ejs-skeleton id="skeletonTextSmall" width="15%" height="15px"></ejs-skeleton>
+                    <br />
+                    <ejs-skeleton id="skeletonTextMedium1" width="60%" height="15px"></ejs-skeleton>
+                    <br />
+                    <ejs-skeleton id="skeletonTextSmall1" width="15%" height="15px"></ejs-skeleton>
+                </td>
+                <td>
+                    <label>Rectangle</label>
+                    <ejs-skeleton id="skeletonRectangle" shape="Rectangle" width="100%" height="100px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonRectangleMedium" shape="Rectangle" width="20%" height="35px"></ejs-skeleton>
+                    <ejs-skeleton id="skeletonRectangleMediumRight" shape="Rectangle" width="20%" height="35px"></ejs-skeleton>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    label {
+        display: block;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+    table td {
+        padding: 25px 35px 15px 25px;
+        vertical-align: top;
+    }
+    #skeletonRectangleMediumRight {
+        float: right;
+    }
+</style>

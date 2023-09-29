@@ -1,0 +1,69 @@
+@{
+    ViewBag.Title = "CarouselFeatures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2
+<h2>Carousel Features:</h2>
+<br/>
+<li> Animation - Slide</li>
+<li> Buttons visibility - Visible</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div class="carousel-sample">
+    <div class="carousel-section">
+        <ejs-carousel id="carousel" width="600px" height="360px" animationEffect="Slide" buttonsVisibility="Visible">
+            <e-carousel-items>
+                <e-carousel-item template="#template-one"></e-carousel-item>
+                <e-carousel-item template="#template-two"></e-carousel-item>
+                <e-carousel-item template="#template-three"></e-carousel-item>
+                <e-carousel-item template="#template-four"></e-carousel-item>
+                <e-carousel-item template="#template-five"></e-carousel-item>
+            </e-carousel-items>
+        </ejs-carousel>
+    </div>
+</div>
+<style>
+    .img-container {
+        height: 100%;
+        margin: 0;
+    }
+    .img-caption {
+        color: #fff !important;
+        font-size: 1rem;
+        left: 1rem;
+        position: absolute;
+        bottom: 4rem;
+        margin-right: 1rem;
+        text-align: justify;
+    }
+</style>
+<script id="template-one" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../scripts/Carousel/images/cardinal.png" alt="cardinal" style="height:100%;width:100%;" />
+        <a class="img-caption" href="https://en.wikipedia.org/wiki/Cardinal_(bird)" target="_blank">Cardinalidae is a family of New World endemic passerine birds that consists of cardinals, grosbeaks, and buntings.</a>
+    </figure>
+</script>
+<script id="template-two" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../scripts/Carousel/images/kingfisher.png" alt="kingfisher" style="height:100%;width:100%;" />
+        <a class="img-caption" href="https://en.wikipedia.org/wiki/Kingfisher" target="_blank">Kingfishers or Alcedinidae are a family of small to medium-sized, brightly colored birds in the order Coraciiformes.</a>
+    </figure>
+</script>
+<script id="template-three" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../scripts/Carousel/images/keel-billed-toucan.png" alt="keel-billed-toucan" style="height:100%;width:100%;" />
+        <a class="img-caption" href="https://en.wikipedia.org/wiki/Keel-billed_toucan" target="_blank">The keel-billed toucan, also known as sulfur-breasted toucan or rainbow-billed toucan, is a colorful Latin American member of the toucan family.</a>
+    </figure>
+</script>
+<script id="template-four" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../scripts/Carousel/images/yellow-warbler.png" alt="yellow-warbler" style="height:100%;width:100%;" />
+        <a class="img-caption" href="https://en.wikipedia.org/wiki/American_yellow_warbler" target="_blank">The yellow warblers are the most widespread species in the diverse genus Setophaga, breeding in almost the whole of North America, the Caribbean, and down to northern South America.</a>
+    </figure>
+</script>
+<script id="template-five" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../scripts/Carousel/images/bee-eater.png" alt="bee-eater" style="height:100%;width:100%;" />
+        <a class="img-caption" href="https://en.wikipedia.org/wiki/Bee-eater" target="_blank">The bee-eaters are a group of non-passerine birds in the family Meropidae, containing three genera and twenty-seven species.</a>
+    </figure>
+</script>

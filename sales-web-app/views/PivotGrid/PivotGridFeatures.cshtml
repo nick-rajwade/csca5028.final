@@ -1,0 +1,156 @@
+@{
+    ViewBag.Title = "PivotGrid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>PivotGrid Features:</h2>
+<br/>
+<li> PivotGrid Samples - Sorting</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+ <div class="col-lg-8 control-section">
+    <div class="content-wrapper">
+        <ejs-pivotview id="pivotview" width="100%" height="300">
+            <e-datasourcesettings dataSource="@ViewBag.data" expandAll="false" enableSorting="true">
+                <e-formatsettings>
+                    <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
+                </e-formatsettings>
+                <e-rows>
+                    <e-field name="Country"></e-field>
+                    <e-field name="Products"></e-field>
+                </e-rows>
+                <e-columns>
+                    <e-field name="Year"></e-field>
+                    <e-field name="Quarter"></e-field>
+                </e-columns>
+                <e-values>
+                    <e-field name="Sold" caption="Units Sold"></e-field>
+                    <e-field name="Amount" caption="Sold Amount"></e-field>
+                </e-values>
+            </e-datasourcesettings>
+            <e-gridSettings columnWidth="140"></e-gridSettings>
+        </ejs-pivotview>
+    </div>
+</div>
+<div class="col-lg-4 property-section">
+    <table id="property" title="Properties" style="width: 100%;height:100%;">
+        <tbody>
+            <tr style="height: 50px">
+                <td>
+                    <div style="margin-left: -10px">
+                        <ejs-checkbox id="enablesort" checked="true" label="Enable Sorting" change="onChange" labelPosition="After"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div>
+                        Fields:
+                    </div>
+                </td>
+                <td style="width: 60%;">
+                    <div style="margin-left: -20px">
+                        <ejs-dropdownlist id="fields" dataSource="@ViewBag.fielddata" index="0" popupWidth="auto" enabled="true" change="onFieldChange">
+                            <e-dropdownlist-fields text="Field" value="Order"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div>
+                        Order:
+                    </div>
+                </td>
+                <td style="width: 60%;">
+                    <div style="margin-left: -20px">
+                        <ejs-dropdownlist id="sort" dataSource="@ViewBag.sortdata" index="0" popupWidth="auto" enabled="true" change="onOrderChange">
+                            <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td></td>
+                <td>
+                    <div style="float:right">
+                        <ejs-button id="apply-btn" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary="true" content="Apply"></ejs-button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    #pivotview {
+        width: 100%;
+        height: 100%;
+    }
+    .e-play-icon::before {
+        content: '\e728';
+    }
+    .hdrlabel {
+        font-size: 13px;
+    }
+    .e-bigger .hdrlabel {
+        font-size: 14px;
+    }
+</style>
+<script>
+    function onChange(args) {
+        var fieldsddl = document.getElementById('fields').ej2_instances[0];
+        var orderddl = document.getElementById('sort').ej2_instances[0];
+        var applyBtn = document.getElementById('apply-btn').ej2_instances[0];
+        if (args.checked) {
+            fieldsddl.enabled = true;
+            orderddl.enabled = true;
+            applyBtn.disabled = false;
+        }
+        else {
+            fieldsddl.enabled = false;
+            orderddl.enabled = false;
+            applyBtn.disabled = true;
+        }
+    }
+    function onFieldChange(args) {
+        var fieldsddl = document.getElementById('fields').ej2_instances[0];
+        var orderddl = document.getElementById('sort').ej2_instances[0];
+        if (fieldsddl.dataSource[fieldsddl.index].Order === fieldsddl.dataSource[fieldsddl.index].Field + '_asc') {
+            orderddl.index = 0;
+        }
+        else {
+            orderddl.index = 1;
+        }
+    }
+    function onOrderChange(args) {
+        var fieldsddl = document.getElementById('fields').ej2_instances[0];
+        var orderddl = document.getElementById('sort').ej2_instances[0];
+        if (args.value === 'Ascending') {
+            fieldsddl.dataSource[fieldsddl.index].Order = fieldsddl.dataSource[fieldsddl.index].Field + '_asc';
+        }
+        else {
+            fieldsddl.dataSource[fieldsddl.index].Order = fieldsddl.dataSource[fieldsddl.index].Field + '_desc';
+        }
+        fieldsddl.refresh();
+    }
+    document.getElementById('apply-btn').onclick = function () {
+        var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+        var fieldsddl = document.getElementById('fields').ej2_instances[0];
+        var orderddl = document.getElementById('sort').ej2_instances[0];
+        var checkBoxObj = document.getElementById('enablesort').ej2_instances[0];
+        if (checkBoxObj.checked) {
+            pivotGridObj.dataSourceSettings.enableSorting = true;
+            pivotGridObj.dataSourceSettings.sortSettings = [
+                { name: 'Country', order: fieldsddl.dataSource[0].Order === 'Country_asc' ? 'Ascending' : 'Descending' },
+                { name: 'Products', order: fieldsddl.dataSource[1].Order === 'Products_asc' ? 'Ascending' : 'Descending' },
+                { name: 'Year', order: fieldsddl.dataSource[2].Order === 'Year_asc' ? 'Ascending' : 'Descending' },
+                { name: 'Quarter', order: fieldsddl.dataSource[3].Order === 'Quarter_asc' ? 'Ascending' : 'Descending' }
+            ];
+        }
+        else {
+            pivotGridObj.dataSourceSettings.enableSorting = false;
+            pivotGridObj.dataSourceSettings.sortSettings = [];
+        }
+    };
+</script>
+</div>

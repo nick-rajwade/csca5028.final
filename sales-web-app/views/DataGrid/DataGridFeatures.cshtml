@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Data Grid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Data Grid Features:</h2>
+<br/>
+<li> Grid Samples - Default</li>
+<li> Grouping</li>
+<li> Sorting</li>
+<li> Filtering</li>
+<li> Selection</li>
+<li> Aggregates</li>
+<li> Paging</li>
+<li> Column Resizing</li>
+<li> Editing - Normal</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<ejs-grid id="DataGrid" dataSource ="ViewBag.dataSource" 
+              allowPaging="true"
+              allowSorting="true"
+              allowResizing="true"
+              allowFiltering="true"
+              allowGrouping="true"
+           toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel","Search" })">
+              <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Normal"></e-grid-editSettings>
+              <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+              <e-grid-filterSettings type="Menu"></e-grid-filterSettings>
+              <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
+              <e-grid-groupsettings showDropArea="false" columns="@(new string[] { "CustomerID"})"></e-grid-groupsettings>
+    <e-grid-columns>
+        <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" textAlign="Right" width="120"></e-grid-column>
+        <e-grid-column field="CustomerID" headerText="Customer ID" width="140"></e-grid-column>
+        <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
+        <e-grid-column field="ShipCountry" headerText="Ship Country" width="140"></e-grid-column>
+    </e-grid-columns>
+              <e-grid-aggregates>
+            <e-grid-aggregate>
+                <e-aggregate-columns>
+                    <e-aggregate-column field="Freight" type="Sum" groupFooterTemplate="Total units: ${Sum}"></e-aggregate-column>
+                    <e-aggregate-column field="Verified" type="Truecount" groupFooterTemplate="Verified: ${Truecount}"></e-aggregate-column>
+                    <e-aggregate-column field="Freight" type="Max" groupCaptionTemplate="Maximum: ${Max}"></e-aggregate-column>
+                </e-aggregate-columns>
+            </e-grid-aggregate>
+			</e-grid-aggregates>
+</ejs-grid>
+</div>

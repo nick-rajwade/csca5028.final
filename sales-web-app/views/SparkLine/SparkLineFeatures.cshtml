@@ -1,0 +1,132 @@
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Charts;
+@{
+    ViewBag.Title = "SparkLine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var axisLine = new { color = "red", width = 2 };
+    var trackLine = new SparklineTrackLineSettings { Color = "red", Width = 1 };
+    var markerVisible = new string[] { "All" };
+    var labelVisible = new string[] { "All" };
+}
+<h2>SparkLine Features:</h2>
+<br/>
+<li> Enable Tooltip</li>
+<li> Marker</li>
+<li> Data Label</li>
+<li> Track Line</li>
+<li> Axis Line</li>
+<li> Type - Column</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="col-lg-8 control-section">
+    <div id="spark-container" class="row">
+        <div class="cols-sample-area" align="center">
+            <p>
+                <font size="4px"> Worldwide car sales by brand - 2017</font>
+            </p>
+            <table style="width:150%;">
+                <tr>
+                    <td align="center">Sales Percentage</td>
+                    <td>
+                        <div id="percentage" style="width:200px; height:200px">
+                            <ejs-sparkline id="percentage" load="sparkLoad" height="200px" width="200px" lineWidth="1"
+               type="@SparklineType.Column"
+           valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category"
+                                           xName="xval" yName="yval">
+               <e-sparkline-axissettings>
+                                    <e-axissettings-linesettings visible="true"></e-axissettings-linesettings>
+                                </e-sparkline-axissettings>
+               <e-sparkline-datalabelsettings visible="labelVisible" visible="true"></e-sparkline-datalabelsettings>
+               <e-sparkline-markersettings fill="red" size="5" visible="markerVisible" visible="true"></e-sparkline-markersettings>
+                                <e-sparkline-tooltipsettings format="${xval}: ${yval}" 
+               visible="true"
+          >
+               <e-sparklinetooltipsettings-tracklinesettings visible="true" color="red" width="1"></e-sparklinetooltipsettings-tracklinesettings>
+                                </e-sparkline-tooltipsettings>
+                            </ejs-sparkline>
+                        </div>
+                    </td>
+                </tr>                
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<style>
+    .sparkinput {
+        opacity: 1 !important;
+        position: relative !important;
+    }
+    .property-text {
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif" !important;
+        font-size: 13px !important;
+        font-weight: 400 !important;
+    }
+    #range > * {
+        padding: 0px !important;
+    }
+    label {
+        height: 32px !important;
+    }
+</style>
+<script type="text/javascript">
+    var percentage, sales;
+    function sparkLoad(args) {
+        if (args.sparkline.element.id === "percentage") {
+            percentage = args.sparkline;
+            args.sparkline.dataSource = [
+                { x: 0, xval: 'AUDI', yval: 1 },
+                { x: 1, xval: 'BMW', yval: 5 },
+                { x: 2, xval: 'BUICK', yval: -1 },
+                { x: 3, xval: 'CETROEN', yval: -6 },
+                { x: 4, xval: 'CHEVROvar', yval: 0 },
+                { x: 5, xval: 'FIAT', yval: 1 },
+                { x: 6, xval: 'FORD', yval: -2 },
+                { x: 7, xval: 'HONDA', yval: 7 },
+                { x: 8, xval: 'HYUNDAI', yval: -9 },
+                { x: 9, xval: 'JEEP', yval: 0 },
+                { x: 10, xval: 'KIA', yval: -10 },
+                { x: 11, xval: 'MAZDA', yval: 3 },
+                { x: 12, xval: 'MERCEDES', yval: 13 },
+                { x: 13, xval: 'NISSAN', yval: 5 },
+                { x: 14, xval: 'OPEL/VHALL', yval: -6 },
+                { x: 15, xval: 'PEUGEOT', yval: 0 },
+                { x: 16, xval: 'RENAULT', yval: 7 },
+                { x: 17, xval: 'SKODA', yval: 5 },
+                { x: 18, xval: 'SUBARU', yval: 5 },
+                { x: 19, xval: 'SUZUKI', yval: 11 },
+                { x: 20, xval: 'TOYOTA', yval: 5 },
+                { x: 21, xval: 'VOLKSWAGEN', yval: 3 },
+            ];
+        } else {
+            sales = args.sparkline;
+            args.sparkline.dataSource = [
+                { x: 0, xval: 'AUDI', yval: 1847613 },
+                { x: 1, xval: 'BMW', yval: 2030331 },
+                { x: 2, xval: 'BUICK', yval: 1465823 },
+                { x: 3, xval: 'CETROEN', yval: 999888 },
+                { x: 4, xval: 'CHEVROvar', yval: 3857388 },
+                { x: 5, xval: 'FIAT', yval: 1503806 },
+                { x: 6, xval: 'FORD', yval: 5953122 },
+                { x: 7, xval: 'HONDA', yval: 4967689 },
+                { x: 8, xval: 'HYUNDAI', yval: 3951176 },
+                { x: 9, xval: 'JEEP', yval: 1390130 },
+                { x: 10, xval: 'KIA', yval: 2511293 },
+                { x: 11, xval: 'MAZDA', yval: 1495557 },
+                { x: 12, xval: 'MERCEDES', yval: 2834181 },
+                { x: 13, xval: 'NISSAN', yval: 4834694 },
+                { x: 14, xval: 'OPEL/VHALL', yval: 996559 },
+                { x: 15, xval: 'PEUGEOT', yval: 1590300 },
+                { x: 16, xval: 'RENAULT', yval: 2275227 },
+                { x: 17, xval: 'SKODA', yval: 1180672 },
+                { x: 18, xval: 'SUBARU', yval: 1050390 },
+                { x: 19, xval: 'SUZUKI', yval: 2891415 },
+                { x: 20, xval: 'TOYOTA', yval: 7843423 },
+                { x: 21, xval: 'VOLKSWAGEN', yval: 6639250 },
+            ];
+        }
+    }
+</script>

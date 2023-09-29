@@ -1,0 +1,47 @@
+@{
+    ViewBag.Title = "Rating";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Inputs
+<h2>Rating Features:</h2>
+<br/>
+<li> Reset</li>
+<li> Single Selection</li>
+<li> ShowTooltip</li>
+<li> ShowLabel</li>
+<li> ItemCount</li>
+<li> Full Template</li>
+<li> Empty Template</li>
+<li> ToolTip Template</li>
+<li> Label Template</li>
+<li> Precision Type - Full</li>
+<li> Label Position - Top</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id="ControlRegion">
+  <ejs-rating id="rating" allowReset=true enableSingleSelection=true itemsCount=5 showTooltip=true readOnly=false disabled=false ShowLabel=true precision="Full" labelPosition="Top" fullTemplate="<span class = 'e-rating-icon sf-icon-heart'>" emptyTemplate="<span class = 'e-rating-icon sf-icon-spiked-star'>" tooltipTemplate="<span> ${value} Star</span>" labelTemplate="<span> ${value} Out Of 5</span>" ></ejs-rating>
+</div>
+<style>
+@@font-face {
+font-family: 'rating-icons';
+src:
+url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj0gSRkAAAEoAAAAVmNtYXDnEOdaAAABjAAAADhnbHlmNr3qegAAAcwAAACwaGVhZCLmjl4AAADQAAAANmhoZWEHmQNsAAAArAAAACRobXR4C9AAAAAAAYAAAAAMbG9jYQAsAFgAAAHEAAAACG1heHABDgAlAAABCAAAACBuYW1lrSSpXgAAAnwAAAJhcG9zdGt0K6AAAATgAAAAPQABAAADUv9qAFoEAAAA//4D6gABAAAAAAAAAAAAAAAAAAAAAwABAAAAAQAAT3WSuV8PPPUACwPoAAAAAN/vJMcAAAAA3+8kxwAAAAAD6gPrAAAACAACAAAAAAAAAAEAAAADABkAAQAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQPwAZAABQAAAnoCvAAAAIwCegK8AAAB4AAxAQIAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnAQNS/2oAWgPrAJYAAAABAAAAAAAABAAAAAPoAAAD6AAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAAkAAAABAAEAAEAAOcB//8AAOcA//8AAAABAAQAAAABAAIAAAAAACwAWAABAAAAAAPqA+oAEwAAAScXBRcHJQM3GwEXJyUnNwUTBwMBlutx/ub03gEaS9FkO+txARr03v7mS9FkAuGW+g2MrBz++rX+/wENlvoNiawcAQe2AQAAAAAAAQAAAAAD6gPrABgAABMOAQcVFhIFJBI3NS4BJyYrASIGBy4BIybkTYcOBuMBCwEM4wUNh0wOCxZTZS0sZVMXA+cHjYg7gf69ysoBQ4E7iI0HA0Q8PEQBAAAAEgDeAAEAAAAAAAAAAQAAAAEAAAAAAAEADAABAAEAAAAAAAIABwANAAEAAAAAAAMADAAUAAEAAAAAAAQADAAgAAEAAAAAAAUACwAsAAEAAAAAAAYADAA3AAEAAAAAAAoALABDAAEAAAAAAAsAEgBvAAMAAQQJAAAAAgCBAAMAAQQJAAEAGACDAAMAAQQJAAIADgCbAAMAAQQJAAMAGACpAAMAAQQJAAQAGADBAAMAAQQJAAUAFgDZAAMAAQQJAAYAGADvAAMAAQQJAAoAWAEHAAMAAQQJAAsAJAFfIHJhdGluZy1pY29uc1JlZ3VsYXJyYXRpbmctaWNvbnNyYXRpbmctaWNvbnNWZXJzaW9uIDEuMHJhdGluZy1pY29uc0ZvbnQgZ2VuZXJhdGVkIHVzaW5nIFN5bmNmdXNpb24gTWV0cm8gU3R1ZGlvd3d3LnN5bmNmdXNpb24uY29tACAAcgBhAHQAaQBuAGcALQBpAGMAbwBuAHMAUgBlAGcAdQBsAGEAcgByAGEAdABpAG4AZwAtAGkAYwBvAG4AcwByAGEAdABpAG4AZwAtAGkAYwBvAG4AcwBWAGUAcgBzAGkAbwBuACAAMQAuADAAcgBhAHQAaQBuAGcALQBpAGMAbwBuAHMARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAdQBzAGkAbgBnACAAUwB5AG4AYwBmAHUAcwBpAG8AbgAgAE0AZQB0AHIAbwAgAFMAdAB1AGQAaQBvAHcAdwB3AC4AcwB5AG4AYwBmAHUAcwBpAG8AbgAuAGMAbwBtAAAAAAIAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwECAQMBBAALc3Bpa2VkLXN0YXIFaGVhcnQAAAAAAA==) format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+[class^="sf-icon-"], [class*=" sf-icon-"] {
+ font-family: 'rating-icons' !important;
+speak: none;
+font-style: normal;
+font-weight: normal;
+font-variant: normal;
+text-transform: none;
+line-height: 1;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.sf-icon-spiked-star:before { content: "\e700"; }
+.sf-icon-heart:before { content: "\e701"; }
+</style>

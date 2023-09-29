@@ -1,0 +1,59 @@
+@{
+    ViewBag.Title = "HeatMap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>HeatMap Features:</h2>
+<br/>
+<li> Axis Type - Category</li>
+<li> Axis Opposed Position</li>
+<li> Axis Inversed</li>
+<li> Tooltip</li>
+<li> Render Mode - SVG</li>
+<li> Palette Type - Gradient</li>
+<li> Legend Position - Top</li>
+<li> Legend Alignment - Center</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+@{
+    var heatmapData = new int[12, 6]
+            {
+{73,39,26,39,94,0},
+{93, 58, 53, 38, 26, 68 },
+{99, 28, 22, 4, 66, 90},
+{14, 26, 97, 69, 69, 3 },
+{7, 46, 47, 47, 88, 6 },
+{41, 55, 73, 23, 3, 79},
+{56, 69, 21, 86, 3, 33},
+{45, 7, 53, 81, 95, 79 },
+{60, 77, 74, 68, 88, 51},
+{25, 25, 10, 12, 78, 14},
+{25, 56, 55, 58, 12, 82 },
+{ 74, 33, 88, 23, 86, 59 }
+            };
+                      var xAxisLabel = new string[] {"Nancy", "Andrew", "Janet", "Margaret", "Steven",
+    "Michael", "Robert", "Laura", "Anne", "Paul", "Karin",   "Mario"};
+    var yAxisLabel = new string[] { "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat" };
+}
+<div id = "ControlRegion">
+<ejs-heatmap id="container" 
+              showTooltip="true"
+           renderingMode="SVG" dataSource="heatmapData">
+                  <e-heatmap-xaxis vaueType="Category" 
+              opposedPosition="true"
+              isInversed="true"
+           labels="xAxisLabel">
+    </e-heatmap-xaxis>
+    <e-heatmap-yaxis vaueType="Category" 
+              opposedPosition="true"
+           labels="yAxisLabel">
+    </e-heatmap-yaxis>
+<e-heatmap-palettesettings type="Gradient">
+			<e-palettes>
+            <e-palette color="#C06C84"></e-palette>
+            <e-palette color="#6C5B7B"></e-palette>
+            <e-palette color="#355C7D"></e-palette>
+        </e-palettes>
+    </e-heatmap-palettesettings>
+<e-heatmap-legendsettings alignment="Center" position="Top" ></e-heatmap-legendsettings>
+</ejs-heatmap>
+</div>

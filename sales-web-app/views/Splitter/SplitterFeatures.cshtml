@@ -1,0 +1,24 @@
+@{
+    ViewBag.Title = "Splitter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Splitter Features:</h2>
+<br/>
+<li> Orientation - Horizontal</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div id="target" class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+            <ejs-splitter id="splitter" orientation="Horizontal" height="300px" width="100%" >
+                <e-splitter-panes>
+                    <e-splitter-pane size="25%" content="Top pane"></e-splitter-pane>
+                    <e-splitter-pane size="50%" content="Middle pane"></e-splitter-pane>
+                    <e-splitter-pane size="25%" content="Bottom pane"></e-splitter-pane>
+                </e-splitter-panes>
+            </ejs-splitter>
+        </div>
+    </div>
+</div>
+</div>

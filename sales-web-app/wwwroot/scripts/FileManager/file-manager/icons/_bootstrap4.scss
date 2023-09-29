@@ -1,0 +1,198 @@
+@mixin set-image($value) {
+  $fe-image-url: './file-manager/images/';
+  background-image: url($fe-image-url + $value);
+}
+
+@include export-module('FileManager-bootstrap4-icons') {
+
+  #{&}.e-filemanager {
+
+    .e-fe-icon,
+    .e-list-icon {
+      background-repeat: no-repeat;
+    }
+
+    .e-fe-docx,
+    .e-fe-doc {
+      @include set-image('word.svg');
+    }
+
+    .e-fe-pptx,
+    .e-fe-ppt {
+      @include set-image('ppt.svg');
+    }
+
+    .e-fe-xlsx,
+    .e-fe-xls {
+      @include set-image('excel.svg');
+    }
+
+    .e-fe-pdf {
+      @include set-image('pdf.svg');
+    }
+
+    .e-fe-image {
+      @include set-image('image.svg');
+    }
+
+    .e-fe-rar {
+      @include set-image('rar.svg');
+    }
+
+    .e-fe-zip {
+      @include set-image('zip.svg');
+    }
+
+    .e-fe-txt {
+      @include set-image('text.svg');
+    }
+
+    .e-fe-music {
+      @include set-image('music.svg');
+    }
+
+    .e-fe-video {
+      @include set-image('video.svg');
+    }
+
+    .e-fe-js {
+      @include set-image('js.svg');
+    }
+
+    .e-fe-css {
+      @include set-image('css.svg');
+    }
+
+    .e-fe-html {
+      @include set-image('html.svg');
+    }
+
+    .e-fe-php {
+      @include set-image('php.svg');
+    }
+
+    .e-fe-exe {
+      @include set-image('exe.svg');
+    }
+
+    .e-fe-msi {
+      @include set-image('msi.svg');
+    }
+
+    .e-fe-unknown {
+      @include set-image('exclamatory.svg');
+    }
+
+    .e-fe-rtf {
+      @include set-image('rtf.svg');
+    }
+
+    .e-fe-xml {
+      @include set-image('xml.svg');
+    }
+
+    .e-fe-folder {
+      @include set-image('folder.svg');
+    }
+
+    .e-address {
+
+      .e-address-list-item {
+
+        .e-icons::before {
+          content: '\e608';
+        }
+      }
+    }
+  }
+
+  #{&}.e-filemanager,
+  #{&}.e-fe-popup {
+
+    .e-fe-open::before {
+      content: '\e609';
+    }
+
+    .e-fe-cut::before {
+      content: '\e604';
+    }
+
+    .e-fe-copy::before {
+      content: '\e60d';
+    }
+
+    .e-fe-paste::before {
+      content: '\e601';
+    }
+
+    .e-fe-delete::before {
+      content: '\e602';
+    }
+
+    .e-fe-rename::before {
+      content: '\e60c';
+    }
+
+    .e-fe-newfolder::before {
+      content: '\e60b';
+    }
+
+    .e-fe-refresh::before {
+      content: '\e606';
+    }
+
+    .e-fe-upload::before {
+      content: '\e60f';
+    }
+
+    .e-fe-download::before {
+      content: '\e603';
+    }
+
+    .e-fe-grid::before {
+      content: '\e605';
+    }
+
+    .e-fe-large::before {
+      content: '\e600';
+    }
+
+    .e-fe-select::before {
+      content: '\e611';
+    }
+
+    .e-fe-details::before {
+      content: '\e607';
+    }
+
+    .e-fe-sort::before {
+      content: '\e612';
+    }
+
+    .e-fe-search::before {
+      content: '\e60e';
+    }
+
+    .e-fe-clear::before {
+      content: '\e60a';
+    }
+
+    &.e-fe-m-filter {
+
+      .e-fe-search::before {
+        content: '\e610';
+      }
+    }
+  }
+
+  #{&}.e-fe-popup {
+
+    .e-fe-dot::before {
+      content: '\e614';
+    }
+
+    .e-fe-tick::before {
+      content: '\e614';
+    }
+  }
+}

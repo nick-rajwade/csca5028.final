@@ -1,0 +1,24 @@
+@{
+    ViewBag.Title = "AccumulationChart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>AccumulationChart Features:</h2>
+<br/>
+<li> Series Type - Pie</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="row" style="margin-top:10px">
+    <div class="col-md-8">
+        <ejs-accumulationchart id="piecontainer" title="Income Tax" enableSmartLabels="true">
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" 
+              type="Pie"
+           startAngle="0" endAngle="360" 
+                                       explode="true" explodeIndex="0" innerRadius="0%" radius="70%" explodeOffset="10%">
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+</div>
+</div>

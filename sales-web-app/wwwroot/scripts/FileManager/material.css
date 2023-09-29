@@ -1,0 +1,1082 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
+/*! FileManager's material theme wise override definitions and variables */
+.e-filemanager .e-fe-icon,
+.e-filemanager .e-list-icon {
+  background-repeat: no-repeat;
+}
+
+.e-filemanager .e-fe-docx,
+.e-filemanager .e-fe-doc {
+  background-image: url("./file-manager/images/word.svg");
+}
+
+.e-filemanager .e-fe-pptx,
+.e-filemanager .e-fe-ppt {
+  background-image: url("./file-manager/images/ppt.svg");
+}
+
+.e-filemanager .e-fe-xlsx,
+.e-filemanager .e-fe-xls {
+  background-image: url("./file-manager/images/excel.svg");
+}
+
+.e-filemanager .e-fe-pdf {
+  background-image: url("./file-manager/images/pdf.svg");
+}
+
+.e-filemanager .e-fe-image {
+  background-image: url("./file-manager/images/image.svg");
+}
+
+.e-filemanager .e-fe-rar {
+  background-image: url("./file-manager/images/rar.svg");
+}
+
+.e-filemanager .e-fe-zip {
+  background-image: url("./file-manager/images/zip.svg");
+}
+
+.e-filemanager .e-fe-txt {
+  background-image: url("./file-manager/images/text.svg");
+}
+
+.e-filemanager .e-fe-music {
+  background-image: url("./file-manager/images/music.svg");
+}
+
+.e-filemanager .e-fe-video {
+  background-image: url("./file-manager/images/video.svg");
+}
+
+.e-filemanager .e-fe-js {
+  background-image: url("./file-manager/images/js.svg");
+}
+
+.e-filemanager .e-fe-css {
+  background-image: url("./file-manager/images/css.svg");
+}
+
+.e-filemanager .e-fe-html {
+  background-image: url("./file-manager/images/html.svg");
+}
+
+.e-filemanager .e-fe-php {
+  background-image: url("./file-manager/images/php.svg");
+}
+
+.e-filemanager .e-fe-exe {
+  background-image: url("./file-manager/images/exe.svg");
+}
+
+.e-filemanager .e-fe-msi {
+  background-image: url("./file-manager/images/msi.svg");
+}
+
+.e-filemanager .e-fe-unknown {
+  background-image: url("./file-manager/images/exclamatory.svg");
+}
+
+.e-filemanager .e-fe-rtf {
+  background-image: url("./file-manager/images/rtf.svg");
+}
+
+.e-filemanager .e-fe-xml {
+  background-image: url("./file-manager/images/xml.svg");
+}
+
+.e-filemanager .e-fe-folder {
+  background-image: url("./file-manager/images/folder.svg");
+}
+
+.e-filemanager .e-address .e-address-list-item .e-icons::before {
+  content: '\e608';
+}
+
+.e-filemanager .e-fe-open::before,
+.e-fe-popup .e-fe-open::before {
+  content: '\e609';
+}
+
+.e-filemanager .e-fe-cut::before,
+.e-fe-popup .e-fe-cut::before {
+  content: '\e604';
+}
+
+.e-filemanager .e-fe-copy::before,
+.e-fe-popup .e-fe-copy::before {
+  content: '\e60d';
+}
+
+.e-filemanager .e-fe-paste::before,
+.e-fe-popup .e-fe-paste::before {
+  content: '\e601';
+}
+
+.e-filemanager .e-fe-delete::before,
+.e-fe-popup .e-fe-delete::before {
+  content: '\e602';
+}
+
+.e-filemanager .e-fe-rename::before,
+.e-fe-popup .e-fe-rename::before {
+  content: '\e60c';
+}
+
+.e-filemanager .e-fe-newfolder::before,
+.e-fe-popup .e-fe-newfolder::before {
+  content: '\e60b';
+}
+
+.e-filemanager .e-fe-refresh::before,
+.e-fe-popup .e-fe-refresh::before {
+  content: '\e606';
+}
+
+.e-filemanager .e-fe-upload::before,
+.e-fe-popup .e-fe-upload::before {
+  content: '\e60f';
+}
+
+.e-filemanager .e-fe-download::before,
+.e-fe-popup .e-fe-download::before {
+  content: '\e603';
+}
+
+.e-filemanager .e-fe-grid::before,
+.e-fe-popup .e-fe-grid::before {
+  content: '\e605';
+}
+
+.e-filemanager .e-fe-large::before,
+.e-fe-popup .e-fe-large::before {
+  content: '\e600';
+}
+
+.e-filemanager .e-fe-select::before,
+.e-fe-popup .e-fe-select::before {
+  content: '\e611';
+}
+
+.e-filemanager .e-fe-details::before,
+.e-fe-popup .e-fe-details::before {
+  content: '\e607';
+}
+
+.e-filemanager .e-fe-sort::before,
+.e-fe-popup .e-fe-sort::before {
+  content: '\e612';
+}
+
+.e-filemanager .e-fe-search::before,
+.e-fe-popup .e-fe-search::before {
+  content: '\e60e';
+}
+
+.e-filemanager .e-fe-clear::before,
+.e-fe-popup .e-fe-clear::before {
+  content: '\e60a';
+}
+
+.e-filemanager.e-fe-m-filter .e-fe-search::before,
+.e-fe-popup.e-fe-m-filter .e-fe-search::before {
+  content: '\e610';
+}
+
+.e-fe-popup .e-fe-dot::before {
+  content: '\e614';
+}
+
+.e-fe-popup .e-fe-tick::before {
+  content: '\e614';
+}
+
+.e-filemanager {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 1px solid;
+  position: relative;
+}
+
+.e-filemanager .e-upload {
+  display: none;
+}
+
+.e-filemanager .e-blur {
+  opacity: .5;
+}
+
+.e-filemanager .e-display-none {
+  display: none;
+}
+
+.e-filemanager .e-toolbar {
+  border-bottom: 1px solid;
+}
+
+.e-filemanager .e-toolbar .e-toolbar-item button {
+  background: #fafafa;
+}
+
+.e-filemanager .e-toolbar .e-toolbar-item button:active {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.e-filemanager .e-toolbar .e-toolbar-item button:hover {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.e-filemanager .e-toolbar .e-dropdown-btn {
+  font-weight: 400;
+  height: calc(100% - 10px);
+  padding: 4px 3px;
+}
+
+.e-filemanager .e-toolbar .e-fe-sort {
+  display: inline-block;
+}
+
+.e-filemanager .e-toolbar .e-status {
+  font-size: 14px;
+  padding: 0 2px;
+}
+
+.e-filemanager .e-toolbar .e-fe-clear {
+  font-size: 14px;
+}
+
+.e-filemanager .e-toolbar .e-fe-clear::before {
+  display: inline-block;
+  padding: 5px;
+}
+
+.e-filemanager .e-treeview > .e-ul {
+  overflow: initial;
+  padding-left: 8px;
+}
+
+.e-filemanager .e-treeview .e-text-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.e-filemanager .e-treeview .e-list-text {
+  display: initial;
+}
+
+.e-filemanager .e-splitter {
+  border-width: 0;
+}
+
+.e-filemanager .e-splitter .e-split-bar .e-resize-handler {
+  display: none;
+}
+
+.e-filemanager .e-address {
+  border-bottom: 1px solid;
+  position: relative;
+}
+
+.e-filemanager .e-address .e-search-wrap {
+  float: right;
+  margin: 3px 0;
+  padding: 0 16px;
+  width: 200px;
+}
+
+.e-filemanager .e-address .e-search-wrap.e-focus {
+  width: 220px;
+}
+
+.e-filemanager .e-address .e-search-wrap .e-input-group {
+  border-bottom: 0;
+  height: 30px;
+  margin: 0;
+}
+
+.e-filemanager .e-address .e-search-wrap .e-input-group .e-input {
+  margin: 0 0 0 24px;
+  padding: 0;
+}
+
+.e-filemanager .e-address .e-fe-search {
+  font-size: 14px;
+  margin: 3px 0;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+}
+
+.e-filemanager .e-address .e-fe-search::before {
+  display: inline-block;
+}
+
+.e-filemanager .e-address .e-addressbar-ul {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 4px 8px;
+  visibility: visible;
+}
+
+.e-filemanager .e-address .e-addressbar-ul .e-breadcrumb-menu {
+  display: inline;
+}
+
+.e-filemanager .e-address .e-list-text {
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 28px;
+  padding: 4px 4px 5px;
+}
+
+.e-filemanager .e-address .e-address-list-item {
+  display: inline-block;
+  height: 28px;
+}
+
+.e-filemanager .e-address .e-address-list-item:last-child .e-list-text {
+  cursor: default;
+}
+
+.e-filemanager .e-address .e-address-list-item .e-icons {
+  font-size: 14px;
+  margin: 0 4px;
+}
+
+.e-filemanager .e-address .e-address-list-item .e-icons::before {
+  padding: 5px;
+}
+
+.e-filemanager .e-grid {
+  border-width: 0;
+  float: left;
+}
+
+.e-filemanager .e-grid .e-checkbox-wrapper .e-frame {
+  border-width: 1px;
+  line-height: 9px;
+}
+
+.e-filemanager .e-grid .e-gridheader {
+  border-width: 0 1px 1px;
+}
+
+.e-filemanager .e-grid .e-gridheader .e-headercell {
+  height: 32px;
+}
+
+.e-filemanager .e-grid .e-gridheader .e-headercell .e-headertext {
+  font-size: 14px;
+}
+
+.e-filemanager .e-grid .e-content {
+  overflow-y: auto !important;
+}
+
+.e-filemanager .e-grid .e-content .e-rowcell {
+  font-size: 12px;
+}
+
+.e-filemanager .e-grid .e-content .e-rowcell .e-fe-text {
+  font-size: 13px;
+}
+
+.e-filemanager .e-grid .e-empty {
+  height: 160px;
+  left: 50%;
+  min-width: 200px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.e-filemanager .e-grid .e-empty-content {
+  font-size: 20px;
+  margin: 0 auto;
+  padding: 8px;
+  text-align: center;
+}
+
+.e-filemanager .e-grid .e-empty-icon {
+  height: 82px;
+  margin: 0 auto;
+  width: 82px;
+}
+
+.e-filemanager .e-grid .e-empty-inner-content {
+  font-size: 14px;
+  margin: 0 auto;
+  opacity: 0.5;
+  padding: 6px;
+  text-align: center;
+}
+
+.e-filemanager .e-grid .e-gridpopup {
+  display: none !important;
+}
+
+.e-filemanager .e-grid .e-gridheader .e-fe-checkbox,
+.e-filemanager .e-grid .e-gridcontent .e-fe-checkbox {
+  padding-left: 12px;
+  padding-right: 0;
+}
+
+.e-filemanager .e-grid .e-gridheader .e-fe-grid-icon,
+.e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon {
+  padding-left: 12px;
+  padding-right: 0;
+}
+
+.e-filemanager .e-grid .e-gridheader .e-fe-grid-icon + .e-rowcell,
+.e-filemanager .e-grid .e-gridheader .e-fe-grid-icon + .e-headercell,
+.e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon + .e-rowcell,
+.e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon + .e-headercell {
+  padding-left: 0;
+}
+
+.e-filemanager .e-grid .e-row .e-checkbox-wrapper {
+  visibility: hidden;
+}
+
+.e-filemanager .e-grid .e-row:hover .e-checkbox-wrapper,
+.e-filemanager .e-grid .e-row .e-active .e-checkbox-wrapper {
+  visibility: visible;
+}
+
+.e-filemanager .e-grid .e-focused:not(.e-menu-item) {
+  box-shadow: none;
+}
+
+.e-filemanager .e-grid.e-horizontallines .e-rowcell.e-lastrowcell, .e-filemanager .e-grid.e-verticallines .e-rowcell.e-lastrowcell, .e-filemanager .e-grid.e-hidelines .e-rowcell.e-lastrowcell {
+  border-bottom-width: 0;
+}
+
+.e-filemanager .e-grid.e-resize-lines .e-headercell .e-rhandler,
+.e-filemanager .e-grid.e-resize-lines .e-headercell .e-rsuppress {
+  border-width: 0;
+}
+
+.e-filemanager .e-grid .e-fe-icon {
+  display: inline-block;
+  height: 18px;
+  margin: 0 8px 0 0;
+  vertical-align: middle;
+  width: 18px;
+}
+
+.e-filemanager .e-dialog td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  max-width: 211px;
+  min-width: 51px;
+  padding: 8px 24px 8px 0;
+}
+
+.e-filemanager .e-dialog .e-fe-errorcontent {
+  white-space: normal;
+  word-break: break-all;
+}
+
+.e-filemanager .e-large-icons {
+  float: left;
+  overflow: auto;
+  width: 100%;
+}
+
+.e-filemanager .e-large-icons .e-checkbox-wrapper .e-frame {
+  border-width: 1px;
+  line-height: 9px;
+}
+
+.e-filemanager .e-large-icons .e-empty {
+  height: 160px;
+  left: 50%;
+  min-width: 200px;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.e-filemanager .e-large-icons .e-empty-content {
+  font-size: 20px;
+  margin: 0 auto;
+  padding: 8px;
+  text-align: center;
+}
+
+.e-filemanager .e-large-icons .e-empty-icon {
+  height: 82px;
+  margin: 0 auto;
+  width: 82px;
+}
+
+.e-filemanager .e-large-icons .e-empty-inner-content {
+  font-size: 14px;
+  margin: 0 auto;
+  opacity: 0.5;
+  padding: 6px;
+  text-align: center;
+}
+
+.e-filemanager .e-large-icons .e-list-parent {
+  display: block;
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  padding: 0 4px;
+}
+
+.e-filemanager .e-large-icons .e-checkbox-wrapper {
+  float: left;
+  position: absolute;
+  top: 0;
+  visibility: hidden;
+}
+
+.e-filemanager .e-large-icons .e-list-item {
+  border: 1px solid;
+  float: left;
+  height: 85px;
+  margin: 8px 4px;
+  overflow: hidden;
+  padding: 2px;
+  width: 80px;
+}
+
+.e-filemanager .e-large-icons .e-list-item.e-active .e-checkbox-wrapper, .e-filemanager .e-large-icons .e-list-item.e-hover .e-checkbox-wrapper {
+  visibility: visible;
+}
+
+.e-filemanager .e-large-icons .e-text-content {
+  display: table-cell;
+  height: 79px;
+  position: relative;
+  vertical-align: bottom;
+}
+
+.e-filemanager .e-large-icons .e-list-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  font-size: 13px;
+  padding: 2px 0 0 0;
+  text-align: center;
+  width: 74px;
+}
+
+.e-filemanager .e-large-icons .e-list-img {
+  border: 2px solid;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.05);
+  display: block;
+  margin: 0 auto;
+  max-height: 62px;
+  max-width: 100%;
+  min-height: 20px;
+}
+
+.e-filemanager .e-large-icons .e-list-icon {
+  display: block;
+  height: 40px;
+  margin: 10px auto;
+  width: 40px;
+}
+
+.e-filemanager.e-rtl .e-toolbar .e-fe-grid {
+  transform: rotate(180deg);
+}
+
+.e-filemanager.e-rtl .e-address .e-search-wrap {
+  float: left;
+}
+
+.e-filemanager.e-rtl .e-address .e-search-wrap .e-input-group .e-input {
+  margin: 0 24px 0 0;
+}
+
+.e-filemanager.e-rtl .e-address .e-addressbar-ul {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.e-filemanager.e-rtl .e-address .e-addressbar-ul .e-icons {
+  float: right;
+  transform: rotate(180deg);
+}
+
+.e-filemanager.e-rtl .e-address .e-addressbar-ul .e-icons::before {
+  display: inline-block;
+}
+
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridheader .e-fe-checkbox,
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridcontent .e-fe-checkbox {
+  padding-left: 0;
+  padding-right: 12px;
+}
+
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridheader .e-fe-grid-icon,
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridcontent .e-fe-grid-icon {
+  padding-left: 0;
+  padding-right: 12px;
+}
+
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridheader .e-fe-grid-icon + .e-rowcell,
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridheader .e-fe-grid-icon + .e-headercell,
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridcontent .e-fe-grid-icon + .e-rowcell,
+.e-filemanager.e-rtl .e-grid.e-rtl .e-gridcontent .e-fe-grid-icon + .e-headercell {
+  padding-left: 21px;
+  padding-right: 0;
+}
+
+.e-filemanager.e-rtl .e-grid.e-rtl .e-fe-icon {
+  margin: 0 0 0 8px;
+}
+
+.e-filemanager.e-rtl .e-large-icons .e-list-item {
+  float: right;
+}
+
+.e-filemanager.e-fe-mobile .e-toolbar-left .e-icons.e-fe-sort {
+  display: inline-block;
+  margin: 0;
+  width: 14px;
+}
+
+.e-filemanager.e-fe-mobile .e-toolbar-left .e-tbar-ddb-text {
+  display: none;
+}
+
+.e-filemanager.e-fe-mobile .e-toolbar-left .e-toolbar-item .e-tbar-btn-text {
+  display: none;
+}
+
+.e-filemanager.e-fe-mobile .e-address .e-search-wrap {
+  min-width: 47px;
+  width: auto;
+}
+
+.e-filemanager.e-fe-mobile .e-address .e-input-group {
+  display: none;
+  width: 100%;
+}
+
+.e-filemanager.e-fe-mobile .e-treeview > .e-ul {
+  padding-left: 12px;
+}
+
+.e-filemanager.e-fe-mobile .e-grid .e-gridheader {
+  display: none;
+}
+
+.e-filemanager.e-fe-mobile .e-grid .e-fe-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.e-filemanager.e-fe-mobile .e-grid .e-fe-size {
+  float: right;
+}
+
+.e-filemanager.e-fe-mobile .e-large-icons .e-list-item.e-hover .e-checkbox-wrapper {
+  visibility: hidden;
+}
+
+.e-filemanager.e-fe-mobile .e-large-icons .e-list-item.e-active .e-checkbox-wrapper {
+  visibility: visible;
+}
+
+.e-filemanager.e-fe-m-select .e-large-icons .e-list-item.e-large-icon .e-checkbox-wrapper {
+  visibility: visible;
+}
+
+.e-filemanager.e-fe-m-filter .e-address .e-search-wrap {
+  position: absolute;
+  width: 100%;
+}
+
+.e-filemanager.e-fe-m-filter .e-address .e-input-group {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.e-filemanager.e-fe-m-filter .e-address .e-addressbar-ul {
+  visibility: hidden;
+}
+
+.e-filemanager.e-fe-m-filter.e-rtl .e-address .e-fe-search {
+  transform: rotate(180deg);
+}
+
+.e-fe-popup.e-dropdown-popup ul .e-item .e-fe-dot,
+.e-fe-popup.e-dropdown-popup ul .e-item .e-fe-tick,
+.e-fe-popup.e-contextmenu-wrapper ul .e-menu-item .e-fe-dot,
+.e-fe-popup.e-contextmenu-wrapper ul .e-menu-item .e-fe-tick {
+  font-size: 14px;
+}
+
+.e-fe-popup.e-dlg-resizable .e-dlg-content {
+  overflow: hidden;
+}
+
+.e-fe-popup.e-contextmenu-wrapper ul .e-menu-item.e-separator {
+  margin: 0 0;
+}
+
+.e-fe-popup .e-image {
+  height: 100%;
+  width: 100%;
+}
+
+.e-bigger .e-filemanager .e-toolbar .e-dropdown-btn,
+.e-filemanager.e-bigger .e-toolbar .e-dropdown-btn {
+  padding: 4px 7px;
+}
+
+.e-bigger .e-filemanager .e-address .e-address-list-item,
+.e-filemanager.e-bigger .e-address .e-address-list-item {
+  height: 32px;
+}
+
+.e-bigger .e-filemanager .e-address .e-addressbar-ul,
+.e-filemanager.e-bigger .e-address .e-addressbar-ul {
+  padding: 8px 12px;
+}
+
+.e-bigger .e-filemanager .e-address .e-list-text,
+.e-filemanager.e-bigger .e-address .e-list-text {
+  font-size: 18px;
+  line-height: 32px;
+  padding: 5px 4px;
+}
+
+.e-bigger .e-filemanager .e-address .e-search-wrap,
+.e-filemanager.e-bigger .e-address .e-search-wrap {
+  margin: 5px 0;
+  min-width: 51px;
+  padding: 0 16px;
+}
+
+.e-bigger .e-filemanager .e-address .e-search-wrap .e-input-group,
+.e-filemanager.e-bigger .e-address .e-search-wrap .e-input-group {
+  height: 38px;
+}
+
+.e-bigger .e-filemanager .e-address .e-fe-search,
+.e-filemanager.e-bigger .e-address .e-fe-search {
+  margin: 7px 0;
+}
+
+.e-bigger .e-filemanager .e-grid .e-checkbox-wrapper .e-frame,
+.e-filemanager.e-bigger .e-grid .e-checkbox-wrapper .e-frame {
+  border-width: 1px;
+  line-height: 14px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-headercell,
+.e-filemanager.e-bigger .e-grid .e-headercell {
+  height: 36px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-headertext,
+.e-filemanager.e-bigger .e-grid .e-headertext {
+  font-size: 15px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-gridheader .e-rowcell,
+.e-bigger .e-filemanager .e-grid .e-gridcontent .e-rowcell,
+.e-filemanager.e-bigger .e-grid .e-gridheader .e-rowcell,
+.e-filemanager.e-bigger .e-grid .e-gridcontent .e-rowcell {
+  font-size: 13px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-gridheader .e-rowcell .e-fe-text,
+.e-bigger .e-filemanager .e-grid .e-gridcontent .e-rowcell .e-fe-text,
+.e-filemanager.e-bigger .e-grid .e-gridheader .e-rowcell .e-fe-text,
+.e-filemanager.e-bigger .e-grid .e-gridcontent .e-rowcell .e-fe-text {
+  font-size: 14px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-gridheader .e-fe-checkbox,
+.e-bigger .e-filemanager .e-grid .e-gridcontent .e-fe-checkbox,
+.e-filemanager.e-bigger .e-grid .e-gridheader .e-fe-checkbox,
+.e-filemanager.e-bigger .e-grid .e-gridcontent .e-fe-checkbox {
+  padding-left: 16px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-gridheader .e-fe-grid-icon,
+.e-bigger .e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon,
+.e-filemanager.e-bigger .e-grid .e-gridheader .e-fe-grid-icon,
+.e-filemanager.e-bigger .e-grid .e-gridcontent .e-fe-grid-icon {
+  padding-left: 16px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-fe-icon,
+.e-filemanager.e-bigger .e-grid .e-fe-icon {
+  margin: 0 12px 0 0;
+}
+
+.e-bigger .e-filemanager .e-grid .e-empty,
+.e-filemanager.e-bigger .e-grid .e-empty {
+  height: 175px;
+  left: 50%;
+  min-width: 300px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.e-bigger .e-filemanager .e-grid .e-empty-content,
+.e-filemanager.e-bigger .e-grid .e-empty-content {
+  font-size: 24px;
+  margin: 0 auto;
+  padding: 12px;
+  text-align: center;
+}
+
+.e-bigger .e-filemanager .e-grid .e-empty-icon,
+.e-filemanager.e-bigger .e-grid .e-empty-icon {
+  height: 92px;
+  margin: 0 auto;
+  width: 92px;
+}
+
+.e-bigger .e-filemanager .e-grid .e-empty-inner-content,
+.e-filemanager.e-bigger .e-grid .e-empty-inner-content {
+  font-size: 16px;
+  margin: 0 auto;
+  opacity: 0.5;
+  padding: 4px;
+  text-align: center;
+}
+
+.e-bigger .e-filemanager .e-dialog .e-dlg-header-content,
+.e-filemanager.e-bigger .e-dialog .e-dlg-header-content {
+  padding: 21px;
+}
+
+.e-bigger .e-filemanager .e-dialog td,
+.e-filemanager.e-bigger .e-dialog td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  max-width: 205px;
+  min-width: 45px;
+  padding: 8px 30px 8px 0;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-checkbox-wrapper .e-frame,
+.e-filemanager.e-bigger .e-large-icons .e-checkbox-wrapper .e-frame {
+  border-width: 1px;
+  line-height: 14px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-list-parent,
+.e-filemanager.e-bigger .e-large-icons .e-list-parent {
+  padding: 0 6px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-list-item,
+.e-filemanager.e-bigger .e-large-icons .e-list-item {
+  height: 106px;
+  margin: 12px 6px;
+  width: 100px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-text-content,
+.e-filemanager.e-bigger .e-large-icons .e-text-content {
+  height: 100px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-list-text,
+.e-filemanager.e-bigger .e-large-icons .e-list-text {
+  font-size: 14px;
+  padding: 4px 2px 2px;
+  width: 94px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-list-img,
+.e-filemanager.e-bigger .e-large-icons .e-list-img {
+  max-height: 79px;
+  max-width: 94px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-list-icon,
+.e-filemanager.e-bigger .e-large-icons .e-list-icon {
+  height: 52px;
+  margin: 11px auto;
+  width: 52px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-empty,
+.e-filemanager.e-bigger .e-large-icons .e-empty {
+  height: 180px;
+  left: 50%;
+  min-width: 300px;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-empty-content,
+.e-filemanager.e-bigger .e-large-icons .e-empty-content {
+  font-size: 24px;
+  margin: 0 auto;
+  padding: 12px;
+  text-align: center;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-empty-icon,
+.e-filemanager.e-bigger .e-large-icons .e-empty-icon {
+  height: 92px;
+  margin: 0 auto;
+  width: 92px;
+}
+
+.e-bigger .e-filemanager .e-large-icons .e-empty-inner-content,
+.e-filemanager.e-bigger .e-large-icons .e-empty-inner-content {
+  font-size: 16px;
+  margin: 0 auto;
+  opacity: 0.5;
+  padding: 4px;
+  text-align: center;
+}
+
+.e-bigger .e-filemanager.e-rtl .e-grid .e-gridheader .e-fe-checkbox,
+.e-bigger .e-filemanager.e-rtl .e-grid .e-gridcontent .e-fe-checkbox,
+.e-filemanager.e-bigger.e-rtl .e-grid .e-gridheader .e-fe-checkbox,
+.e-filemanager.e-bigger.e-rtl .e-grid .e-gridcontent .e-fe-checkbox {
+  padding-right: 16px;
+}
+
+.e-bigger .e-filemanager.e-rtl .e-grid .e-gridheader .e-fe-grid-icon,
+.e-bigger .e-filemanager.e-rtl .e-grid .e-gridcontent .e-fe-grid-icon,
+.e-filemanager.e-bigger.e-rtl .e-grid .e-gridheader .e-fe-grid-icon,
+.e-filemanager.e-bigger.e-rtl .e-grid .e-gridcontent .e-fe-grid-icon {
+  padding-right: 16px;
+}
+
+.e-filemanager {
+  border-color: #e0e0e0;
+}
+
+.e-filemanager .e-toolbar {
+  border-bottom-color: #e0e0e0;
+}
+
+.e-filemanager .e-toolbar .e-status {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-address {
+  border-bottom-color: #e0e0e0;
+}
+
+.e-filemanager .e-address .e-icons {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.e-filemanager .e-address .e-address-list-item {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.e-filemanager .e-address .e-address-list-item:last-child {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-address .e-address-list-item:not(:last-child) .e-list-text:hover {
+  background: #eee;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-address .e-address-list-item:not(:last-child) .e-list-text:active {
+  background: #eee;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-address .e-search-wrap .e-input-group {
+  background: #f5f5f5;
+}
+
+.e-filemanager .e-grid .e-gridheader tr:first-child th {
+  background: #fff;
+}
+
+.e-filemanager .e-grid td.e-active {
+  background-color: #e0e0e0;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-dialog td {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-dialog td:first-child {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.e-filemanager .e-large-icons .e-list-img {
+  border-color: #fff;
+}
+
+.e-filemanager .e-large-icons .e-active {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.e-filemanager .e-large-icons .e-large-icon {
+  border-color: transparent;
+}
+
+.e-filemanager .e-large-icons .e-large-icon.e-active {
+  background: #e0e0e0;
+  border-color: #e0e0e0;
+}
+
+.e-filemanager .e-large-icons .e-large-icon.e-hover {
+  background: #eee;
+  border-color: #eee;
+}
+
+.e-filemanager .e-large-icons .e-large-icon.e-active.e-hover {
+  background: lightgray;
+  border-color: lightgray;
+}
+
+.e-filemanager .e-large-icons .e-large-icon.e-focus {
+  border-color: #eee;
+}
+
+.e-filemanager .e-fe-error {
+  color: #f44336;
+}
+
+.e-filemanager.e-fe-mobile .e-large-icons .e-large-icon.e-hover {
+  background: transparent;
+  border-color: transparent;
+}
+
+.e-filemanager.e-fe-mobile .e-large-icons .e-large-icon.e-focus {
+  border-color: transparent;
+}
+
+.e-filemanager.e-fe-mobile .e-large-icons .e-large-icon.e-active {
+  background: #e0e0e0;
+  border-color: #e0e0e0;
+}
+
+.e-fe-popup.e-dropdown-popup ul .e-item .e-fe-dot,
+.e-fe-popup.e-dropdown-popup ul .e-item .e-fe-tick,
+.e-fe-popup.e-contextmenu-wrapper ul .e-menu-item .e-fe-dot,
+.e-fe-popup.e-contextmenu-wrapper ul .e-menu-item .e-fe-tick {
+  color: #e3165b;
+}

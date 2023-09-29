@@ -1,0 +1,13 @@
+@{
+    ViewBag.Title = "Spreadsheet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<ejs-spreadsheet id="spreadsheet" openUrl="Open" saveUrl="Save">
+    <e-spreadsheet-sheets>
+        <e-spreadsheet-sheet>
+            <e-spreadsheet-ranges>
+                <e-spreadsheet-range dataSource="@ViewBag.defaultData"></e-spreadsheet-range>
+            </e-spreadsheet-ranges>
+        </e-spreadsheet-sheet>
+    </e-spreadsheet-sheets>
+</ejs-spreadsheet>

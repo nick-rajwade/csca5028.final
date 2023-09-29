@@ -1,0 +1,27 @@
+@{
+    ViewBag.Title = "ContextMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>ContextMenu Features:</h2>
+<br/>
+<li> Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div>    
+    <div id="target">Right click to open the ContextMenu</div>
+    <ejs-contextmenu id="contextmenu" target="#target" items="ViewBag.menuItems"></ejs-contextmenu>
+</div>
+</div>
+<style>
+   #target {
+border: 1px dashed;
+height: 250px;
+padding: 10px;
+position: relative;
+text-align: center;
+color: gray;
+line-height: 17;
+font-size: 14px;
+}
+</style>

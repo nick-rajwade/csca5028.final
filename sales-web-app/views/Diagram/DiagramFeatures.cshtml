@@ -1,0 +1,101 @@
+﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Diagrams;
+@using saleswebapp.Controllers
+@{
+    ViewBag.Title = "Diagram";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Diagram Features:</h2>
+<br/>
+<li> Diagram Samples - FlowChart</li>
+<li> Page Editable</li>
+<li> Gridlines and snapping</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+              <div class="control-section">
+        <div style="width:100%">
+            <div id="palette-space" style="width:240px;height:100%; float:left">
+                <ejs-symbolpalette id="symbolPalette" getNodeDefaults="@ViewBag.getSymbolNode" symbolHeight="60" symbolWidth="60" expandMode="Syncfusion.EJ2.Navigations.ExpandMode.Multiple" width="100%" height="700px" palettes="ViewBag.Palette" symbolMargin="new SymbolPaletteMargin() { Left=15,Right=15,Top=15,Bottom=15}" getSymbolInfo="@ViewBag.getSymbolInfo">
+                </ejs-symbolpalette>
+            </div>
+            <div id="diagram-space" style="width:calc(100% - 242px);height:100%; float:left">
+                <ejs-diagram id="container" width="100%" height="700px" mode="SVG" 
+              constraints="PageEditable"
+           getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" nodes="ViewBag.nodes" connectors="ViewBag.connectors">
+                    <e-diagram-snapsettings horizontalGridlines="ViewBag.gridLines" 
+             constraints="None"
+           verticalGridlines="ViewBag.gridLines"></e-diagram-snapsettings>
+                </ejs-diagram>
+            </div>
+        </div>
+    </div>
+    <style>
+        #container {
+            display: block;
+        }
+        #symbolPalette {
+            display: block;
+        }
+    </style>
+    <script>
+        function getNodeDefaults(obj, diagram) {
+            if (obj.width === undefined) {
+                obj.width = 145;
+                obj.maxWidth = obj.width;
+            } else {
+                //var ratio = 100 / obj.width;
+                obj.width = 100;
+                obj.maxWidth = obj.width;
+                //obj.height *= ratio;
+                obj.maxHeight = obj.height;
+            }
+            obj.style = { fill: '#357BD2', strokeColor: 'white' };
+            //Set ports
+            obj.ports = getPorts(obj);
+            return obj;
+        }
+        function getSymbolInfo(symbol) {
+            return { fit: true };
+        }
+        var segments1 = [{ direction: 'Top', length: 120 }];
+        var segments2 = [{ direction: 'Right', length: 100 }];
+        function getConnectorDefaults(obj, diagram) {
+             if (obj.id === 'connector9') {
+                obj.segments = [{ direction: 'Top', length: 120, type: 'Orthogonal' }];
+            }
+            if (obj.id === 'connector10') {
+                obj.segments = [{ direction: 'Right', length: 100, type: 'Orthogonal' }];
+            }
+            if (obj.id.indexOf('connector') !== -1) {
+                obj.type = 'Orthogonal';
+                obj.targetDecorator = { shape: 'Arrow', width: 10, height: 10 };
+            }
+        }
+        function getPorts(obj) {
+            var ports = [
+                { id: 'port1', shape: 'Circle', offset: { x: 0, y: 0.5 } },
+                { id: 'port2', shape: 'Circle', offset: { x: 0.5, y: 1 } },
+                { id: 'port3', shape: 'Circle', offset: { x: 1, y: .5 } },
+                { id: 'port4', shape: 'Circle', offset: { x: .5, y: 0 } }
+            ];
+            return ports;
+        }
+        function getSymbolNodes(symbol, diagram) {
+            if (symbol.id === 'Terminator' || symbol.id === 'Process') {
+                symbol.width = 80;
+                symbol.height = 40;
+            }
+            else if (symbol.id === 'Decision' || symbol.id === 'Document' || symbol.id === 'PreDefinedProcess' ||
+                symbol.id === 'PaperTap' || symbol.id === 'DirectData' || symbol.id === 'MultiDocument' || symbol.id === 'Data') {
+                symbol.width = 50;
+                symbol.height = 40;
+            }
+            else {
+                symbol.width = 50;
+                symbol.height = 50;
+            }
+            symbol.style.strokeWidth = 2;
+        }
+    </script>
+</div>

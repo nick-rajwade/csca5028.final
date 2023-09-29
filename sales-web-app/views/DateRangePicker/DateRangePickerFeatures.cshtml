@@ -1,0 +1,69 @@
+@{
+    ViewBag.Title = "DateRangePicker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ DateTime Today = DateTime.Now;}
+<h2>DateRangePicker Features:</h2>
+<br/>
+<li> DaySpan</li>
+<li> Globalization - German</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+    <div class="align">
+      <ejs-daterangepicker id="daterange" format="dd-MMM-yy hh:mm a" 
+                        minDays="5" maxDays="10"
+           width="400px"></ejs-daterangepicker>
+</div>
+</div>
+              <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        daterangepicker = document.getElementById('daterange').ej2_instances[0];
+        var L10n = ej.base.L10n;
+        L10n.load({
+            'de': {
+                'daterangepicker': {
+                    placeholder: 'Einen Bereich auswählen',
+                    startLabel: 'Anfangsdatum',
+                    endLabel: 'Enddatum',
+                    applyText: 'Sich bewerben',
+                    cancelText: 'Stornieren',
+                    selectedDays: 'Ausgewählte Tage',
+                    days: 'Tage',
+                    customRange: 'benutzerdefinierten Bereich'
+                }
+            }
+        });
+        loadCultureFiles('de');
+        daterangepicker.locale = 'de';
+    });
+    function loadCultureFiles(name) {
+        var files = ['ca-gregorian.json', 'numbers.json', 'timeZoneNames.json'];
+        if (name === 'ar') {
+            files.push('numberingSystems.json');
+        }
+        var loader = ej.base.loadCldr;
+        var loadCulture = function (prop) {
+            var val, ajax;
+            if (name === 'ar' && prop === files.length - 1) {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/DateRangePicker/cldr-data/supplemental/' + files[prop], 'GET', false);
+            } else {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/DateRangePicker/cldr-data/main/' + name + '/' + files[prop], 'GET', false);
+            }
+            ajax.onSuccess = function (value) {
+                val = value;
+            };
+            ajax.send();
+            loader(JSON.parse(val));
+        };
+        for (var prop = 0; prop < files.length; prop++) {
+            loadCulture(prop);
+        }
+    }
+</script>
+<style>
+    .align {
+        margin: 0 auto;
+        width: 300px;
+    }
+</style>

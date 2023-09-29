@@ -1,0 +1,130 @@
+@using Syncfusion.EJ2.Maps;
+@{
+    ViewBag.Title = "DashboardLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping> {
+    new MapsColorMapping{ Value = "Trump", Color = "#D84444" },
+    new MapsColorMapping{ Value = "Clinton", Color = "#316DB5" }
+    };
+    var titleStyle = new MapsFont
+            {
+                Size = "16px"
+            };
+}
+@{
+    var maparea = new Syncfusion.EJ2.Maps.MapsMapsAreaSettings { };
+}
+@{
+    ViewBag.Title = "Maps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var propertyPath = new[] { "name" };
+}
+<h2>DashboardLayout Features:</h2>
+<br/>
+<li> DashboardLayout Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+			<div>
+    <ejs-dashboardlayout id="defaultLayout" columns="6">
+        <e-content-template>
+            <div id="one" class="e-panel" data-row="0" data-col="0" data-sizeX="1" data-sizeY="1">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">0</div>
+                </div>
+            </div>
+            <div id="two" class="e-panel" data-row="1" data-col="0" data-sizeX="1" data-sizeY="2">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">1</div>
+                </div>
+            </div>
+            <div id="three" class="e-panel" data-row="0" data-col="1" data-sizeX="2" data-sizeY="2">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                        <div id="ControlRegion">
+                            <div class="col-lg-9 control-section">
+                                <div id="container" class="row">
+                                    <div style="width:500px">
+                                        <ejs-maps id="maps"
+                                                  projectionType="Mercator"
+                                                  mapsArea="maparea">
+                                            <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="USA Election Results - 2016" textStyle="titleStyle"></e-maps-titlesettings>
+                                            <e-maps-zoomsettings enable="true"></e-maps-zoomsettings>
+                                            <e-maps-legendsettings visible="true"
+                                                                   mode="Default"
+                                                                   position="Top"
+                                                                   alignment="Center"
+                                                                   height="20px">
+                                                <e-legendsettings-textstyle fontWeight="400" size="14px"></e-legendsettings-textstyle>
+                                            </e-maps-legendsettings>
+                                            <e-maps-layers>
+                                                <e-maps-layer dataSource="ViewBag.electiondata" shapeData="ViewBag.usmap" shapeDataPath="State" shapePropertyPath="propertyPath">
+                                                    <e-layersettings-markers>
+                                                        <e-layersettings-marker visible="true" fill="darkgray" shape="Balloon" width="15" height="25" animationDuration="0" dataSource="ViewBag.marker"></e-layersettings-marker>
+                                                    </e-layersettings-markers>
+                                                    <e-layersettings-datalabelsettings visible="true" labelPath="State" smartLabelMode="@Syncfusion.EJ2.Maps.SmartLabelMode.Trim"></e-layersettings-datalabelsettings>
+                                                    <e-layersettings-tooltipsettings visible="true" valuePath="State"></e-layersettings-tooltipsettings>
+                                                    <e-layersettings-shapesettings colorMapping="colormapping" colorValuePath="Winner"></e-layersettings-shapesettings>
+                                                    <e-layersettings-highlightsettings enable="true" fill="#A3B0D0"></e-layersettings-highlightsettings>
+                                                    <e-layersettings-selectionsettings enable="true" fill="#4C515B" opacity="1"></e-layersettings-selectionsettings>
+                                                </e-maps-layer>
+                                            </e-maps-layers>
+                                        </ejs-maps>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div id="four" class="e-panel" data-row="2" data-col="1" data-sizeX="1" data-sizeY="1">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">3</div>
+                </div>
+            </div>
+            <div id="five" class="e-panel" data-row="2" data-col="2" data-sizeX="2" data-sizeY="1">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">4</div>
+                </div>
+            </div>
+            <div id="six" class="e-panel" data-row="0" data-col="3" data-sizeX="1" data-sizeY="1">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">5</div>
+                </div>
+            </div>
+            <div id="seven" class="e-panel" data-row="1" data-col="3" data-sizeX="1" data-sizeY="1">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">6</div>
+                </div>
+            </div>
+            <div id="eight" class="e-panel" data-row="0" data-col="4" data-sizeX="1" data-sizeY="3">
+                <span id="close" class="e-template-icon e-clear-icon"></span>
+                <div class="e-panel-container">
+                    <div class="text-align">7</div>
+                </div>
+            </div>
+        </e-content-template>
+    </ejs-dashboardlayout>
+</div>
+<style>
+    #defaultLayout .e-panel .e-panel-container {
+        vertical-align: middle;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+    }
+    .text-align {
+        line-height: 200px;
+    }
+    .default {
+        margin-top: 10px;
+        padding: 10px;
+    }
+	
+</style>
+</div>

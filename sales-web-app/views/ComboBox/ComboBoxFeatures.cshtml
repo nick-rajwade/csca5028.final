@@ -1,0 +1,16 @@
+﻿@using saleswebapp.Controllers
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "ComboBox";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>ComboBox Features:</h2>
+<br/>
+<li> ComboBox Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+			<ejs-combobox id="games" dataSource="@ViewBag.data" placeholder="Select a game" index="2" popupHeight="220px">
+    <e-combobox-fields text="Game" value="Id"></e-combobox-fields>
+</ejs-combobox>
+    </div>

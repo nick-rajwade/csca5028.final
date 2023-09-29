@@ -1,0 +1,22 @@
+@{
+    ViewBag.Title = "Slider";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Slider Features:</h2>
+<br/>
+<li> Slider Samples - Default Functionalities</li>
+<li> Ticks</li>
+<li> Tooltip</li>
+<li> Limits</li>
+<li> Orientation</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion" style="height:300px" >
+<ejs-slider id="slider" 
+                      orientation=Vertical
+            >
+                      <e-slider-ticksdata placement=Both></e-slider-ticksdata>
+                      <e-slider-tooltipdata isVisible=true></e-slider-tooltipdata>
+                      <e-slider-limitsdata enabled=true minStart=10 minEnd=40></e-slider-limitsdata>
+</ejs-slider>
+</div>

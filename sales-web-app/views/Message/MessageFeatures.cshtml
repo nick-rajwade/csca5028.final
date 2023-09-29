@@ -1,0 +1,16 @@
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2.Notifications
+<h2>Message Features:</h2>
+<br/>
+<li> Severity - Normal</li>
+<li> Variant - Text</li>
+<li> Severity Icon</li>
+<li> Close Icon</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+   <ejs-message id="msg" showIcon="true" showCloseIcon="true" severity="Normal" variant="Text" content="Your message has been sent successfully"></ejs-message>
+</div>

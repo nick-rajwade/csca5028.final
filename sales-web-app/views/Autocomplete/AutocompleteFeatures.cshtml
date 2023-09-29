@@ -1,0 +1,15 @@
+@{
+    ViewBag.Title = "Autocomplete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Newtonsoft.Json
+<h2>Autocomplete Features:</h2>
+<br/>
+<li> Autocomplete Samples - Default</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion" style="width:236px">
+              <ejs-autocomplete id="games" dataSource="@ViewBag.data" placeholder="Select a game" index="2" popupHeight="220px">
+    <e-autocomplete-fields value="Game"></e-autocomplete-fields>
+</ejs-autocomplete>
+</div>

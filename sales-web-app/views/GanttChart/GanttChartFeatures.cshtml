@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>GanttChart Features:</h2>
+<br/>
+<li> Holidays</li>
+<li> Editing</li>
+<li> Filtering</li>
+<li> Baseline</li>
+<li> Event Markers</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+    <ejs-gantt id='DefaultFunctionalities' dataSource="ViewBag.dataSource" height="450px" highlightWeekends="true"
+               projectStartDate="03/24/2019" projectEndDate="07/06/2019"
+               allowFilering="true"
+               renderBaseline="true" 
+               toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })"
+			   >
+        <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                            endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                            child="SubTasks"
+                baselineStartDate="BaselineStartDate"
+                baselineEndDate="BaselineEndDate"
+							>
+        </e-gantt-taskfields>
+        <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                              allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+        <e-gantt-eventmarkers>
+            <e-gantt-eventmarker day="04/09/2019" label="Research phase"></e-gantt-eventmarker>
+            <e-gantt-eventmarker day="04/30/2019" label="Design phase"></e-gantt-eventmarker>
+            <e-gantt-eventmarker day="05/23/2019" label="Production phase"></e-gantt-eventmarker>
+            <e-gantt-eventmarker day="06/20/2019" label="Sales and marketing phase"></e-gantt-eventmarker>
+        </e-gantt-eventmarkers>
+        <e-gantt-holidays>
+                      <e-gantt-holiday from="04/13/2019" label="Local holiday"></e-gantt-holiday>
+                      <e-gantt-holiday from="04/25/2019" label="Local holiday"></e-gantt-holiday>
+                    </e-gantt-holidays>
+        <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+</ejs-gantt>
+</div>

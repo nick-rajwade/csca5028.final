@@ -1,0 +1,49 @@
+﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.DropDowns
+@using saleswebapp.Controllers;
+@{
+    ViewBag.Title = "RangeNavigator";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>RangeNavigator Features:</h2>
+<br/>
+<li> RTL</li>
+<li> Theme - Tailwind CSS</li>
+<br/>
+<div id = "ControlRegion">
+<div class="row" style="margin-top:10px">
+    <div class="col-md-8">
+        <div class="row" style="text-align:center;">Default Range Navigator</div>
+        <div class="row">
+            <ejs-rangenavigator id="container" 
+              enableRtl="true"
+           valueType="DateTime" load="onChartLoad">
+                <e-rangenavigator-tooltip enable="true" displayMode="Always" format="MM/dd/yyyy"></e-rangenavigator-tooltip>
+                <e-rangenavigator-rangenavigatorseriescollection>
+                    <e-rangenavigator-rangenavigatorseries xName="x" yName="y" type="Area">
+                    </e-rangenavigator-rangenavigatorseries>
+                </e-rangenavigator-rangenavigatorseriescollection>
+            </ejs-rangenavigator>
+        </div>
+    </div>    
+</div>
+</div>
+<script>
+    var series1 = [];
+    var point1;
+    var value = 80;
+    var i;
+    for (i = 1; i <= 20; i++) {
+        if (Math.random() > 0.5) {
+            value += Math.random();
+        }
+        else {
+            value -= Math.random();
+        }
+        point1 = { x: new Date(2018, 0, i), y: value.toFixed(1), bubbleSize: Math.random() };
+        series1.push(point1);
+    }
+    function onChartLoad(args) {
+        args.rangeNavigator.series[0].dataSource = series1;
+    }    
+</script>
