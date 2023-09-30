@@ -9,8 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["./sales-collector.csproj", "sales-collector/"]
 RUN dotnet restore "sales-collector/sales-collector.csproj"
-COPY . .
 WORKDIR "/src/sales-collector"
+COPY . .
+
 RUN dotnet build "sales-collector.csproj" -c Release -o /app/build
 
 FROM build AS publish

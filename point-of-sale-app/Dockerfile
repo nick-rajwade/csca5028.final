@@ -9,8 +9,9 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["./point-of-sale-app.csproj", "point-of-sale-app/"]
 RUN dotnet restore "point-of-sale-app/point-of-sale-app.csproj"
-COPY . .
 WORKDIR "/src/point-of-sale-app"
+COPY . .
+
 RUN dotnet build "point-of-sale-app.csproj" -c Release -o /app/build
 
 FROM build AS publish
