@@ -8,7 +8,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["./sales-collector.csproj", "sales-collector/"]
-COPY ["../csca5028.lib/csca5028.csproj","csca5028.lib/"]
+COPY ["../csca5028.lib/csca5028.lib.csproj","csca5028.lib/"]
 RUN dotnet restore "sales-collector/sales-collector.csproj"
 WORKDIR "/src/sales-collector"
 COPY . .

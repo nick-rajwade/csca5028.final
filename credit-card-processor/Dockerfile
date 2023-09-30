@@ -9,7 +9,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["./credit-card-processor.csproj", "credit-card-processor/"]
-COPY ["../csca5028.lib/csca5028.csproj","csca5028.lib/"]
+COPY ["../csca5028.lib/csca5028.lib.csproj","csca5028.lib/"]
 RUN dotnet restore "credit-card-processor/credit-card-processor.csproj"
 WORKDIR "/src/credit-card-processor"
 COPY . .
