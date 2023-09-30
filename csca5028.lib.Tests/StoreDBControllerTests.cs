@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using csca5028.lib;
+using System.Collections;
 
-namespace components.Tests
+namespace csca5028.lib.Tests
 {
     [TestClass()]
     public class StoreDBControllerTests
@@ -148,6 +149,28 @@ namespace components.Tests
             StoreDBController storeDBController = new StoreDBController(connectionString);
             List<Store> stores = (List<Store>)storeDBController.GetStoresAsync(dbName).Result;
             Assert.AreEqual(10, stores.Count);
+        }
+
+        [TestMethod()]
+        public void GetTerminalsTest()
+        {
+            StoreDBController storeDBController = new StoreDBController(connectionString);
+            List<Store> stores = (List<Store>)storeDBController.GetStoresAsync(dbName).Result;
+
+            foreach (Store store in stores)
+            {
+                List<POSTerminal> terminals = (List<POSTerminal>)storeDBController.GetTerminalsAsync(store.ID, dbName).Result;
+                //Assert.AreEqual(10, terminals.Count);
+                Assert.IsTrue(terminals.Count > 0);
+            }
+        }
+
+        [TestMethod()]
+        public async Task GetStoresAndTerminalsTest()
+        {
+            StoreDBController storeDBController = new StoreDBController(connectionString);
+            Hashtable storesAndTerminals = (Hashtable) await storeDBController.GetStoresAndTerminalsAsync(dbName);
+            Assert.AreEqual(10, storesAndTerminals.Count);
         }
     }
 }

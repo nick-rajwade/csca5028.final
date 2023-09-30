@@ -135,7 +135,16 @@ namespace csca5028.Tests
 
 
             var saleDeserialised = Newtonsoft.Json.JsonConvert.DeserializeObject<Sale>(saleJson);
-            Assert.AreEqual(sale, saleDeserialised);
+            Assert.AreEqual(sale.ItemsAsJson, saleDeserialised.ItemsAsJson);
+            Assert.AreEqual(sale.TotalItems, saleDeserialised.TotalItems);
+            Assert.AreEqual(sale.TotalPrice, saleDeserialised.TotalPrice);
+            Assert.AreEqual(sale.paymentType, saleDeserialised.paymentType);
+            Assert.AreEqual(sale.loyaltyCard, saleDeserialised.loyaltyCard);
+            Assert.AreEqual(sale.StoreID, saleDeserialised.StoreID);
+            Assert.AreEqual(sale.ID, saleDeserialised.ID);
+            Assert.AreEqual(sale.Items.Count, saleDeserialised.Items.Count);
+            Assert.AreEqual(sale.CreatedAt, saleDeserialised.CreatedAt);
+            
         }
 
         /*[TestMethod()]

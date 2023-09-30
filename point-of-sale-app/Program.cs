@@ -5,6 +5,7 @@ using Microsoft.Extensions.ObjectPool;
 using System.Diagnostics;
 using csca5028.lib;
 using Microsoft.Extensions.Logging.Console;
+using System.Collections;
 
 namespace point_of_sale_app
 {
@@ -33,9 +34,10 @@ namespace point_of_sale_app
 
             StoreDBController storeDb = new(connectionString);
             await storeDb.Initialise(dbName);
-            List<Store> stores = (List<Store>)await storeDb.GetStoresAsync(dbName);
+            //List<Store> stores = (List<Store>)await storeDb.GetStoresAsync(dbName);
+            Hashtable storeAndTerminals = (Hashtable)await storeDb.GetStoresAndTerminalsAsync(dbName);
 
-
+            //storeAndTerminals[]
             while (Program.keepRunning)
             {
 
@@ -47,16 +49,17 @@ namespace point_of_sale_app
                 Task webTask = Task.Factory.StartNew(() => RunWebEndPoint(args));
                 tasks.Add(webTask);
 
-                foreach (Store store in stores)
+                foreach (Store store in storeAndTerminals.Keys)
                 {
-                    //Task storeTask = Task.Factory.StartNew(store.StartHealthCheck);
-                    //tasks.Add(storeTask);
-                    Task storeTask = Task.Factory.StartNew(store.StartSales);
-                    tasks.Add(storeTask);
-                    //add the store to the prometheus counter
-                //    storesGauge.Inc();
+                    //get terminal from storeAndTerminals
+                    List<POSTerminal> terminals = (List<POSTerminal>)storeAndTerminals[store];
+                    foreach (var terminal in terminals)
+                    {
+                        Task terminalTask = Task.Factory.StartNew(() => store.StartSales(terminal));
+                        tasks.Add(terminalTask);
+                    }
                 }
-
+                //wait for all tasks to complete - some never will
                 Task.WaitAll(tasks.ToArray());
             }
         }

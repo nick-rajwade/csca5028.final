@@ -84,7 +84,7 @@ namespace csca5028.lib
             }
         }
 
-        public async void StartSales()
+        public async void StartSales(POSTerminal terminal)
         {
             while(true)
             {
@@ -103,9 +103,9 @@ namespace csca5028.lib
                 //queue sale to be sent to the transaction processor
                 QueueSaleForProcessing("rmq0", "sales-exchange", "salesq", sale);
                 
-                int sleepTime = CheckoutTimeSleep(sale.TotalItems);
-                Console.WriteLine("Check out time for store {0} for {1} is {2} minutes.", Name, sale.TotalItems, (sleepTime * 1000 / 60000).ToString());
-                System.Threading.Thread.Sleep(sleepTime * 1000);
+                int sleepTime = terminal.checkoutTime * 1000 * 60;
+                Console.WriteLine("Check out time for store {0} for {1} is {2} minutes.", Name, sale.TotalItems, (terminal.checkoutTime.ToString()));
+                System.Threading.Thread.Sleep(sleepTime);
                 //send health check message
                 await StartHealthCheck();
                 
@@ -332,5 +332,23 @@ namespace csca5028.lib
         {
         }
 
+    }
+
+    public class POSTerminal
+    {
+        public Guid posID { get; set; }
+        public Guid storeID { get; set; }
+        public int checkoutTime { get; set; }
+
+        public POSTerminal(Guid posID, Guid storeID, int checkoutTime)
+        {
+            this.posID = posID;
+            this.storeID = storeID;
+            this.checkoutTime = checkoutTime;
+        }
+
+        public POSTerminal()
+        {
+        }
     }
 }

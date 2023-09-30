@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -93,6 +94,18 @@ namespace csca5028.lib
                     command.CommandText = sql;
                     await command.ExecuteNonQueryAsync();
                 }
+
+                sql = $@"USE {dbName} IF NOT EXISTS (SELECT * FROM sysobjects WHERE name ='pos_terminals' AND xtype='U')
+                      CREATE TABLE [{dbName}].[dbo].[pos_terminals](
+                      [Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+                      pos_checkout_time INT NOT NULL,    
+                      store_id UNIQUEIDENTIFIER NOT NULL,
+                      CONSTRAINT FK_pos_terminals_Stores FOREIGN KEY (store_id) REFERENCES Stores(Id));";
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
@@ -125,6 +138,17 @@ namespace csca5028.lib
                     using(SqlDataReader reader = command.ExecuteReader())
                     {
                         storesHasValues = reader.HasRows;
+                    }
+                }
+
+                bool posTerminalsHasValues = true;
+                sql = $"select * from [{dbName}].[dbo].pos_terminals;";
+                using(var command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    using(SqlDataReader reader = command.ExecuteReader())
+                    {
+                        posTerminalsHasValues = reader.HasRows;
                     }
                 }
 
@@ -168,6 +192,48 @@ namespace csca5028.lib
                         await command.ExecuteNonQueryAsync();
                     }
                 }
+                
+                if(!posTerminalsHasValues)
+                {
+                    sql = $"select * from [{dbName}].[dbo].Stores;";
+                    List<string> posSql = new List<string>();
+                    
+                    using (var command = connection.CreateCommand())
+                    {
+                        command.CommandText = sql;
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if(reader.HasRows)
+                            {
+                                int i = 0;
+                                while(reader.Read())
+                                {
+                                    var storeId = reader["Id"].ToString();
+                                    if(i%2 != 0) //if even add 10 stores else add 5
+                                    {
+                                        for (int j = 0; j < 5; j++)
+                                        {
+                                            posSql.Add($"INSERT INTO [{dbName}].[dbo].[pos_terminals] (pos_checkout_time, store_id) VALUES (5, '{storeId}');");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for(int j = 0;j<10;j++)
+                                        {
+                                            posSql.Add($"INSERT INTO [{dbName}].[dbo].[pos_terminals] (pos_checkout_time, store_id) VALUES (5, '{storeId}');");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        foreach(var sqlStatement in posSql)
+                        {
+                            command.CommandText = sqlStatement;
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
             }
         }
 
@@ -205,9 +271,47 @@ namespace csca5028.lib
                         return stores;
                     }
                 }
-                
-                
             }
         }
+
+        public async Task<IEnumerable<POSTerminal>> GetTerminalsAsync(Guid storeID, string dbName)
+        {
+            using(var connection = Connect())
+            {
+                await connection.OpenAsync();
+
+                var sql = $"select * from [{dbName}].[dbo].pos_terminals where store_id = '{storeID.ToString()}';";
+                using(SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    using(SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        var terminals = new List<POSTerminal>();
+                        while(reader.Read())
+                        {
+                            var terminal = new POSTerminal();
+                            terminal.posID = Guid.Parse(reader["Id"].ToString());
+                            terminal.checkoutTime = int.Parse(reader["pos_checkout_time"].ToString());
+                            terminal.storeID = Guid.Parse(reader["store_id"].ToString());
+                            terminals.Add(terminal);
+                        }
+                        return terminals;
+                    }
+                }
+            }
+        }
+
+        public async Task<Hashtable> GetStoresAndTerminalsAsync(string dbName)
+        {
+            var stores = (List<Store>)await GetStoresAsync(dbName);
+            var storesAndTerminals = new Hashtable();
+            foreach(var store in stores)
+            {
+                var terminals = (List<POSTerminal>)await GetTerminalsAsync(store.ID, dbName);
+                storesAndTerminals.Add(store, terminals);
+            }
+            return storesAndTerminals;
+        }
+
     }
 }
