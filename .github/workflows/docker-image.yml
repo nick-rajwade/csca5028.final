@@ -26,4 +26,4 @@ jobs:
         context: ${{matrix.project}}
         file: ${{matrix.project}}/Dockerfile
         push: true
-        tags: user/repo:${{matrix.project}}
+        tags: nick-rajwade/csca5028.final:${{matrix.project}}
