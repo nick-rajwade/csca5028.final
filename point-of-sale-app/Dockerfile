@@ -7,10 +7,12 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["point-of-sale-app/point-of-sale-app.csproj", "point-of-sale-app/"]
+COPY ["./point-of-sale-app.csproj", "point-of-sale-app/"]
+COPY ["../csca5028.lib/csca5028.lib.csproj","csca5028.lib/"]
 RUN dotnet restore "point-of-sale-app/point-of-sale-app.csproj"
-COPY . .
 WORKDIR "/src/point-of-sale-app"
+COPY . .
+
 RUN dotnet build "point-of-sale-app.csproj" -c Release -o /app/build
 
 FROM build AS publish
