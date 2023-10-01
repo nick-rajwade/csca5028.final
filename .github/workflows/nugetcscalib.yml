@@ -10,7 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install gitversion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          updateAssemblyInfo: true
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -26,4 +36,4 @@ jobs:
         with:
           PROJECT_FILE_PATH: ./csca5028.lib/csca5028.lib.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          VERSION_REGEX: ^\s*<AssemblyVersion>(.*)<\/AssemblyVersion>\s*$
+          VERSION_STATIC: ${{env.GitVersion_SemVer}}
