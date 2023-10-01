@@ -4,6 +4,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>CSCA5028 Final Project Helper Assembly</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <UserSecretsId>db1b4898-d72d-498a-85fd-4972596ca328</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +31,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NSwag.ApiDescription.Client" Version="13.20.0">
       <PrivateAssets>all</PrivateAssets>
