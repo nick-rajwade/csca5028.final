@@ -7,6 +7,12 @@
     <Title>CSCA5028 Final Project Helper Assembly</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <UserSecretsId>db1b4898-d72d-498a-85fd-4972596ca328</UserSecretsId>
+    <Description>CSCA5028 Final Project Helper Assembly</Description>
+    <PackageProjectUrl>https://github.com/nick-rajwade/csca5028.final</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nick-rajwade/csca5028.final</RepositoryUrl>
+    <PackageTags>CSCA5028</PackageTags>
+    <FileVersion>1.0</FileVersion>
+    <AssemblyVersion>1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
