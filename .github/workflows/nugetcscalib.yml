@@ -22,7 +22,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
         working-directory: ./csca5028.lib/
       - name: Publish
-        uses: brandedoutcast/publish-nuget@v2.5.5
+        uses: tedd/publish-nuget-neo@v1
         with:
           PROJECT_FILE_PATH: ./csca5028.lib/csca5028.lib.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
