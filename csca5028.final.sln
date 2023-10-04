@@ -7,8 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		grafana\dashboards.yml = grafana\dashboards.yml
 		grafana\datasources.yml = grafana\datasources.yml
-		docker-compose.yml = docker-compose.yml
 		prometheus.yml = prometheus.yml
+		docker-compose.yml = docker-compose.yml
+		docker-compose-build.yml = docker-compose-build.yml
 		README.md = README.md
 	EndProjectSection
 EndProject

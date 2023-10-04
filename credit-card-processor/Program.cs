@@ -1,3 +1,5 @@
+using Prometheus;
+
 
 namespace credit_card_processor
 {
@@ -7,6 +9,7 @@ namespace credit_card_processor
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -15,6 +18,7 @@ namespace credit_card_processor
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -24,7 +28,7 @@ namespace credit_card_processor
             }
 
             app.UseAuthorization();
-
+            app.UseMetricServer(url: "/metrics");
 
             app.MapControllers();
 
