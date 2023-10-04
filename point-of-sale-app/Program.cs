@@ -50,18 +50,19 @@ namespace point_of_sale_app
                 var storesOnline = Metrics.CreateGauge("point_of_sale_app_stores_online", "Number of stores running point-of-sale");
                 storesOnline.Set(storeAndTerminals.Count);
                 var posOnline = Metrics.CreateGauge("point_of_sale_app_pos_online", "Number of point-of-sale terminals running");
-                
+                var terminalCounter = 0;
                 foreach (Store store in storeAndTerminals.Keys)
                 {
                     //get terminal from storeAndTerminals
                     List<POSTerminal> terminals = (List<POSTerminal>)storeAndTerminals[store];
-                    posOnline.WithLabels(store.Name).Set(terminals.Count);
+                    terminalCounter += terminals.Count;
                     foreach (var terminal in terminals)
                     {
                         Task terminalTask = Task.Factory.StartNew(() => store.StartSales(terminal));
                         tasks.Add(terminalTask);
                     }
                 }
+                posOnline.Set(terminalCounter);
                 //wait for all tasks to complete - some never will
                 Task.WaitAll(tasks.ToArray());
             }
