@@ -75,6 +75,33 @@ services:
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
       #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+  rabbitmq-exporter:
+  # https://hub.docker.com/r/kbudde/rabbitmq-exporter/tags
+    image: kbudde/rabbitmq-exporter:v0.35.0
+    container_name: csca5028-rabbitmq-exporter
+    #networks:
+     # - "rabbitmq-prometheus"
+    ports:
+      - "9090:9090"
+    environment:
+      RABBIT_URL: http://rmq0:15692
+      RABBIT_USER: guest
+      RABBIT_PASSWORD: guest
+      RABBIT_CAPABILITIES: "bert,no_sort"
+      RABBIT_IGNORE_QUEUES: "amq.rabbitmq.trace.*,amq.rabbitmq.log.*"
+      RABBIT_IGNORE_EXCHANGES: "amq.rabbitmq.trace.*,amq.rabbitmq.log.*"
+      RABBIT_IGNORE_NODES: "rabbit@rmq0"
+      RABBIT_IGNORE_VHOSTS: "/"
+  blackbox-exporter:
+    # https://hub.docker.com/r/prom/blackbox-exporter/tags
+    image: prom/blackbox-exporter:v0.19.0
+    container_name: csca5028-blackbox-exporter
+    #networks:
+     # - "rabbitmq-prometheus"
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox.yml:/config/blackbox.yml
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: csca5028-database

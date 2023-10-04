@@ -1,8 +1,9 @@
-
+using Prometheus;
 using csca5028.lib;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace sales_collector
 {
@@ -56,10 +57,25 @@ namespace sales_collector
                             //register a callback to be executed when a message is received
 
                             Log("Register Callback...");
+
+                            var summary = Metrics.CreateSummary("sales_collector_db_insert", "Summary for sales_collector Database insert", new SummaryConfiguration
+                            {
+                                LabelNames = new[] { "method", "endpoint" },
+                                SuppressInitialValue = true,
+                                Objectives = new[]
+                                {
+                                    new QuantileEpsilonPair(0.5, 0.05),
+                                    new QuantileEpsilonPair(0.9, 0.05),
+                                    new QuantileEpsilonPair(0.95, 0.01),
+                                    new QuantileEpsilonPair(0.99, 0.005),
+                                },
+                            });
                             
 
                             consumer.Received += async (model, ea) =>
                             {
+                                Stopwatch stopwatch = new Stopwatch();
+                                stopwatch.Start();
                                 //get the message body
                                 Log("Message Received...");
                                 var body = ea.Body.ToArray();
@@ -79,6 +95,8 @@ namespace sales_collector
                                     await salesDBController.Insert(dbName, sale);//ProcessSale(sale);
                                     channel.BasicAck(ea.DeliveryTag, false);
                                 }
+                                stopwatch.Stop();
+                                summary.WithLabels("MQ Receive", "salesq").Observe(stopwatch.ElapsedMilliseconds);
 
                             };
 
@@ -119,7 +137,7 @@ namespace sales_collector
             }
 
             app.UseAuthorization();
-
+            app.UseMetricServer(url: "/metrics");
 
             app.MapControllers();
 

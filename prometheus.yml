@@ -24,16 +24,16 @@ scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['host.docker.internal:9090']
   - job_name: 'docker'
     static_configs:
-      - targets: ['docker.for.mac.localhost:9323']
+      - targets: ['host.docker.internal:9323']
   - job_name: 'node-exporter'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['host.docker.internal:9100']
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets: ['host.docker.internal:8080']
   - job_name: 'rabbitmq-server'
     static_configs:
       - targets:
@@ -45,9 +45,26 @@ scrape_configs:
       - targets:
           # docker-compose-dist-tls.yml
           - 'rabbitmq-exporter:9090'
-  - job_name: 'point-of-sale'
+  - job_name: 'credit-card-processor'
     static_configs:
-      - targets: ['localhost:1234']
+      - targets: ['host.docker.internal:9001']
+        metrics_path: '/metrics'
     scrape_interval: 5s
-  
+  - job_name: 'sales-collector'
+    static_configs:
+      - targets: ['host.docker.internal:9003']
+        metrics_path: '/metrics'
+    scrape_interval: 5s
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+        - targets:
+            # credit-card-processor
+            - http://host.docker.internal:9001/ping
+            # sales_collector
+            - http://host.docker.internal:9003/ping
+            #pos
+            - http://host.docker.internal:9002/ping
           

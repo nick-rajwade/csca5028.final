@@ -1,7 +1,5 @@
-
-//using components;
 using Microsoft.Extensions.ObjectPool;
-//using Prometheus;
+using Prometheus;
 using System.Diagnostics;
 using csca5028.lib;
 using Microsoft.Extensions.Logging.Console;
@@ -85,7 +83,8 @@ namespace point_of_sale_app
             }
 
             app.UseAuthorization();
-
+            app.UseMetricServer(url: "/metrics");
+            
 
             app.MapControllers();
 

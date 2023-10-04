@@ -5,6 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2FD54FC8-C15D-4C76-A31C-6CC712299080}"
 	ProjectSection(SolutionItems) = preProject
+		blackbox.yml = blackbox.yml
 		grafana\dashboards.yml = grafana\dashboards.yml
 		grafana\datasources.yml = grafana\datasources.yml
 		prometheus.yml = prometheus.yml
@@ -30,6 +31,25 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sales-collector", "sales-collector\sales-collector.csproj", "{7AECB731-2CBA-4E8F-B539-E1F49ABC4767}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sales-web-app", "sales-web-app\sales-web-app.csproj", "{EE7C2608-C8F4-4620-BDC0-6AFF15E35DAC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "grafana", "grafana", "{88AFB9F5-FF16-4C51-8D0D-244518D5B34D}"
+	ProjectSection(SolutionItems) = preProject
+		grafana\dashboards.yml = grafana\dashboards.yml
+		grafana\datasources.yml = grafana\datasources.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dashboards", "dashboards", "{23D8504E-4CD4-47B6-88FD-F67CC8A48D97}"
+	ProjectSection(SolutionItems) = preProject
+		grafana\dashboards\Erlang-Distribution.json = grafana\dashboards\Erlang-Distribution.json
+		grafana\dashboards\Erlang-Distributions-Compare.json = grafana\dashboards\Erlang-Distributions-Compare.json
+		grafana\dashboards\Erlang-Memory-Allocators.json = grafana\dashboards\Erlang-Memory-Allocators.json
+		grafana\dashboards\inet_tcp_metrics.json = grafana\dashboards\inet_tcp_metrics.json
+		grafana\dashboards\rabbitmq-exporter_vs_rabbitmq-prometheus.json = grafana\dashboards\rabbitmq-exporter_vs_rabbitmq-prometheus.json
+		grafana\dashboards\RabbitMQ-Overview.json = grafana\dashboards\RabbitMQ-Overview.json
+		grafana\dashboards\RabbitMQ-PerfTest.json = grafana\dashboards\RabbitMQ-PerfTest.json
+		grafana\dashboards\RabbitMQ-Quorum-Queues-Raft.json = grafana\dashboards\RabbitMQ-Quorum-Queues-Raft.json
+		grafana\dashboards\RabbitMQ-Stream.json = grafana\dashboards\RabbitMQ-Stream.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +92,8 @@ Global
 		{5DF43864-8005-474A-BAFB-78F19C18E1E6} = {47292D9E-41AD-455D-8D5A-66C944C0370A}
 		{7AECB731-2CBA-4E8F-B539-E1F49ABC4767} = {E4154375-158F-4A40-9FD0-D0B95575C524}
 		{EE7C2608-C8F4-4620-BDC0-6AFF15E35DAC} = {E4154375-158F-4A40-9FD0-D0B95575C524}
+		{88AFB9F5-FF16-4C51-8D0D-244518D5B34D} = {2FD54FC8-C15D-4C76-A31C-6CC712299080}
+		{23D8504E-4CD4-47B6-88FD-F67CC8A48D97} = {88AFB9F5-FF16-4C51-8D0D-244518D5B34D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16E0874C-1E53-4BC5-BD1B-77A8E2676157}
