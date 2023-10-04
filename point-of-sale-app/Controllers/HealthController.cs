@@ -19,12 +19,10 @@ namespace point_of_sale_app.Controllers
             return "pong";
         }
 
-        //implement a POST method to receive a JSON payload
-        //and return a JSON response
-        [HttpPost(Name = "/ping/{value}")]
-        public string Post([FromBody] string value)
+        [HttpGet("{storename}",Name = "storehealth")]
+        public string GetStoreHealth(string name)
         {
-            return "pong";
+            return $"{name} is good";
         }
     }
 
