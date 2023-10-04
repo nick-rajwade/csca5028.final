@@ -19,6 +19,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "credit-card-processor", "credit-card-processor\credit-card-processor.csproj", "{EEA665B3-0B43-4B45-A74E-58C8E9B3AE81}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{47292D9E-41AD-455D-8D5A-66C944C0370A}"
+	ProjectSection(SolutionItems) = preProject
+		test.http = test.http
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{E4154375-158F-4A40-9FD0-D0B95575C524}"
 EndProject
