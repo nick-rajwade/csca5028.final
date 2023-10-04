@@ -22,7 +22,7 @@ namespace credit_card_processor.Controllers
 
             var declinedCounter = Metrics.CreateCounter("credit_card_processor_declined_requests", "Number of requests to the credit card processor endpoint that are declined");
             var authorizedCounter = Metrics.CreateCounter("credit_card_processor_authorized_requests", "Number of requests to the credit card processor endpoint that are authorized");
-            var txnProcessingSummary = Metrics.CreateSummary("credit_card_processor_txn_processing_ms", "Summary of the time (in ms) it takes to process a transaction");
+            var txnProcessingSummary = Metrics.CreateGauge("credit_card_processor_txn_processing_ms", "Time (in ms) it takes to process a transaction");
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -45,7 +45,7 @@ namespace credit_card_processor.Controllers
                 declinedCounter.Inc();
             }
             stopwatch.Stop();
-            txnProcessingSummary.Observe(stopwatch.ElapsedMilliseconds);
+            txnProcessingSummary.Set(stopwatch.ElapsedMilliseconds);
             return Ok(creditCardResponse);
         }
 
