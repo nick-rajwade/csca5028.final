@@ -1,0 +1,13 @@
+- labels:
+   module: [rmq_pong]
+  targets:
+      - 'http://host.docker.internal:15672/api/queues//houston-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//phoenix-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//sandiego-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//dallas-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//la-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//new-york-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//sanjose-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//philly-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//sanantonio-pos/get'
+      - 'http://host.docker.internal:15672/api/queues//chicago-pos/get'

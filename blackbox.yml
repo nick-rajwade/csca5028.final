@@ -6,3 +6,19 @@ modules:
       valid_status_codes: [] # Defaults to 2xx
       method: GET
       preferred_ip_protocol: "ip4" # Defaults to "ip6"
+  http_pong:
+    prober: http
+    http:
+      valid_status_codes: [] # Defaults to 2xx
+      method: GET
+      preferred_ip_protocol: "ip4" # Defaults to "ip6"  
+      fail_if_body_not_matches_regexp:
+       - "pong"
+  rmq_pong:
+    prober: http
+    http:
+      method: POST
+      headers:
+      Content-Type: application/json
+      fail_if_body_not_matches_regexp:
+        - "PONG"

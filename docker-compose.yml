@@ -35,7 +35,7 @@ services:
       GF_INSTALL_PLUGINS: "flant-statusmap-panel,grafana-piechart-panel"  
   prometheus:
     # https://hub.docker.com/r/prom/prometheus/tags
-    image: prom/prometheus:v2.28.1
+    image: prom/prometheus
     container_name: csca5028-prometheus
     #networks:
      # - "rabbitmq-prometheus"
@@ -44,6 +44,9 @@ services:
     volumes:
       - rabbitmq-prometheus_prometheus:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./http_pong.yml:/etc/prometheus/blackbox/http_pong.yml
+      - ./rmq_pong.yml:/etc/prometheus/blackbox/rmq_pong.yml
+    restart: always
   node-exporter:
     command:
       - '--path.procfs=/host/proc'
@@ -53,7 +56,7 @@ services:
     expose:
       - 9100
     # https://hub.docker.com/r/prom/node-exporter/tags
-    image: prom/node-exporter:v1.2.0
+    image: prom/node-exporter
     container_name: csca5028-node-exporter
     #networks:
      # - "rabbitmq-prometheus"
@@ -77,12 +80,12 @@ services:
       #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
   rabbitmq-exporter:
   # https://hub.docker.com/r/kbudde/rabbitmq-exporter/tags
-    image: kbudde/rabbitmq-exporter:v0.35.0
+    image: kbudde/rabbitmq-exporter:latest
     container_name: csca5028-rabbitmq-exporter
     #networks:
      # - "rabbitmq-prometheus"
     ports:
-      - "9090:9090"
+      - "9091:9090"
     environment:
       RABBIT_URL: http://rmq0:15692
       RABBIT_USER: guest

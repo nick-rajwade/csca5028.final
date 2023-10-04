@@ -1,0 +1,6 @@
+- labels:
+   module: [http_pong]
+  targets:
+      - 'http://host.docker.internal:9001/ping'
+      - 'http://host.docker.internal:9003/ping'
+      - 'http://host.docker.internal:9002/ping'

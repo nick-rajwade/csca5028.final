@@ -8,10 +8,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		blackbox.yml = blackbox.yml
 		grafana\dashboards.yml = grafana\dashboards.yml
 		grafana\datasources.yml = grafana\datasources.yml
+		http_pong.yml = http_pong.yml
 		prometheus.yml = prometheus.yml
 		docker-compose.yml = docker-compose.yml
 		docker-compose-build.yml = docker-compose-build.yml
 		README.md = README.md
+		rmq_pong.yml = rmq_pong.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "credit-card-processor", "credit-card-processor\credit-card-processor.csproj", "{EEA665B3-0B43-4B45-A74E-58C8E9B3AE81}"

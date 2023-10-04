@@ -25,19 +25,24 @@ scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['host.docker.internal:9090']
+  
   - job_name: 'docker'
     static_configs:
       - targets: ['host.docker.internal:9323']
+  
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['host.docker.internal:9100']
+  
   - job_name: 'cadvisor'
     static_configs:
       - targets: ['host.docker.internal:8080']
+  
   - job_name: 'rabbitmq-server'
     static_configs:
       - targets:
           - 'rmq0:15692'
+
   - job_name: 'rabbitmq-exporter'
     scrape_interval: 60s
     scrape_timeout: 59s
@@ -45,26 +50,29 @@ scrape_configs:
       - targets:
           # docker-compose-dist-tls.yml
           - 'rabbitmq-exporter:9090'
+
   - job_name: 'credit-card-processor'
+    metrics_path: /metrics
     static_configs:
       - targets: ['host.docker.internal:9001']
-        metrics_path: '/metrics'
     scrape_interval: 5s
+
   - job_name: 'sales-collector'
+    metrics_path: /metrics  
     static_configs:
       - targets: ['host.docker.internal:9003']
-        metrics_path: '/metrics'
     scrape_interval: 5s
+
   - job_name: 'blackbox'
+    scrape_interval: 5s
     metrics_path: /probe
-    params:
-      module: [http_2xx]
-    static_configs:
-        - targets:
-            # credit-card-processor
-            - http://host.docker.internal:9001/ping
-            # sales_collector
-            - http://host.docker.internal:9003/ping
-            #pos
-            - http://host.docker.internal:9002/ping
-          
+    file_sd_configs:
+        - files:
+          - '/etc/prometheus/blackbox/*.yml'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: host.docker.internal:9115 # The blackbox exporter's address

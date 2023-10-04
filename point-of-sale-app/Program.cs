@@ -47,10 +47,15 @@ namespace point_of_sale_app
                 Task webTask = Task.Factory.StartNew(() => RunWebEndPoint(args));
                 tasks.Add(webTask);
 
+                var storesOnline = Metrics.CreateGauge("point_of_sale_app_stores_online", "Number of stores running point-of-sale");
+                storesOnline.Set(storeAndTerminals.Count);
+                var posOnline = Metrics.CreateGauge("point_of_sale_app_pos_online", "Number of point-of-sale terminals running");
+                
                 foreach (Store store in storeAndTerminals.Keys)
                 {
                     //get terminal from storeAndTerminals
                     List<POSTerminal> terminals = (List<POSTerminal>)storeAndTerminals[store];
+                    posOnline.WithLabels(store.Name).Set(terminals.Count);
                     foreach (var terminal in terminals)
                     {
                         Task terminalTask = Task.Factory.StartNew(() => store.StartSales(terminal));
