@@ -29,4 +29,4 @@ jobs:
         context: ${{matrix.project}}
         file: ${{matrix.project}}/Dockerfile
         push: true
-        tags: nikhilrajwade/csca5028.final.${{matrix.project}}:${{env.VERSION}}
+        tags: nikhilrajwade/csca5028.final.${{matrix.project}}:latest

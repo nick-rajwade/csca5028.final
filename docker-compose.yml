@@ -141,7 +141,7 @@ services:
       - ./.docker-data/.rabbit-log:/var/log/rabbitmq
   creditcard:
     container_name: csca5028-creditcardprocessor
-    image: nikhilrajwade/csca5028.final:credit-card-processor
+    image: nikhilrajwade/csca5028.final.credit-card-processor:latest
     ports:
       - '9001:80'
     hostname: card0
@@ -149,7 +149,7 @@ services:
      # - "rabbitmq-prometheus"
   pos:
     container_name: csca5028-pos
-    image: nikhilrajwade/csca5028.final:point-of-sale-app
+    image: nikhilrajwade/csca5028.final.point-of-sale-app:latest
     ports:
         - '9002:80'
     depends_on: 
@@ -157,7 +157,7 @@ services:
     restart: always
   salescollector:
     container_name: csca5028-salescollector
-    image: nikhilrajwade/csca5028.final:sales-collector
+    image: nikhilrajwade/csca5028.final.sales-collector:latest
     ports:
     - '9003:80'
     depends_on:
@@ -165,7 +165,7 @@ services:
     restart: always
   saleswebapp:
     container_name: csca5028-saleswebapp
-    image: nikhilrajwade/csca5028.final:sales-web-app
+    image: nikhilrajwade/csca5028.final.sales-web-app:latest
     ports:
     - '80:80'
     - '443:443'
