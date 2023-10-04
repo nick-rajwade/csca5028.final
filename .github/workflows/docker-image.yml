@@ -1,8 +1,10 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ "master" ]
+  workflow_run:
+    workflows: [build.publish.nuget]
+    types:
+      - completed
 jobs:
   push_to_registry:
     name: Push Docker image(s) to Docker Hub
