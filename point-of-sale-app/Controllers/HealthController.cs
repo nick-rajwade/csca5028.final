@@ -3,7 +3,7 @@
 namespace point_of_sale_app.Controllers
 {
     [ApiController]
-    [Route("/ping")]
+    [Route("/{action}/{id?}")]
     public class HealthController : Controller
     {
         private readonly ILogger<HealthController> _logger;
@@ -12,14 +12,16 @@ namespace point_of_sale_app.Controllers
         {
             _logger = logger;
         }
-        
-        [HttpGet(Name = "ping")]
+
+        [HttpGet]
+        [ActionName("ping")]
         public string Get()
         {
             return "pong";
         }
 
-        [HttpGet("{storename}",Name = "storehealth")]
+        [HttpGet]
+        [ActionName("ping")]
         public string GetStoreHealth(string name)
         {
             return $"{name} is good";
