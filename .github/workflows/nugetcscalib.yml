@@ -35,6 +35,8 @@ jobs:
       - name: Publish to GitHub Packages
         run: dotnet nuget push ./nuget/*.nupkg --source github
         working-directory: ./csca5028.lib/
+        env:
+            NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
        # - name: Publish
         #uses: tedd/publish-nuget-neo@v1
         #with:
