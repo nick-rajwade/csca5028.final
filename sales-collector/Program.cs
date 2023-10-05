@@ -15,7 +15,7 @@ namespace sales_collector
 
         public static string connectionString = "Server=tcp:host.docker.internal,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
         public static string dbName = "sales_db";
-        public static string hostname = "rmq0";
+        public static string hostname = "host.docker.internal";
         public static async Task Main(string[] args)
         {
             //create a prometheus metric server

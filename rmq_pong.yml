@@ -1,13 +1,14 @@
 - labels:
-    module: rmq_pong
+    module: http_pong
   targets:
-      - 'http://host.docker.internal:15672/api/queues/%2f/houston-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/phoenix-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/sandiego-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/dallas-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/la-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/new-york-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/sanjose-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/philly-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/sanantonio-pos/get'
-      - 'http://host.docker.internal:15672/api/queues/%2f/chicago-pos/get'
+      #- http://host.docker.internal:9002/qping?qname=la-pos
+      #- http://host.docker.internal:9002/qping?qname=philly-pos
+      #- http://host.docker.internal:9002/qping?qname=sanantonio-pos
+      #- http://host.docker.internal:9002/qping?qname=chicago-pos
+      #- http://host.docker.internal:9002/qping?qname=sandiego-pos
+      #- http://host.docker.internal:9002/qping?qname=dallas-pos
+      #- http://host.docker.internal:9002/qping?qname=new-york-pos
+      #- http://host.docker.internal:9002/qping?qname=sanjose-pos
+      #- http://host.docker.internal:9002/qping?qname=houston-pos
+      #- http://host.docker.internal:9002/qping?qname=phoenix-pos
+

@@ -41,7 +41,7 @@ scrape_configs:
   - job_name: 'rabbitmq-server'
     static_configs:
       - targets:
-          - 'rmq0:15692'
+          - 'host.docker.internal:15692'
 
   - job_name: 'rabbitmq-exporter'
     scrape_interval: 60s

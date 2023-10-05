@@ -22,7 +22,7 @@ namespace point_of_sale_app.Controllers
         [HttpGet("/qping")]
         public string GetStoreHealth(string qname)
         {
-            var factory = new ConnectionFactory() { HostName = "rmq0" };
+            var factory = new ConnectionFactory() { HostName = "host.docker.internal" };
             using (var connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())

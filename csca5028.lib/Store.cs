@@ -22,6 +22,8 @@ namespace csca5028.lib
 
         public int HealthCheckInterval { get; set; }
 
+        private static readonly string hostName = "host.docker.internal";
+
         //create a constructor that takes all the fields as parameters
         public Store(String name, StoreLocation storeLocation, Guid id, String healthCheckURL) : this()
         {
@@ -36,26 +38,20 @@ namespace csca5028.lib
             _inventory = _initialiseInventory();
         }
 
-        public async Task StartHealthCheck()
+        public async Task StartHealthCheck(IConnection connection)
         {
-
-
-
-            Task sendMsg = Task.Factory.StartNew(()=> SendHealthCheckMessage("rmq0"));
-            await sendMsg;
-            //    System.Threading.Thread.Sleep(HealthCheckInterval * 60000); //sleep for health check interval
-
+            while (true)
+            {
+                Task sendMsg = Task.Factory.StartNew(() => SendHealthCheckMessage(connection));
+                await sendMsg;
+                System.Threading.Thread.Sleep(HealthCheckInterval * 1000); //sleep for health check interval
+            }
         }
 
-        public void SendHealthCheckMessage(string hostname)
+        public void SendHealthCheckMessage(IConnection host)
         {
-            //create rabbitmq connection
-            var factory = new ConnectionFactory() { HostName = hostname };
-            //create a connection to the rabbitmq server
-            using (var connection = factory.CreateConnection())
-            {
                 //create a channel to communicate with the rabbitmq server
-                using (var channel = connection.CreateModel())
+                using (var channel = host.CreateModel())
                 {
              
                     //declare a queue to send messages to. queue name should be based on the store ID
@@ -71,38 +67,37 @@ namespace csca5028.lib
                     var body = Encoding.UTF8.GetBytes(message);
 
                     //publish the message to the queue
-                    channel.BasicPublish(exchange: "healthcheck",
-                                                routingKey: "",
+                    channel.BasicPublish(exchange: "",
+                                                routingKey: HealthCheckURL,
                                                 basicProperties: null,
                                                 body: body);
                     Console.WriteLine("{0} Sent {1}", Name, message);
                 }
-            }
         }
 
-        public async void StartSales(POSTerminal terminal)
+        public async void StartSales(POSTerminal terminal, IConnection connection)
         {
-            while(true)
+            while (true)
             {
                 Sale sale = GenerateSale();
-                if(sale.paymentType == Sale.PaymentType.CreditCard)
+                if (sale.paymentType == Sale.PaymentType.CreditCard)
                 {
                     CreditCardProcessor processor = new CreditCardProcessor("http://host.docker.internal:9001", new System.Net.Http.HttpClient());
                     CreditCardResponse response = ProcessCardTransaction(sale, processor);
-                    Console.WriteLine("Sale processed by credit card processor: Result: {0}, Code: {1}",response.ResponseType.ToString(), response.AuthCode);
+                    Console.WriteLine("Sale processed by credit card processor: Result: {0}, Code: {1}", response.ResponseType.ToString(), response.AuthCode);
                     //attach card response to sale
                     sale.CreditCardResponse = response;
                 }
-                Console.WriteLine("Sale processed: Store {0}, {1} Items, Price {2}, PaymentType: {3}", 
-                    Name, sale.TotalItems, sale.TotalPrice,sale.paymentType.ToString());
+                Console.WriteLine("Sale processed: Store {0}, {1} Items, Price {2}, PaymentType: {3}",
+                    Name, sale.TotalItems, sale.TotalPrice, sale.paymentType.ToString());
 
                 //queue sale to be sent to the transaction processor
-                QueueSaleForProcessing("rmq0", "sales-exchange", "salesq", sale);
-                
-                int sleepTime = terminal.checkoutTime * 1000 * 60;
-                Console.WriteLine("Check out time for store {0} for {1} is {2} minutes.", Name, sale.TotalItems, (terminal.checkoutTime.ToString()));
-                //send health check message
-                await StartHealthCheck();
+
+                await QueueSaleForProcessing(connection, "sales-exchange", "salesq", sale);
+
+                int sleepTime = terminal.checkoutTime * 1000;
+                Console.WriteLine("Check out time for store {0} for {1} is {2} ms.", Name, sale.TotalItems, (sleepTime.ToString()));
+
                 System.Threading.Thread.Sleep(sleepTime);
             }
         }
@@ -116,7 +111,11 @@ namespace csca5028.lib
             for (int i = 0; i < numItems; i++)
             {
                 int itemIndex = random.Next(0, _inventory.Count);
-                items.Add(_inventory[itemIndex]);
+                SaleItem itemToAdd = _inventory[itemIndex];
+                //randomly change the quantity of the item upto 5 items
+                int quantity = random.Next(1, 5);
+                itemToAdd.quantity = quantity;
+                items.Add(itemToAdd);
             }
             Sale.PaymentType paymentType = Sale.PaymentType.Cash;
             int paymentTypeIndex = random.Next(0, 100);
@@ -132,12 +131,9 @@ namespace csca5028.lib
             return sale;
         }
 
-        public void QueueSaleForProcessing(string hostName,string exchange, string queue, Sale sale)
+        public async Task QueueSaleForProcessing(IConnection host,string exchange, string queue, Sale sale)
         {
-            var connectionFactory = new ConnectionFactory() { HostName = hostName };
-            using (var connection = connectionFactory.CreateConnection())
-            {
-                using (var channel = connection.CreateModel())
+                using (var channel = host.CreateModel())
                 {
                     //create consistent hash exchange
                     channel.ExchangeDeclare(exchange, type: "x-consistent-hash", true, false);
@@ -151,9 +147,9 @@ namespace csca5028.lib
 
                     //publish message with routing key as the sale ID
                   
-                    channel.BasicPublish(exchange: exchange,sale.ID.ToString(),null,body);
+                    await Task.Factory.StartNew(() => channel.BasicPublish(exchange: exchange,sale.ID.ToString(),null,body));
+                    
                 }
-            }
         }
 
         public CreditCardResponse ProcessCardTransaction(Sale sale, CreditCardProcessor processor)
@@ -296,6 +292,7 @@ namespace csca5028.lib
             items.Add(new SaleItem() { name = "caramel", quantity = 1, price = 1.99M });
             return items;
         }
+
     }
 
 

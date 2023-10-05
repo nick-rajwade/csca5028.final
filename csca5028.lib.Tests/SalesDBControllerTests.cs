@@ -7,17 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace csca5028.lib.Tests
 {
     [TestClass()]
     public class SalesDBControllerTests
     {
+
+        public static string connectionString = "Server=localhost,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
+        public static string dbName = "sales_db_test";
+
         [TestMethod()]
         public async Task CreateDatabaseTest()
         {
-            SalesDBController controller = new SalesDBController("Server=localhost,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True");
-            var dbName = "sales_test_db";
+            SalesDBController controller = new SalesDBController(connectionString);
+
             await controller.CreateDatabase(dbName);
             using (SqlConnection connection = controller.Connect())
             {
@@ -48,8 +53,8 @@ namespace csca5028.lib.Tests
         [TestMethod()]
         public async Task CreateTablesTest()
         {
-            SalesDBController controller = new SalesDBController("Server=localhost,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True");
-            var dbName = "sales_test_db";
+            SalesDBController controller = new SalesDBController(connectionString);
+
             await controller.CreateDatabase(dbName);
             await controller.CreateTables(dbName);
             using (SqlConnection connection = controller.Connect())
@@ -84,8 +89,8 @@ namespace csca5028.lib.Tests
             Store store = new Store("New York Store", new StoreLocation("123 Main St", "New York", "NY", "10001", "USA", decimal.Parse("40.7128"), decimal.Parse("-74.0060")),
                 new Guid("00000000-0000-0000-0000-000000000001"), "new-york-pos");
             Sale sale = store.GenerateSale();
-            SalesDBController controller = new SalesDBController("Server=localhost,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True");
-            var dbName = "sales_test_db";
+            SalesDBController controller = new SalesDBController(connectionString);
+
             await controller.CreateDatabase(dbName);
             await controller.CreateTables(dbName);
             await controller.Insert(dbName, sale);
@@ -118,6 +123,50 @@ namespace csca5028.lib.Tests
                     }
                 }
             }
+        }
+
+        [TestMethod()]
+        public async Task GetSalesRevenueByStoreIdTest()
+        {
+            Store store = new Store("New York Store", new StoreLocation("123 Main St", "New York", "NY", "10001", "USA", decimal.Parse("40.7128"), decimal.Parse("-74.0060")),
+                new Guid("00000000-0000-0000-0000-000000000001"), "new-york-pos");
+
+
+            SalesDBController salesDBController = new SalesDBController(connectionString);
+            await salesDBController.Initialise(dbName);
+            decimal perf = 0.0M;
+            for (int i = 0; i < 10; i++)
+            {
+                Sale sale = store.GenerateSale();
+                await salesDBController.Insert(dbName, sale);
+                perf += sale.TotalPrice;
+            }
+
+            var salesPerf = await salesDBController.GetSalesRevenueByStoreID(dbName, store.ID);
+            Assert.IsTrue(salesPerf >= perf);
+
+        }
+
+        [TestMethod()]
+        public async Task GetAverageSalePriceByStoreIDTest()
+        {
+            Store store = new Store("New York Store", new StoreLocation("123 Main St", "New York", "NY", "10001", "USA", decimal.Parse("40.7128"), decimal.Parse("-74.0060")),
+                new Guid("00000000-0000-0000-0000-000000000001"), "new-york-pos");
+
+
+            SalesDBController salesDBController = new SalesDBController(connectionString);
+            await salesDBController.Initialise(dbName);
+            decimal perf = 0.0M;
+            for (int i = 0; i < 10; i++)
+            {
+                Sale sale = store.GenerateSale();
+                await salesDBController.Insert(dbName, sale);
+                perf += sale.TotalPrice;
+            }
+            var avgSalePrice = perf/ 10;
+
+            var salesPerf = await salesDBController.GetAverageSalePriceByStoreID(dbName, store.ID);
+            Assert.IsTrue(avgSalePrice >= salesPerf);
         }
     }
 }

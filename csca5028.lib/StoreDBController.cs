@@ -13,7 +13,7 @@ namespace csca5028.lib
 {
     public class StoreDBController
     {
-        private string connectionString = "Server=tcp:host.docker.internal,1433;Database=store_db;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
+        private string connectionString = "Server=tcp:host.docker.internal,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
 
         public StoreDBController(string connectionString)
         {
@@ -209,16 +209,16 @@ namespace csca5028.lib
                                 while(reader.Read())
                                 {
                                     var storeId = reader["Id"].ToString();
-                                    if(i%2 != 0) //if even add 10 stores else add 5
+                                    if(i%2 != 0) //if even add 2 stores else add 1
                                     {
-                                        for (int j = 0; j < 5; j++)
+                                        for (int j = 0; j < 1; j++)
                                         {
                                             posSql.Add($"INSERT INTO [{dbName}].[dbo].[pos_terminals] (pos_checkout_time, store_id) VALUES (5, '{storeId}');");
                                         }
                                     }
                                     else
                                     {
-                                        for(int j = 0;j<10;j++)
+                                        for(int j = 0;j<2;j++)
                                         {
                                             posSql.Add($"INSERT INTO [{dbName}].[dbo].[pos_terminals] (pos_checkout_time, store_id) VALUES (5, '{storeId}');");
                                         }
@@ -313,5 +313,29 @@ namespace csca5028.lib
             return storesAndTerminals;
         }
 
+        //get storeId by store_name
+        public async Task<Guid> GetStoreIdAsync(string storeName, string dbName)
+        {
+            using(var connection = Connect())
+            {
+                await connection.OpenAsync();
+                var sql = $"select Id from [{dbName}].[dbo].Stores where store_name = '{storeName}';";
+                using(SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = sql;
+                    using(SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        if(reader.HasRows)
+                        {
+                            while(reader.Read())
+                            {
+                                return Guid.Parse(reader["Id"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            return Guid.Empty;
+        }
     }
 }

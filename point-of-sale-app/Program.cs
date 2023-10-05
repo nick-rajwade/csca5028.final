@@ -4,6 +4,7 @@ using System.Diagnostics;
 using csca5028.lib;
 using Microsoft.Extensions.Logging.Console;
 using System.Collections;
+using RabbitMQ.Client;
 
 namespace point_of_sale_app
 {
@@ -13,8 +14,9 @@ namespace point_of_sale_app
         //create prometheus counter for the number of stores
         //public static Prometheus.Gauge storesGauge = Metrics.CreateGauge("stores", "Number of stores running point-of-sale");
         
-        public static string connectionString = "Server=tcp:host.docker.internal,1433;Database=store_db;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
+        public static string connectionString = "Server=tcp:host.docker.internal,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
         public static string dbName = "store_db";
+        public static string hostName = "rmq0";
 
         public static async Task Main(string[] args)
         {
@@ -51,20 +53,26 @@ namespace point_of_sale_app
                 storesOnline.Set(storeAndTerminals.Count);
                 var posOnline = Metrics.CreateGauge("point_of_sale_app_pos_online", "Number of point-of-sale terminals running");
                 var terminalCounter = 0;
-                foreach (Store store in storeAndTerminals.Keys)
+                var connectionFactory = new ConnectionFactory() { HostName = hostName };
+                using (var connection = connectionFactory.CreateConnection())
                 {
-                    //get terminal from storeAndTerminals
-                    List<POSTerminal> terminals = (List<POSTerminal>)storeAndTerminals[store];
-                    terminalCounter += terminals.Count;
-                    foreach (var terminal in terminals)
+                    foreach (Store store in storeAndTerminals.Keys)
                     {
-                        Task terminalTask = Task.Factory.StartNew(() => store.StartSales(terminal));
-                        tasks.Add(terminalTask);
+                        //get terminal from storeAndTerminals
+                        List<POSTerminal> terminals = (List<POSTerminal>)storeAndTerminals[store];
+                        terminalCounter += terminals.Count;
+                        foreach (var terminal in terminals)
+                        {
+                            Task terminalTask = Task.Factory.StartNew(() => store.StartSales(terminal, connection));
+                            tasks.Add(terminalTask);
+                        }
+                        //Task healthCheckTask = Task.Factory.StartNew(() => store.StartHealthCheck(connection));
+                        //tasks.Add(healthCheckTask);
                     }
+                    posOnline.Set(terminalCounter);
+                    //wait for all tasks to complete - some never will
+                    Task.WaitAll(tasks.ToArray());
                 }
-                posOnline.Set(terminalCounter);
-                //wait for all tasks to complete - some never will
-                Task.WaitAll(tasks.ToArray());
             }
         }
 

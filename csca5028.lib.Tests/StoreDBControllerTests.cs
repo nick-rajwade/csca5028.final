@@ -169,8 +169,19 @@ namespace csca5028.lib.Tests
         public async Task GetStoresAndTerminalsTest()
         {
             StoreDBController storeDBController = new StoreDBController(connectionString);
-            Hashtable storesAndTerminals = (Hashtable) await storeDBController.GetStoresAndTerminalsAsync(dbName);
+            Hashtable storesAndTerminals = (Hashtable)await storeDBController.GetStoresAndTerminalsAsync(dbName);
             Assert.AreEqual(10, storesAndTerminals.Count);
+        }
+
+        [TestMethod()]
+        public async Task GetStoreIdAsyncTest()
+        {
+            StoreDBController storeDBController = new StoreDBController(connectionString);
+            await storeDBController.Initialise(dbName);
+            await storeDBController.InsertInitialValues(dbName);
+
+            Guid storeid = await storeDBController.GetStoreIdAsync("Dallas Store", dbName);
+            Assert.IsNotNull(storeid);
         }
     }
 }

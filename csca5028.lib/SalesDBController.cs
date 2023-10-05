@@ -127,7 +127,60 @@ namespace csca5028.lib
 
                     await cmd.ExecuteNonQueryAsync();
                 }
+
+
             }
         }
+
+        //from sales_db get all sales for a given store and calculate the sales performance
+        public async Task<decimal> GetSalesRevenueByStoreID(string dbName, Guid storeId)
+        {
+            decimal salesPerformance = 0;
+            using (var conn = Connect())
+            {
+                await conn.OpenAsync();
+                var sql = @$"SELECT [total_price] FROM [{dbName}].[dbo].[Sales] WHERE [store_id] = @storeId AND (CC_AUTH IS NULL OR CC_AUTH <> 'DECLINE');";
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@storeId", storeId);
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            salesPerformance += reader.GetDecimal(0);
+                        }
+                    }
+                }
+            }
+            return salesPerformance;
+        }
+
+        //Get average sale price for a given store
+        public async Task<decimal> GetAverageSalePriceByStoreID(string dbName, Guid storeId)
+        {
+            decimal averageSalePrice = 0;
+            using (var conn = Connect())
+            {
+                await conn.OpenAsync();
+                var sql = @$"SELECT AVG([total_price]) FROM [{dbName}].[dbo].[Sales] WHERE [store_id] = @storeId AND (CC_AUTH IS NULL OR CC_AUTH <> 'DECLINE');";
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@storeId", storeId);
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            averageSalePrice = reader.GetDecimal(0);
+                        }
+                    }
+                }
+            }
+            return averageSalePrice;
+        }
+
+        
+
     }
 }

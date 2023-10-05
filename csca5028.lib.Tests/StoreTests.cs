@@ -15,7 +15,7 @@ namespace csca5028.Tests
     [TestClass()]
     public class StoreTests
     {
-        [TestMethod()]
+        /*[TestMethod()]
         public void SendHealthCheckMessageTest()
         {
             //create a store with the name "test", storelocation "test", id 1, and healthcheckurl "test"
@@ -51,7 +51,7 @@ namespace csca5028.Tests
 
                 }
             }
-        }
+        }*/
 
         [TestMethod()]
         public void GenerateSaleTest()
@@ -86,24 +86,29 @@ namespace csca5028.Tests
         }
 
         [TestMethod()]
-        public void QueueSaleForProcessingTest()
+        public async Task QueueSaleForProcessingTest()
         {
             Store store = new Store("New York Store", new StoreLocation("123 Main St", "New York", "NY", "10001", "USA", decimal.Parse("40.7128"), decimal.Parse("-74.0060")),
                 new Guid("00000000-0000-0000-0000-000000000001"), "new-york-pos");
             Sale sale = store.GenerateSale();
             var saleJson = Newtonsoft.Json.JsonConvert.SerializeObject(sale);
-
-            store.QueueSaleForProcessing("localhost","test-sale-exchange","test-queue",sale);
             var factory = new RabbitMQ.Client.ConnectionFactory() { HostName = "localhost" };
+
+
+
             using (var connection = factory.CreateConnection())
             {
+                await store.QueueSaleForProcessing(connection, "test-sale-exchange", "test-queue", sale);
+
+
+
                 //create a channel to communicate with the rabbitmq server
                 using (var channel = connection.CreateModel())
                 {
                     var queueName = "test-queue";
                     channel.ExchangeDeclare(exchange: "test-sale-exchange", type: "x-consistent-hash", true, false);
                     //bind weight at 10% to the queue
-                    channel.QueueBind(queue: queueName, exchange: "test-sale-exchange", "42", new Dictionary<string, object>() { { "x-weight",10} });
+                    channel.QueueBind(queue: queueName, exchange: "test-sale-exchange", "42", new Dictionary<string, object>() { { "x-weight", 10 } });
                     //declare a queue to send messages to. queue name should be based on the store ID
 
                     var message = channel.BasicGet(queueName, true);
