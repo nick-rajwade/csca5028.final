@@ -1,4 +1,4 @@
-# CSCA5028 Final Project - "Retail Real Time Sales"
+# Touch CSCA5028 Final Project - "Retail Real Time Sales"
 
 ## By Nikhil Rajwade
 
