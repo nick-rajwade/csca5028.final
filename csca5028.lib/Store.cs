@@ -57,13 +57,9 @@ namespace csca5028.lib
                 //create a channel to communicate with the rabbitmq server
                 using (var channel = connection.CreateModel())
                 {
-                    channel.ExchangeDeclare(exchange: "healthcheck", type: ExchangeType.Direct);
-                    
-                    Hashtable args = new Hashtable();
-                    //message TTL is 10 minutes
-                    args.Add("x-message-ttl", 60000 * 10);
+             
                     //declare a queue to send messages to. queue name should be based on the store ID
-                    _ = channel.QueueDeclare(queue: HealthCheckURL,
+                    channel.QueueDeclare(queue: HealthCheckURL,
                                              durable: true,
                                              exclusive: false,
                                              autoDelete: false,
@@ -76,7 +72,7 @@ namespace csca5028.lib
 
                     //publish the message to the queue
                     channel.BasicPublish(exchange: "healthcheck",
-                                                routingKey: "healthcheck",
+                                                routingKey: "",
                                                 basicProperties: null,
                                                 body: body);
                     Console.WriteLine("{0} Sent {1}", Name, message);
@@ -105,10 +101,9 @@ namespace csca5028.lib
                 
                 int sleepTime = terminal.checkoutTime * 1000 * 60;
                 Console.WriteLine("Check out time for store {0} for {1} is {2} minutes.", Name, sale.TotalItems, (terminal.checkoutTime.ToString()));
-                System.Threading.Thread.Sleep(sleepTime);
                 //send health check message
                 await StartHealthCheck();
-                
+                System.Threading.Thread.Sleep(sleepTime);
             }
         }
 

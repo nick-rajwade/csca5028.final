@@ -27,13 +27,12 @@ namespace point_of_sale_app.Controllers
             {
                 using (var channel = connection.CreateModel())
                 {
-                    //channel.ExchangeDeclare(exchange: "healthcheck", type: ExchangeType.Direct);
                     BasicGetResult msgResp = channel.BasicGet(queue: qname, autoAck: true);
-                    if(msgResp == null)
+                    string msgBody = string.Empty;
+                    if (msgResp != null)
                     {
-                        BadRequest();
+                        msgBody = System.Text.Encoding.UTF8.GetString(msgResp.Body.ToArray());
                     }
-                    var msgBody = System.Text.Encoding.UTF8.GetString(msgResp.Body.ToArray());
                     return msgBody;
                 }
             }
