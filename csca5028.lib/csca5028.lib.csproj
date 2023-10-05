@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -11,9 +11,6 @@
     <PackageProjectUrl>https://github.com/nick-rajwade/csca5028.final</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nick-rajwade/csca5028.final</RepositoryUrl>
     <PackageTags>CSCA5028</PackageTags>
-    <FileVersion>1.0</FileVersion>
-    <AssemblyVersion>1.0</AssemblyVersion>
-	  	<Version>1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +35,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NSwag.ApiDescription.Client" Version="13.20.0">
       <PrivateAssets>all</PrivateAssets>
