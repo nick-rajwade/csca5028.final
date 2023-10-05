@@ -3,11 +3,12 @@ assembly-versioning-scheme: MajorMinorPatch
 assembly-file-versioning-scheme: MajorMinorPatch
 assembly-informational-format: '{InformationalVersion}'
 tag-prefix: '[vV]'
+commit-message-incrementing: Enabled
 branches:
   master:
     mode: ContinuousDelivery
-    tag: ''
-    increment: Patch
+    tag: 'latest'
+    increment: Minor
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
