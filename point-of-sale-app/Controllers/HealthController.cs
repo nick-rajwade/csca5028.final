@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Client;
 
 namespace point_of_sale_app.Controllers
 {
@@ -19,9 +20,23 @@ namespace point_of_sale_app.Controllers
         }
 
         [HttpGet("/qping")]
-        public string GetStoreHealth(string name)
+        public string GetStoreHealth(string qname)
         {
-            return $"{name} is good";
+            var factory = new ConnectionFactory() { HostName = "rmq0" };
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    //channel.ExchangeDeclare(exchange: "healthcheck", type: ExchangeType.Direct);
+                    BasicGetResult msgResp = channel.BasicGet(queue: qname, autoAck: true);
+                    if(msgResp == null)
+                    {
+                        BadRequest();
+                    }
+                    var msgBody = System.Text.Encoding.UTF8.GetString(msgResp.Body.ToArray());
+                    return msgBody;
+                }
+            }
         }
     }
 

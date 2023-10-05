@@ -64,7 +64,7 @@ namespace csca5028.lib
                     args.Add("x-message-ttl", 60000 * 10);
                     //declare a queue to send messages to. queue name should be based on the store ID
                     _ = channel.QueueDeclare(queue: HealthCheckURL,
-                                             durable: false,
+                                             durable: true,
                                              exclusive: false,
                                              autoDelete: false,
                                              arguments: null);
