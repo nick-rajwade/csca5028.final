@@ -7,8 +7,8 @@ commit-message-incrementing: Enabled
 branches:
   master:
     mode: ContinuousDelivery
-    tag: 'latest'
-    increment: Minor
+    tag: latest
+    increment: Major
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
