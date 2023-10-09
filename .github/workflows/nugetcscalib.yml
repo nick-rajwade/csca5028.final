@@ -1,9 +1,11 @@
 name: build.publish.nuget
 
 on:
-  #workflow_dispatch: # Manually trigger a workflow run till we get the CI/CD pipeline working
   push:
-    branches: [ master ]
+    branches:
+      - 'master'
+    paths:
+      - 'csca5028.final/csca5028.lib/**/*'
      
 jobs:
   build:
