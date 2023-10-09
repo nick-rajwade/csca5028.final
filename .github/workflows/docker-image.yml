@@ -1,8 +1,11 @@
-name: docker.CI.CD
-
+name: docker.CI.CD.credit-card-processor
+#workflow_dispatch: # Manually trigger a workflow run till we get the CI/CD pipeline working
 on:
-  workflow_dispatch: # Manually trigger a workflow run till we get the CI/CD pipeline working
-  
+  push:
+    branches:
+      -'master'
+    paths:
+      - 'csca5028.final/credit-card-processor/**/*'
   #workflow_run:
   #  workflows: [build.publish.nuget]
   #  types:
@@ -13,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [credit-card-processor, point-of-sale-app, sales-collector, csca5028.blazor.webapp]
+        #project: [credit-card-processor, point-of-sale-app, sales-collector, csca5028.blazor.webapp]
+        project: [credit-card-processor]
     steps:
     - name: Check out the repo
       uses: actions/checkout@v3
