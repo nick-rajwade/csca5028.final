@@ -16,4 +16,4 @@ jobs:
             run_conclusions: failure, success
             save_period: 5
             save_min_runs_number: 0
-            dry: true
+            dry: false
