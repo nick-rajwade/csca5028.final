@@ -8,7 +8,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["csca5028.blazor.webapp/csca5028.blazor.webapp.csproj", "csca5028.blazor.webapp/"]
-COPY ["csca5028.lib/csca5028.lib.csproj", "csca5028.lib/"]
+#COPY ["csca5028.lib/csca5028.lib.csproj", "csca5028.lib/"]
 RUN dotnet restore "csca5028.blazor.webapp/csca5028.blazor.webapp.csproj"
 COPY . .
 WORKDIR "/src/csca5028.blazor.webapp"

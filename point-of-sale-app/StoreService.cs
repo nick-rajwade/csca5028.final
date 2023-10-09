@@ -18,8 +18,9 @@ namespace point_of_sale_app
         private Hashtable storeAndTerminals = new();
         private List<System.Threading.Timer> checkOutTimers = new();
         private IConnectionFactory connectionFactory = new ConnectionFactory() { HostName = hostName };
-        
-        
+        Gauge storesOnline = Metrics.CreateGauge("point_of_sale_app_stores_online", "Number of stores running point-of-sale");
+        Gauge posOnline = Metrics.CreateGauge("point_of_sale_app_pos_online", "Number of point-of-sale terminals running");
+
         public StoreService(ILogger<StoreService> logger, IPOSTerminalTaskQueue taskQueue)
         {
             _logger = logger;
@@ -27,9 +28,9 @@ namespace point_of_sale_app
             storeDb.Initialise(dbName).Wait();
             storeAndTerminals = (Hashtable)storeDb.GetStoresAndTerminalsAsync(dbName).Result;
             //start queueing up the checkout timers
-            var storesOnline = Metrics.CreateGauge("point_of_sale_app_stores_online", "Number of stores running point-of-sale");
+            
             storesOnline.Set(storeAndTerminals.Count);
-            var posOnline = Metrics.CreateGauge("point_of_sale_app_pos_online", "Number of point-of-sale terminals running");
+            
             foreach (Store store in storeAndTerminals.Keys)
             {
                 foreach (POSTerminal terminal in (List<POSTerminal>)storeAndTerminals[store])
@@ -72,7 +73,8 @@ namespace point_of_sale_app
             {
                 timer.Dispose();
             }
-            
+            posOnline.Set(0);
+            storesOnline.Set(0);
             await base.StopAsync(stoppingToken);
         }
     }
