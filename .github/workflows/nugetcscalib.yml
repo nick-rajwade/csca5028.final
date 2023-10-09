@@ -1,8 +1,9 @@
 name: build.publish.nuget
 
 on:
-  push:
-    branches: [ master ]
+  workflow_dispatch: # Manually trigger a workflow run till we get the CI/CD pipeline working
+  #push:
+    #branches: [ master ]
      
 jobs:
   build:
