@@ -1,0 +1,120 @@
+﻿@page "/dashboardlayout-features"
+@using Syncfusion.Blazor.Layouts
+<PageTitle>Dashboard Layout</PageTitle>
+<h2>Dashboard Layout</h2>
+<br/>
+<div id = "ControlRegion">
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper" style="max-width: 80%">
+            <table style="table-layout:auto"> 
+                <tr> 
+                    <th>Col1</th> 
+                    <th>Col2</th> 
+                    <th>Col3</th> 
+                </tr> 
+                <tr> 
+                    <td>Alice</td> 
+                    <td>25</td> 
+                    <td>USA</td> 
+                </tr> <tr> 
+                    <td>Bob</td> 
+                    <td>30</td> 
+                    <td>UK</td> 
+                </tr> <tr> 
+                    <td>Charlie</td> 
+                    <td>35</td> 
+                    <td>Australia</td>
+                </tr> </table>
+        </div>
+    </div>
+</div>
+<br/>
+<div>
+  <h3>Selected Features:</h3>
+    <ul class="ulstyle">
+      <li class="list"> Dashboard Layout Samples - Dashboard Panel</li>
+      <li class="list"> Theme - Material</li>
+    </ul>
+</div>
+<br/>
+<style>
+	.control-section{
+        margin: 0 auto;
+        padding:3%;
+    }
+    .form-label {
+        margin-bottom: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .e-panel-header {
+        padding: 10px;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, .03);
+    }
+    .panel-content {
+        vertical-align: middle;
+        font-size: 15px;
+        font-size: 15px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.61);
+        text-align: center;
+    }
+    .e-panel-content {
+        height: calc(100% - 28px);
+        width: 100%;
+        display: block;
+        text-align: center;
+        align-content:center
+    }
+    .e-panel .e-header-text {
+        padding: 12px 0 12px 0;
+    }
+    .e-dashboardlayout.e-control .e-panel .e-panel-header {
+        font-size: 15px;
+        font-weight: 500;
+        height: 37px;
+        padding: 10px;
+        vertical-align: middle;
+        border-bottom: 0.5px solid #e3e3e3;
+    }
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+    .list {
+    float: left;
+    line-height: 20px;
+    margin: 10px;
+    min-width: 350px;
+    }
+</style>
+@code 
+{
+    
+        //DashboardLayout component instance
+        SfDashboardLayout dashboardObject;
+        public double[] CellSpacing = { 10, 10 };
+        public int Columns = 1;
+        public int Count =  1;
+        public int Length { get; set; }  
+        public void AddClick(EventArgs args)
+        {
+            string ContentValue = "Panel" + this.Count.ToString();
+            PanelModel panel = new PanelModel
+            {
+                Id = this.Count.ToString() + "_layout",
+                SizeX = 2,
+                SizeY = 2,
+                Column = 0,
+                Row = 0,
+                Header =@<div class='text-align'> @ContentValue </div>
+            };
+            dashboardObject.AddPanel(panel);
+            this.Count = this.Count + 1;
+        }
+        //end of DashboardLayout component instance
+}

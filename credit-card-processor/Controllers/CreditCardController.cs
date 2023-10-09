@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Prometheus;
 using System.Diagnostics;
 
@@ -46,6 +47,7 @@ namespace credit_card_processor.Controllers
             }
             stopwatch.Stop();
             txnProcessingSummary.Set(stopwatch.ElapsedMilliseconds);
+            
             return Ok(creditCardResponse);
         }
 

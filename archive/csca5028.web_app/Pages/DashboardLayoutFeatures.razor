@@ -1,0 +1,167 @@
+﻿@page "/dashboardlayout-features"
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.CircularGauge
+<PageTitle>Dashboard Layout</PageTitle>
+<h2>Dashboard Layout</h2>
+<br/>
+<div id = "ControlRegion">
+<div class="col-lg-8 control-section">
+    <div class="content-wrapper" style="max-width: 100%">
+        <div style="padding:5px;text-align:right;">
+            <Syncfusion.Blazor.Buttons.SfButton CssClass="e-btn e-info" Content="Add Panel" @onclick="AddClick"></Syncfusion.Blazor.Buttons.SfButton>
+        </div>
+        <SfDashboardLayout @ref="dashboardObject"   CellSpacing="@CellSpacing" Columns="@Columns">
+            <DashboardLayoutPanels>
+                <DashboardLayoutPanel ID="1" Row="0" Column="0" SizeX="2" SizeY="2" MaxSizeX="2" MaxSizeY="2">
+                    <HeaderTemplate><div>Panel 1</div></HeaderTemplate>
+                    <ContentTemplate>
+                        <div id="ControlRegion" class="align-content-lg-center">
+                            <SfCircularGauge Theme="Theme.Material"  EnablePointerDrag="true"  MoveToCenter=true>
+         <CircularGaugeTooltipSettings Enable="true"></CircularGaugeTooltipSettings>
+        <CircularGaugeAxes>
+            <CircularGaugeAxis Direction="GaugeDirection.ClockWise" StartAngle="210" EndAngle="150" Minimum="0" Maximum="120" Radius="80%">
+                <CircularGaugeAxisLineStyle Width="10" Color="transparent">
+                </CircularGaugeAxisLineStyle>
+                <CircularGaugeAxisLabelStyle UseRangeColor="true">
+                    <CircularGaugeAxisLabelFont Size="12px" FontFamily="Roboto" FontStyle="Regular">
+                    </CircularGaugeAxisLabelFont>
+                </CircularGaugeAxisLabelStyle>
+                <CircularGaugeAxisMajorTicks Height="15" Offset="5" UseRangeColor="true">
+                </CircularGaugeAxisMajorTicks>
+                <CircularGaugeAxisMinorTicks Height="10" UseRangeColor="true">
+                </CircularGaugeAxisMinorTicks>
+                 <CircularGaugeAnnotations>
+                    <CircularGaugeAnnotation Radius="30%" Angle="0" ZIndex="1">
+                        <ContentTemplate>
+                            <div><span style="font-size:14px; color:#9E9E9E; font-family:Regular; margin-left: -33px">Speedometer</span></div>
+                        </ContentTemplate>
+                    </CircularGaugeAnnotation>
+                    <CircularGaugeAnnotation Radius="40%" Angle="180" ZIndex="1">
+                        <ContentTemplate>
+                            <div><span style="font-size:20px; color:#424242; font-family:Regular; margin-left: -33px">65 MPH</span></div>
+                        </ContentTemplate>
+                    </CircularGaugeAnnotation>
+                </CircularGaugeAnnotations>
+                <CircularGaugeRanges>
+                    <CircularGaugeRange Start="0" End="40" Color="#30B32D" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                    </CircularGaugeRange>
+                    <CircularGaugeRange Start="40" End="80" Color="#FFDD00" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                    </CircularGaugeRange>
+                    <CircularGaugeRange Start="80" End="120" Color="#F03E3E" StartWidth="10" EndWidth="10" RoundedCornerRadius="0">
+                    </CircularGaugeRange>
+                </CircularGaugeRanges>
+                <CircularGaugePointers>
+                    <CircularGaugePointer Value="65" Radius="60%" PointerWidth="7">
+                        <CircularGaugeCap Radius="7" Color="#757575">
+                            <CircularGaugeCapBorder Width="8"></CircularGaugeCapBorder>
+                        </CircularGaugeCap>
+                        <CircularGaugeNeedleTail Length="25%"></CircularGaugeNeedleTail>
+                    </CircularGaugePointer>
+                </CircularGaugePointers>
+            </CircularGaugeAxis>
+        </CircularGaugeAxes>
+    </SfCircularGauge>
+                        </div>
+                    </ContentTemplate>
+                </DashboardLayoutPanel>
+                <DashboardLayoutPanel Id="2" Row="0" Column="2" SizeX="2" SizeY="2">
+                    <HeaderTemplate><div>Panel 2</div></HeaderTemplate>
+                </DashboardLayoutPanel>
+                <DashboardLayoutPanel Id="3" Row="0" Column="4" SizeX="2" SizeY="2">
+                    <HeaderTemplate><div>Panel 3</div></HeaderTemplate>
+                </DashboardLayoutPanel>
+                <DashboardLayoutPanel Id="4" Row="2" Column="0" SizeX="4" SizeY="2">
+                    <HeaderTemplate><div>Panel 4</div></HeaderTemplate>
+                </DashboardLayoutPanel>
+                <DashboardLayoutPanel Id="5" Row="2" Column="4" SizeX="2" SizeY="2">
+                    <HeaderTemplate><div>Panel 5</div></HeaderTemplate>
+                </DashboardLayoutPanel>
+            </DashboardLayoutPanels>
+        </SfDashboardLayout>
+    </div>
+</div>
+</div>
+<br/>
+<div>
+  <h3>Selected Features:</h3>
+    <ul class="ulstyle">
+      <li class="list"> Dashboard Layout Samples - Dashboard Panel</li>
+      <li class="list"> Theme - Material</li>
+    </ul>
+</div>
+<br/>
+<style>
+	.control-section{
+        margin: 0 auto;
+        padding:3%;
+    }
+    .form-label {
+        margin-bottom: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .e-panel-header {
+        padding: 10px;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, .03);
+    }
+    .panel-content {
+        vertical-align: middle;
+        font-size: 15px;
+        font-size: 15px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.61);
+        text-align: center;
+    }
+    .e-panel-content {
+        height: calc(100% - 28px);
+        width: 100%;
+        display: block;
+    }
+    .e-panel .e-header-text {
+        padding: 12px 0 12px 0;
+    }
+    .e-dashboardlayout.e-control .e-panel .e-panel-header {
+        font-size: 15px;
+        font-weight: 500;
+        height: 37px;
+        padding: 10px;
+        vertical-align: middle;
+        border-bottom: 0.5px solid #e3e3e3;
+    }
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+    .list {
+    float: left;
+    line-height: 20px;
+    margin: 10px;
+    min-width: 350px;
+    }
+</style>
+    @code {
+    SfDashboardLayout dashboardObject;
+    public double[] CellSpacing = { 10, 10 };
+    public int Columns = 6;
+    public int Count = 6;
+    public int Length { get; set; }  
+    public void AddClick(EventArgs args)
+    {
+        string ContentValue = "Panel" + this.Count.ToString();
+        PanelModel panel = new PanelModel
+        {
+            Id = this.Count.ToString() + "_layout",
+            SizeX = 2,
+            SizeY = 2,
+            Column = 0,
+            Row = 0,
+            Header =@<div class='text-align'> @ContentValue </div>
+        };
+        dashboardObject.AddPanel(panel);
+        this.Count = this.Count + 1;
+    }
+}

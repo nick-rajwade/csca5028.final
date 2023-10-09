@@ -95,7 +95,7 @@ namespace csca5028.lib
 
     public class SaleItem
     {
-        public string name;
+        public string? name;
         public int quantity;
         public decimal price;
     }

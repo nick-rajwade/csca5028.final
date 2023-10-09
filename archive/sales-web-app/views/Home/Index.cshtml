@@ -1,0 +1,538 @@
+@{
+	@using Syncfusion.EJ2
+	@using saleswebapp.Controllers;
+	ViewData["Title"] = "Home Page";
+
+	SpacingModel modelValue = new SpacingModel();
+	modelValue.cellSpacing = new double[] { 10, 10 };
+	var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont
+			{
+				Size = "12px",
+				FontFamily = "inherit"
+			};
+	var labels = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont
+			{
+				Size = "0px",
+				FontFamily = "inherit"
+			};
+
+	var txnPerMin = Model.TotalTxnPerMin();
+}
+
+<div class="control-section">
+	<ejs-dashboardlayout id="defaultLayout" columns="3" cellSpacing="modelValue.cellSpacing">
+		<e-content-template>
+			<div id="one" class="e-panel" data-row="0" data-col="0" data-sizeX="2" data-sizeY="2">
+				<div class="e-panel-container">
+					<div class="text-align">Map of Stores</div>
+				</div>
+			</div>
+			<div id="two" class="e-panel" data-row="0" data-col="2" data-sizeX="1" data-sizeY="1">
+				<div class="e-panel-container" style="display: flex; align-items: center; justify-content: center;">
+							<ejs-circulargauge id="txnGauge" title="txn/min" height="300px" width="280px" centerX="50%" centerY="50%">
+								<e-circulargauge-axes>
+							<e-circulargauge-axis startAngle="230" endAngle="130" radius="100%">
+								<e-axis-linestyle width="30" color="#f6f7f9"></e-axis-linestyle>
+								<e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Outside" offset="20" font="labelFont">
+								</e-axis-labelstyle>
+								<e-axis-majorticks height="0" interval="10" color="transparent"></e-axis-majorticks>
+								<e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+								<e-circulargauge-pointers>
+									<e-circulargauge-pointer color="#7edfb4" type="RangeBar" value="38" radius="120%" pointerWidth="28">
+										<e-pointer-animation enable="true" duration="1800"></e-pointer-animation>
+									</e-circulargauge-pointer>
+									<e-circulargauge-pointer color="black" type="Marker" markerShape="Rectangle" value="38" radius="100%" markerWidth="28" markerHeight="3">
+										<e-pointer-animation enable="true" duration="1800"></e-pointer-animation>
+									</e-circulargauge-pointer>
+								</e-circulargauge-pointers>
+								<e-circulargauge-annotations>
+									<e-circulargauge-annotation content='<div style="font-size:30px;font-family:inherit;">@txnPerMin</div>' angle="1" radius="-20%" zIndex="1"></e-circulargauge-annotation>
+								</e-circulargauge-annotations>
+								<e-circulargauge-ranges>
+									<e-circulargauge-range start="0" end="@txnPerMin" color="#7edfb4" radius="86%" startWidth="10" endWidth="10">
+									</e-circulargauge-range>
+									<e-circulargauge-range start="@txnPerMin" end="50" color="#7edfb4" radius="87%" startWidth="10" endWidth="10"></e-circulargauge-range>
+									<e-circulargauge-range start="50" end="75" color="#f99d4c" radius="87%" startWidth="10" endWidth="10"></e-circulargauge-range>
+									<e-circulargauge-range start="75" end="100" color="#e96920" radius="87%" startWidth="10" endWidth="10"></e-circulargauge-range>
+								</e-circulargauge-ranges>
+							</e-circulargauge-axis>
+								</e-circulargauge-axes>
+							</ejs-circulargauge>
+				</div>
+			</div>
+			<div id="three" class="e-panel" data-row="1" data-col="2" data-sizeX="1" data-sizeY="1">
+				<div class="e-panel-container">
+					<div class="text-align">revenue last 10 minutes</div>
+				</div>
+			</div>
+			<!--<div id="four" class="e-panel" data-row="2" data-col="1" data-sizeX="1" data-sizeY="1">
+				<div class="e-panel-container">
+					<div class="text-align">4</div>
+				</div>
+			</div>
+			<div id="five" class="e-panel" data-row="2" data-col="2" data-sizeX="2" data-sizeY="1">
+				<div class="e-panel-container">
+					<div class="text-align">5</div>
+				</div>
+			</div>
+			<div id="six" class="e-panel" data-row="0" data-col="3" data-sizeX="1" data-sizeY="1">
+				<div class="e-panel-container">
+					<div class="text-align">6</div>
+				</div>
+			</div>
+			<div id="seven" class="e-panel" data-row="1" data-col="3" data-sizeX="1" data-sizeY="1">
+				<div class="e-panel-container">
+					<div class="text-align">7</div>
+				</div>
+			</div>
+			<div id="eight" class="e-panel" data-row="0" data-col="4" data-sizeX="1" data-sizeY="3">
+				<div class="e-panel-container">
+					<div class="text-align">8</div>
+				</div>
+			</div>-->
+		</e-content-template>
+	</ejs-dashboardlayout>
+	<!-- end of dashboardlayout element -->
+</div>
+<style>
+	/* DashboardLayout element styles  */
+	#defaultLayout {
+		padding: 10px;
+	}
+
+		#defaultLayout .e-panel .e-panel-container {
+			vertical-align: middle;
+			font-weight: 600;
+			font-size: 20px;
+			text-align: center;
+		}
+
+	.text-align {
+		line-height: 160px;
+	}
+</style>
+
+<table class="tabstyle" style="margin-top:20px"><tr><td style="padding:25px">
+<div class="desc">
+<p>Thank you for using Syncfusion ASP.NET Core Wizard. We have modified the default ASP.NET Core internet application project template based on Syncfusion controls and settings. 
+The following are the samples links:
+</p>
+</div>
+<div class="sf-samples" style="white-space:nowrap;">
+	<ul class="ulstyle">
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DataGrid","DataGridFeatures","DataGrid",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("ComboBox","ComboBoxFeatures","ComboBox",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Diagram","DiagramFeatures","Diagram",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("HeatMap","HeatMapFeatures","HeatMap",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Kanban","KanbanFeatures","Kanban",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Chart","ChartFeatures","Chart",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("AccumulationChart","AccumulationChartFeatures","AccumulationChart",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Maps","MapsFeatures","Maps",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Barcode","BarcodeFeatures","Barcode",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("TreeMap","TreeMapFeatures","TreeMap",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("RangeNavigator","RangeNavigatorFeatures","RangeNavigator",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("LinearGauge","LinearGaugeFeatures","LinearGauge",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("CircularGauge","CircularGaugeFeatures","CircularGauge",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("SparkLine","SparkLineFeatures","SparkLine",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("SmithChart","SmithChartFeatures","SmithChart",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Schedule","ScheduleFeatures","Schedule",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("GanttChart","GanttChartFeatures","GanttChart",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Tooltip","TooltipFeatures","Tooltip",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DashboardLayout","DashboardLayoutFeatures","DashboardLayout",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Card","CardFeatures","Card",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Avatar","AvatarFeatures","Avatar",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Toast","ToastFeatures","Toast",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Message","MessageFeatures","Message",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Badge","BadgeFeatures","Badge",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("ListView","ListViewFeatures","ListView",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Dialog","DialogFeatures","Dialog",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DatePicker","DatePickerFeatures","DatePicker",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Calendar","CalendarFeatures","Calendar",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DateRangePicker","DateRangePickerFeatures","DateRangePicker",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Dropdownlist","DropdownlistFeatures","Dropdownlist",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("MultiSelect","MultiSelectFeatures","MultiSelect",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("RichTextEditor","RichTextEditorFeatures","RichTextEditor",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Upload","UploadFeatures","Upload",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Button","ButtonFeatures","Button",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Speed Dial","SpeedDialFeatures","SpeedDial",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DropDown Button","DropDownButtonFeatures","DropDownButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Radio Button","RadioButtonFeatures","RadioButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Check Box","CheckBoxFeatures","CheckBox",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Split Button","SplitButtonFeatures","SplitButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Group Button","GroupButtonFeatures","GroupButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Switch Button","SwitchButtonFeatures","SwitchButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Progress Button","ProgressButtonFeatures","ProgressButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Floating Action Button","FloatingActionButtonFeatures","FloatingActionButton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Dropdown Tree","DropdownTreeFeatures","DropdownTree",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Autocomplete","AutocompleteFeatures","Autocomplete",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DateTimePicker","DateTimePickerFeatures","DateTimePicker",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("ColorPicker","ColorPickerFeatures","ColorPicker",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Signature","SignatureFeatures","Signature",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Chips","ChipsFeatures","Chips",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("ListBox","ListBoxFeatures","ListBox",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DocumentEditor","DocumentEditorFeatures","DocumentEditor",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Image Editor","ImageEditorFeatures","ImageEditor",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("MaskedTextBox","MaskedTextBoxFeatures","MaskedTextBox",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("NumericTextBox","NumericTextBoxFeatures","NumericTextBox",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("TimePicker","TimePickerFeatures","TimePicker",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("TextBoxes","TextBoxesFeatures","TextBoxes",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Slider","SliderFeatures","Slider",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Pdf","PdfFeatures","Pdf",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Presentation","PresentationFeatures","Presentation",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("DocIO","DocIOFeatures","DocIO",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Splitter","SplitterFeatures","Splitter",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("XlsIO","XlsIOFeatures","XlsIO",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("QueryBuilder","QueryBuilderFeatures","QueryBuilder",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("PdfViewer","PdfViewerFeatures","PdfViewer",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Spreadsheet","SpreadsheetFeatures","Spreadsheet",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("TreeGrid","TreeGridFeatures","TreeGrid",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("InplaceEditor","InplaceEditorFeatures","InplaceEditor",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("TreeView","TreeViewFeatures","TreeView",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Accordion","AccordionFeatures","Accordion",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Breadcrumb","BreadcrumbFeatures","Breadcrumb",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Skeleton","SkeletonFeatures","Skeleton",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Ribbon","RibbonFeatures","Ribbon",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Tab","TabFeatures","Tab",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("SideBar","SideBarFeatures","SideBar",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Toolbar","ToolbarFeatures","Toolbar",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Carousel","CarouselFeatures","Carousel",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("AppBar","AppBarFeatures","AppBar",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("ContextMenu","ContextMenuFeatures","ContextMenu",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Menu","MenuFeatures","Menu",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("FileManager","FileManagerFeatures","FileManager",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("PivotGrid","PivotGridFeatures","PivotGrid",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	<li class="list">
+	<div class="column">
+ 	@Html.ActionLink("Rating","RatingFeatures","Rating",null, new { Style = "text-decoration:none;color:#616161;"})
+	</div>
+	</li>
+	 	</ul>
+	</div>
+			</td>
+		</tr>
+	</table>
+<div class="clear"> </div>

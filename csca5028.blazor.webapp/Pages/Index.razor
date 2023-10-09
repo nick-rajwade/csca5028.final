@@ -1,0 +1,407 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Maps
+@using System.Collections;
+@using csca5028.lib
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Charts
+@inject ISalesAnalyzer SalesAnalyzer
+
+
+<PageTitle>Index</PageTitle>
+    <div class="col-lg-8">
+        <h5>Sales Overview</h5>
+        <SfMessage Severity="MessageSeverity.Info" Visible="@ShowLoadData">Loading Data. Please wait...</SfMessage>
+        <SfMessage Severity="MessageSeverity.Success" Visible="@ShowSuccess">Data is current. Next load in 1min.</SfMessage>
+       <table class="table-bordered">
+                <tr>
+                <td height="400" width="1000" style="align-content:center">
+                    <Syncfusion.Blazor.Maps.SfMaps Theme="Theme.Fluent" Background="transparent" ProjectionType="ProjectionType.Mercator" >
+                        <Syncfusion.Blazor.Maps.MapsAreaSettings Background="transparent">
+                        </Syncfusion.Blazor.Maps.MapsAreaSettings>
+                        <MapsTitleSettings Text="Store Locations">
+                            <MapsTitleTextStyle Size="16px" FontFamily="Segoe UI" />
+                        </MapsTitleSettings>
+                        <MapsLegendSettings Visible="true" Mode="LegendMode.Default" Position="Syncfusion.Blazor.Maps.LegendPosition.Top" Alignment="Syncfusion.Blazor.Maps.Alignment.Center" Width="50%" Height="5%">
+                        <MapsLegendTextStyle FontWeight="400" Size="14px"></MapsLegendTextStyle>
+                    </MapsLegendSettings>
+                        <MapsZoomSettings Enable="false"></MapsZoomSettings>
+                        <MapsLayers>
+                        <MapsLayer ShapeData="@MapShapeData" ShapePropertyPath="@(new string[] { "name" })"  DataSource="MarkerDataSource" TValue="MarkerData">
+                            <MapsLayerTooltipSettings Visible="false" ValuePath="storeName"></MapsLayerTooltipSettings>
+                            <MapsLayerHighlightSettings Enable="false" Fill="#dde2ee"></MapsLayerHighlightSettings>
+                            <MapsLayerSelectionSettings Enable="false" Fill="#bcc5dc" Opacity="1"></MapsLayerSelectionSettings>
+                            <MapsDataLabelSettings Visible="false" LabelPath="State" SmartLabelMode="SmartLabelMode.Trim">
+                                <MapsLayerDataLabelTextStyle Color="Black"></MapsLayerDataLabelTextStyle>
+                            </MapsDataLabelSettings>
+                        
+                            <MapsMarkerSettings>
+                                <MapsMarker Visible="true" AnimationDuration="0" Shape="MarkerType.Balloon" Fill="Red" Width="15" Height="25" DataSource="MarkerDataSource" TValue="MarkerData">
+                                    <MapsMarkerTooltipSettings Visible="true" ValuePath="name" Format="<b>${name}</b><br><b>Terminals: #${posCount}</br><br><b>txn/min: ${txnsInInterval}</br><br><b>Revenue: $${salesPerf}</br>">
+
+                                    </MapsMarkerTooltipSettings>
+                                </MapsMarker>
+                            </MapsMarkerSettings>
+                        </MapsLayer>
+                        
+                        </MapsLayers>
+                    </Syncfusion.Blazor.Maps.SfMaps>
+                </td>
+            
+                <td height="400" width="1000" style="align-content:center">
+                    <div >
+                        <div class="row">
+                            <SfGrid DataSource="MarkerDataSource" AllowPaging=true>
+                                <GridColumns>
+                                    <GridColumn Type=ColumnType.String Field=@nameof(MarkerData.name) HeaderText="Store Name" TextAlign="TextAlign.Left" Width="120"></GridColumn>
+                                    <GridColumn Type=ColumnType.Integer Field=@nameof(MarkerData.posCount) HeaderText="Terminals" TextAlign="TextAlign.Left" Width="50"></GridColumn>
+                                    <GridColumn Type=ColumnType.Integer Field =@nameof(MarkerData.txnsInInterval) HeaderText="txn/min" TextAlign="TextAlign.Left" Width="50"></GridColumn>
+                                    <GridColumn Type=ColumnType.Decimal Format="$#.##" Field =@nameof(MarkerData.salesPerf) HeaderText="Revenue $" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+                                
+                                    <GridColumn Type=ColumnType.Long Field =@nameof(MarkerData.Latitude) HeaderText="Lat" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+                                    <GridColumn Type=ColumnType.Long Field =@nameof(MarkerData.Longitude) HeaderText="Long" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </div>
+                    </div>
+                </td>
+                </tr>
+                </table>
+       <table class="table-bordered">
+                    <tr>
+                    <td height="400" width="2000">
+                        <SfChart Title="Store Performance T-5mins" EnableAutoIntervalOnBothAxis=true SubTitle="@totalRevenueString" Width="100%">
+                    <ChartPrimaryXAxis Title="Time" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" LabelFormat="hh:mm" Interval="10" LabelIntersectAction="@Syncfusion.Blazor.Charts.LabelIntersectAction.Trim" LabelRotation="0" RangePadding=ChartRangePadding.Auto>
+                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                        <ChartAxisMinorGridLines Width="0"></ChartAxisMinorGridLines>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                        <ChartAxisMinorTickLines Width="0"></ChartAxisMinorTickLines>
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                    </ChartPrimaryXAxis>
+                    <ChartPrimaryYAxis Title="Store Revenue" LabelFormat="${value}" ValueType=Syncfusion.Blazor.Charts.ValueType.Double Interval="10000" RangePadding=ChartRangePadding.Auto>
+                        <ChartAxisMajorGridLines Width="1"></ChartAxisMajorGridLines>
+                        <ChartAxisMinorGridLines Width="1"></ChartAxisMinorGridLines>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                        <ChartAxisMinorTickLines Width="0"></ChartAxisMinorTickLines>
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                    </ChartPrimaryYAxis>
+                    <ChartAxis Title="Total Revenue" LabelFormat="${value}" Name="secondaryYAxis" ValueType=Syncfusion.Blazor.Charts.ValueType.Double Interval="100000" RangePadding=ChartRangePadding.Auto OpposedPosition=true>
+                        <ChartAxisMajorGridLines Width="1"></ChartAxisMajorGridLines>
+                        <ChartAxisMinorGridLines Width="1"></ChartAxisMinorGridLines>
+                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                        <ChartAxisMinorTickLines Width="0"></ChartAxisMinorTickLines>
+                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                    </ChartAxis>
+                    <ChartTooltipSettings Enable=true></ChartTooltipSettings>
+                    
+                    <ChartLegendSettings Visible=true EnableHighlight="true"></ChartLegendSettings>
+                    <ChartSeriesCollection>
+                        @for(int i = 0; i < StackedChartDataSource?.Count; i++)
+                        {
+                            <ChartSeries DataSource="@StackedChartDataSource[i]" XName="xAxis"  YName="salesPerf" Type="ChartSeriesType.StackingLine" Name="@StackedChartDataSource[i][0].storeName" Width="2" Opacity="1">
+                                <ChartMarker IsFilled=true Visible=true Height="7" Width="7" Shape=ChartShape.Auto>
+                                </ChartMarker>
+                            
+                            </ChartSeries>
+                        }
+                        <ChartSeries Name="Total Revenue" YAxisName="secondaryYAxis" DataSource="@TotalRevenueTimeSeries" XName="xAxis" YName="salesPerf" Type="ChartSeriesType.StackingLine" Width="3" Opacity="1">
+                            <ChartMarker IsFilled=true Visible=true Height="7" Width="7" Shape="ChartShape.Triangle"></ChartMarker>
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+
+                    </SfChart>
+                </td>
+                <td/></tr>
+            </table>
+    </div>
+
+
+    @code
+{
+    private MapDataSettings MapShapeData = new MapDataSettings
+    {
+        async = true,
+        dataOptions = "usa.json",
+        type = "GET"
+    };
+    private class MapDataSettings
+    {
+        public Boolean async { get; set; }
+        public String dataOptions { get; set; } = string.Empty;
+        public String type { get; set; } = string.Empty;
+    };
+    private Timer? pageTimer;
+    private bool loading = false; //not loading
+
+    [Parameter]
+    public bool ShowLoadData
+    {
+        get 
+        {
+            return loading; 
+        }
+
+        set
+        {
+            loading = value;
+            //InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private bool dataLoadSuccess = false;
+    [Parameter]
+    public bool ShowSuccess
+    {
+        get
+        {
+            return dataLoadSuccess;
+        }
+
+        set
+        {
+            dataLoadSuccess = value;
+            //InvokeAsync(StateHasChanged);
+        }
+    }
+
+
+    public class MarkerData
+    {
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public string name { get; set; } = string.Empty;
+        public decimal salesPerf { get; set; } = 0.0M;
+        public int txnsInInterval { get; set; } = 0;
+        public int posCount { get; set; } = 0;
+    }
+    [Parameter]
+    public List<MarkerData> MarkerDataSource { get; set; }
+
+    [Parameter]
+    public List<List<StackedChartData>> StackedChartDataSource { get; set; }
+
+    public class StackedChartData
+    {
+        public DateTime xAxis { get; set; }
+        public string storeName { get; set; } = string.Empty;
+        public decimal salesPerf { get; set; } = 0.0M;
+    }
+
+    public List<TotalRevenueTimeSeriesData>? TotalRevenueTimeSeries { get; set; }
+    private decimal TotalRevenue { get; set; } = 0.0M;
+    private string totalRevenueString = string.Empty;
+
+    public class TotalRevenueTimeSeriesData
+    {
+        public DateTime xAxis { get; set; }
+        public decimal salesPerf { get; set; } = 0.0M;
+    }
+
+    protected override async void OnInitialized()
+    {
+        //1st load attempt - but if cache is empty we will try again in Async and OnAfterRender
+        MarkerDataSource = await GetStoreMarkerData();
+        StackedChartDataSource = await GetStorePerformanceData(StackedChartDataSource);
+        TotalRevenueTimeSeries = await GetTotalRevenueForTimeInterval(TotalRevenueTimeSeries);
+        //now we will go to OnInitAsync()
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        MarkerDataSource = await GetStoreMarkerData();
+        //now we will go to OnParametersSet()
+    }
+
+    protected override void OnParametersSet()
+    {
+        //MarkerDataSource = GetStoreMarkerData().Result;
+        //now we will go to OnParametersAsync()
+    }
+
+    protected override async  Task OnParametersSetAsync()
+    {
+        //MarkerDataSource = await GetStoreMarkerData();
+        //from here to OnAfterRender
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        //MarkerDataSource = GetStoreMarkerData().Result;
+        //now we will go to OnAfterRenderAsync()
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            pageTimer = new Timer(OnTimerPageRefresh, null,0,20000); //20 seconds
+
+        }
+        MarkerDataSource = await GetStoreMarkerData();
+        StackedChartDataSource = await GetStorePerformanceData(StackedChartDataSource);
+        TotalRevenueTimeSeries = await GetTotalRevenueForTimeInterval(TotalRevenueTimeSeries);
+        //TotalRevenueTimeSeries = await S
+    }
+
+    public async void OnTimerPageRefresh(Object state)
+    {
+        MarkerDataSource = GetStoreMarkerData().Result; //We will load OnAfterRender
+        StackedChartDataSource = GetStorePerformanceData(StackedChartDataSource).Result;
+        TotalRevenueTimeSeries = await GetTotalRevenueForTimeInterval(TotalRevenueTimeSeries);
+        await InvokeAsync(StateHasChanged);        
+    }
+
+    private async Task<List<MarkerData>> GetStoreMarkerData()
+    {
+        List<MarkerData> markerDataList = new List<MarkerData>();
+        Dictionary<string, Tuple<int, decimal>> perfData = await SalesAnalyzer.LoadSalesPerformance();
+        Dictionary<string, Tuple<decimal, decimal>> locationData = await SalesAnalyzer.GetStoreLocations();
+        var storesAndTerminals = await SalesAnalyzer.GetStoresAndTerminals();
+
+        if(perfData == null || perfData.Count == 0 || locationData == null ||locationData.Count ==0)
+        {
+            ShowLoadData = true;
+            ShowSuccess = false;
+
+            return markerDataList;
+        }
+
+        foreach (string storeName in perfData.Keys)
+        {
+            MarkerData markerData = new MarkerData();
+            markerData.name = storeName;
+            markerData.txnsInInterval = perfData[storeName].Item1;
+            markerData.salesPerf = perfData[storeName].Item2;
+            markerData.Latitude = locationData[storeName].Item1;
+            markerData.Longitude = locationData[storeName].Item2;
+            if (storesAndTerminals.ContainsKey(storeName))
+                markerData.posCount = storesAndTerminals[storeName].Item2.Count();
+            markerDataList.Add(markerData);
+        }
+
+        ShowLoadData = false;
+        ShowSuccess = true;
+        return markerDataList;
+    }
+
+    private async Task<List<List<StackedChartData>>> GetStorePerformanceData(List<List<StackedChartData>> current)
+    {
+
+
+        Dictionary<string, Tuple<int, decimal>> perfData = await SalesAnalyzer.LoadSalesPerformance();
+
+        List<List<StackedChartData>> stores = current;
+
+        if (perfData == null || perfData.Count == 0)
+        {
+            ShowLoadData = true;
+            ShowSuccess = false;
+
+            return stores;
+        }
+
+        if(stores == null)
+        {
+            stores = new List<List<StackedChartData>>();
+        }
+        if(stores.Count == 0)
+        {
+            for (int i = 0; i < perfData.Count; i++)
+            {
+                stores.Add(new List<StackedChartData>());
+            }
+        }
+        SortedDictionary<string, Tuple<int, decimal>> sortedPerfData = new SortedDictionary<string, Tuple<int, decimal>>(perfData,StringComparer.OrdinalIgnoreCase);
+
+        for(int i = 0; i < sortedPerfData.Count; i++)
+        {
+            StackedChartData item = new StackedChartData();
+            item.storeName = sortedPerfData.Keys.ElementAt(i);
+            item.salesPerf = sortedPerfData.Values.ElementAt(i).Item2;
+            item.xAxis = DateTime.Now;
+            stores[i].Add(item);
+            if(stores[i].Count > 10) //no more than 10 items
+                stores[i].RemoveAt(0);
+        }
+        ShowLoadData = false;
+        ShowSuccess = true;
+        return stores;
+    }
+
+    private async Task<List<TotalRevenueTimeSeriesData>> GetTotalRevenueForTimeInterval(List<TotalRevenueTimeSeriesData> current)
+    {
+        List<TotalRevenueTimeSeriesData> totalRevenue = current;
+        if(totalRevenue == null)
+        {
+            totalRevenue = new List<TotalRevenueTimeSeriesData>();
+        }
+        TotalRevenueTimeSeriesData item = new TotalRevenueTimeSeriesData();
+        item.salesPerf = await SalesAnalyzer.GetTotalRevenueForTimeInterval();
+        TotalRevenue = item.salesPerf;
+        item.xAxis = DateTime.Now;
+        totalRevenueString = $@"Total Revenue: {TotalRevenue.ToString("C")}";
+        totalRevenue.Add(item);
+        if (totalRevenue.Count > 10)
+            totalRevenue.RemoveAt(0);
+        return totalRevenue;
+    }
+}
+<style>
+    .ulstyle {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: inline-block;
+        list-style-type: none !important;
+        padding-left: 0px !important;
+    }
+
+    .controlregion {
+        margin-top: 50px;
+    }
+
+    .pagecontent {
+        font-family: sans-serif !important;
+font-size: 16px;
+color: #333333;
+letter-spacing: 0.34px;
+line-height: 24px;
+margin-top: 10px;
+    }
+    
+
+    .list {
+        float: left;
+        line-height: 40px;
+        min-width: 280px;
+        font-family: sans-serif !important;
+        font-size: 19px;
+        color: #0073DC;
+    }
+
+    .syncfusion-blazor-index-icons {
+        font-family: "sbicons";
+        color: #0073DC !important;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        padding-right: 13px;
+        font-size: 18px;
+    }
+
+    .productheader {
+        font-family: sans-serif !important;
+        font-size: 19px !important;
+        color: #333333 !important;
+        letter-spacing: 0.41px ;
+    }
+
+    .pageheader {
+        font-family: sans-serif !important;
+        font-size: 24px !important;
+        color: #333333 ;
+        font-weight: bold !important;
+    }
+</style>

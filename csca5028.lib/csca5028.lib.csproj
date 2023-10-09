@@ -14,22 +14,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="dbscripts\dbo.Stores.sql" />
-    <None Remove="dbscripts\store_db.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="dbscripts\dbo.Stores.sql" />
-    <Content Include="dbscripts\store_db.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <OpenApiReference Include="OpenAPIs\swagger1.json" CodeGenerator="NSwagCSharp" Namespace="csca5028.web" ClassName="CreditCardProcessor">
       <SourceUri>http://localhost:32773/swagger/v1/swagger.json</SourceUri>
     </OpenApiReference>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.11" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>

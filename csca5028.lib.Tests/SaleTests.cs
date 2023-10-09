@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace components.Tests
+namespace csca5028.lib.Tests
 {
     [TestClass()]
     public class SaleTests

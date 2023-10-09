@@ -8,19 +8,14 @@ namespace point_of_sale_app.Controllers
     [ApiController]
     public class POSController : ControllerBase
     {
-        /*[HttpGet("{id}", Name = "terminalcount")]
-        public int Get(string id)
-        {
-            StoreDBController storeDb = new(Program.connectionString);
-            List<POSTerminal> terminals = (List<POSTerminal>)storeDb.GetTerminalsAsync(Guid.Parse(id), Program.dbName).Result;
-            return terminals.Count;
-        }*/
+        private static string connectionString = "Server=tcp:host.docker.internal,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
+        private static string dbName = "sales_db";
 
         [HttpGet("{storeid}", Name = "terminals")]
         public List<POSTerminal> GetTerminals(string id)
         {
-            StoreDBController storeDb = new(Program.connectionString);
-            List<POSTerminal> terminals = (List<POSTerminal>)storeDb.GetTerminalsAsync(Guid.Parse(id), Program.dbName).Result;
+            StoreDBController storeDb = new(connectionString);
+            List<POSTerminal> terminals = (List<POSTerminal>)storeDb.GetTerminalsAsync(Guid.Parse(id), dbName).Result;
             return terminals;
         }
     }

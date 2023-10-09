@@ -3,8 +3,11 @@ using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMQ.Client;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +15,7 @@ namespace csca5028.lib
 {
     public class SalesDBController
     {
-        private string connectionString = "Server=tcp:host.docker.internal,1433;Database=store_db;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
+        private string connectionString = "Server=tcp:host.docker.internal,1433;User ID=sa;Password=YourStrong@Passw0rd;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=True";
 
         public SalesDBController(string connectionString)
         {
@@ -30,11 +33,13 @@ namespace csca5028.lib
             {
                 throw new ArgumentException("dbName cannot be null or empty");
             }
-            await CreateDatabase(dbName);
-            await CreateTables(dbName);
+            StoreDBController storeDBController = new StoreDBController(connectionString);
+            await storeDBController.Initialise(dbName);
+            //await CreateDatabase(dbName);
+            //await CreateTables(dbName);
         }
 
-        public async Task CreateDatabase(string dbName)
+        /*public async Task CreateDatabase(string dbName)
         {
             if (dbName.IsNullOrEmpty())
             {
@@ -51,9 +56,9 @@ namespace csca5028.lib
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
-        }
+        }*/ //DEPRECATED USE STOREDBCONTROLLER
 
-        public async Task CreateTables(string dbName)
+        /*public async Task CreateTables(string dbName)
         {
             if (dbName.IsNullOrEmpty())
             {
@@ -77,7 +82,8 @@ namespace csca5028.lib
 	                                [created_at] DATETIME NOT NULL,
 	                                [updated_at] DATETIME NOT NULL DEFAULT GETDATE(),
 	                                [CC_AUTH] varchar(7) NULL CHECK (CC_AUTH IN ('AUTH','DECLINE')),
-	                                [CC_AUTH_CODE] varchar(10) NULL);";
+	                                [CC_AUTH_CODE] varchar(10) NULL,
+                                    CONSTRAINT FK_Sales_Store FOREIGN KEY (store_id) REFERENCES Stores(Id));";
 
                 using (var cmd = conn.CreateCommand())
                 {
@@ -85,7 +91,7 @@ namespace csca5028.lib
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
-        }
+        }*/ //DEPRECATED USE STOREDBCONTROLLER
 
         public async Task Insert(string dbName, Sale sale)
         {
@@ -180,7 +186,60 @@ namespace csca5028.lib
             return averageSalePrice;
         }
 
-        
+        //get sales per minute for a given store
+        public async Task<Dictionary<string,Tuple<int,decimal>>> GetSalesPerformanceForTimeInterval(string dbName, int timeIntervalMinutes)
+        {
+			DataSet ds = new DataSet();
+            using (var conn = Connect())
+            {
+				await conn.OpenAsync();
+                //var sql = @$"SELECT store_id, COUNT(*) as txnCount, sum(total_price) as total_sales FROM [{dbName}].[dbo].[Sales] WHERE created_at > DATEADD(MINUTE,@timeIntervalMinutes,GETDATE()) AND (CC_AUTH IS NULL OR CC_AUTH <> 'DECLINE') group by store_id;";
+                var sql = $@"SELECT t.store_name as name, COUNT(*) as txn_count, SUM(total_price) as total_sales FROM [{dbName}].[dbo].[Sales] s
+                            INNER JOIN [{dbName}].[dbo].[Stores] t ON s.store_id = t.id
+                            WHERE s.created_at > DATEADD(MINUTE,@timeIntervalMinutes,GETDATE())
+                            AND (s.CC_AUTH IS NULL OR s.CC_AUTH <> 'DECLINE')
+                            GROUP BY s.store_id, t.store_name;";
+				
+                
+                using (var cmd = conn.CreateCommand())
+                {
+					cmd.CommandText = sql;
+					cmd.Parameters.AddWithValue("@timeIntervalMinutes", 0-timeIntervalMinutes);
+					using(SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+						da.Fill(ds, "SalesSummary");
+					}
+				}
+			}
+            Dictionary<string, Tuple<int, decimal>> salesPerformance = ds.Tables["SalesSummary"].AsEnumerable()
+                .ToDictionary<DataRow, string, Tuple<int, decimal>>(row =>
+                row.Field<string>(0), row => new Tuple<int, decimal>(row.Field<int>(1), row.Field<decimal>(2)));
+
+            
+			return salesPerformance;
+		}
+
+        public async Task<decimal> GetTotalSalesRevenue(string dbName)
+        {
+            decimal revenue = 0M;
+            using (var conn = Connect())
+            {
+                await conn.OpenAsync();
+                var sql = @$"SELECT SUM(total_price) FROM [{dbName}].[dbo].[Sales] WHERE (CC_AUTH IS NULL OR CC_AUTH <> 'DECLINE');";
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = sql;
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            revenue = reader.GetDecimal(0);
+                        }
+                    }
+                }
+            }
+            return revenue;
+        }
 
     }
 }

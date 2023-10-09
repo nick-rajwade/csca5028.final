@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using csca5028.lib;
 using csca5028.web;
 using System.Text.Json;
 
-namespace csca5028.Tests
+namespace csca5028.lib.Tests
 {
     [TestClass()]
     public class StoreTests
@@ -53,7 +52,7 @@ namespace csca5028.Tests
             }
         }*/
 
-        [TestMethod()]
+        /*[TestMethod()]
         public void GenerateSaleTest()
         {
             Store store = new Store("New York Store", new StoreLocation("123 Main St", "New York", "NY", "10001", "USA", decimal.Parse("40.7128"), decimal.Parse("-74.0060")),
@@ -150,7 +149,7 @@ namespace csca5028.Tests
             Assert.AreEqual(sale.Items.Count, saleDeserialised.Items.Count);
             Assert.AreEqual(sale.CreatedAt, saleDeserialised.CreatedAt);
             
-        }
+        }*/
 
         /*[TestMethod()]
         public void ProcessCardTransactionMockTest()

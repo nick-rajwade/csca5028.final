@@ -1,0 +1,145 @@
+# https://docs.docker.com/compose/compose-file/
+version: "3.6"
+
+# https://docs.docker.com/compose/compose-file/#networks
+#networks:
+ # rabbitmq-prometheus:
+
+# https://docs.docker.com/compose/compose-file/#volumes
+volumes:
+  rabbitmq-prometheus_prometheus:
+  rabbitmq-prometheus_grafana:
+
+services:
+  grafana:
+    # https://hub.docker.com/r/grafana/grafana/tags
+    image: grafana/grafana:8.3.4
+    container_name: csca5028-grafana
+    ports:
+      - "3000:3000"
+    #networks:
+     # - "rabbitmq-prometheus"
+    volumes:
+      - rabbitmq-prometheus_grafana:/var/lib/grafana
+      - ./grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/rabbitmq.yaml
+      - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/prometheus.yaml
+      - ./grafana/dashboards:/dashboards
+    restart: always
+    environment:
+      # https://grafana.com/plugins/flant-statusmap-panel
+      # https://grafana.com/plugins/grafana-piechart-panel
+      # https://grafana.com/plugins/grafana-polystat-panel
+      # https://grafana.com/plugins/jdbranham-diagram-panel
+      # https://grafana.com/plugins/michaeldmoore-multistat-panel
+      # https://grafana.com/plugins/vonage-status-panel
+      # https://grafana.com/plugins/yesoreyeram-boomtable-panel
+      GF_INSTALL_PLUGINS: "flant-statusmap-panel,grafana-piechart-panel"  
+  prometheus:
+    # https://hub.docker.com/r/prom/prometheus/tags
+    image: prom/prometheus
+    container_name: csca5028-prometheus
+    #networks:
+     # - "rabbitmq-prometheus"
+    ports:
+      - "9090:9090"
+    volumes:
+      - rabbitmq-prometheus_prometheus:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./http_pong.yml:/etc/prometheus/blackbox/http_pong.yml
+      - ./rmq_pong.yml:/etc/prometheus/blackbox/rmq_pong.ym
+    restart: always
+  node-exporter:
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100
+    # https://hub.docker.com/r/prom/node-exporter/tags
+    image: prom/node-exporter
+    container_name: csca5028-node-exporter
+    #networks:
+     # - "rabbitmq-prometheus"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+  cadvisor:
+    expose:
+      - 8080
+    # https://hub.docker.com/r/google/cadvisor/tags
+    image: google/cadvisor:v0.33.0
+    container_name: csca5028-cadvisor
+    #networks:
+     # - "rabbitmq-prometheus"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+  rabbitmq-exporter:
+  # https://hub.docker.com/r/kbudde/rabbitmq-exporter/tags
+    image: kbudde/rabbitmq-exporter:latest
+    container_name: csca5028-rabbitmq-exporter
+    #networks:
+     # - "rabbitmq-prometheus"
+    ports:
+      - "9091:9090"
+    environment:
+      RABBIT_URL: http://host.docker.internal:15692
+      RABBIT_USER: guest
+      RABBIT_PASSWORD: guest
+      RABBIT_CAPABILITIES: "bert,no_sort"
+      RABBIT_IGNORE_QUEUES: "amq.rabbitmq.trace.*,amq.rabbitmq.log.*"
+      RABBIT_IGNORE_EXCHANGES: "amq.rabbitmq.trace.*,amq.rabbitmq.log.*"
+      RABBIT_IGNORE_NODES: "rabbit@rmq0"
+      RABBIT_IGNORE_VHOSTS: "/"
+  blackbox-exporter:
+    # https://hub.docker.com/r/prom/blackbox-exporter/tags
+    image: prom/blackbox-exporter:v0.19.0
+    container_name: csca5028-blackbox-exporter
+    #networks:
+     # - "rabbitmq-prometheus"
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox.yml:/config/blackbox.yml
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: csca5028-database
+    #networks:
+     # - "rabbitmq-prometheus"
+    hostname: sql0
+    ports:
+      - '1433:1433'
+    user: root
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 'YourStrong@Passw0rd'
+      MSSQL_PID: 'Express'
+    volumes:
+    - ./.docker-data/data:/var/opt/mssql/data
+    - ./.docker-data/log:/var/opt/mssql/log
+    - ./.docker-data/secrets:/var/opt/mssql/secrets
+    restart: always
+  rabbitmq:
+     # https://hub.docker.com/r/pivotalrabbitmq/rabbitmq/tags
+    image: pivotalrabbitmq/rabbitmq:master-otp-max
+    #networks:
+     # - "rabbitmq-prometheus"
+    container_name: csca5028-rabbit
+    cap_add:
+        - ALL
+    hostname: rmq0
+    environment:
+      RABBITMQ_ERLANG_COOKIE: rabbitmq-prometheus
+      # Uncomment the following line if you want debug logs & colour
+      RABBITMQ_LOG: debug,+color
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./.docker-data/.rabbit-data:/var/lib/rabbitmq/
+      - ./.docker-data/.rabbit-log:/var/log/rabbitmq
