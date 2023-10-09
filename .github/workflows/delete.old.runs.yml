@@ -13,9 +13,7 @@ jobs:
             repo: nick-rajwade/csca5028.final
             #workflow_id: TheWorkflow.yml
             branch: main
-            run_conclusions: |
-              failure
-              timed_out
+            run_conclusions: failure, success
             save_period: 5
             save_min_runs_number: 0
             dry: true
