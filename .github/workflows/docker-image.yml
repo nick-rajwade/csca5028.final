@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [credit-card-processor, point-of-sale-app, sales-collector, sales-web-app]
+        project: [credit-card-processor, point-of-sale-app, sales-collector, csca5028.blazor.webapp]
     steps:
     - name: Check out the repo
       uses: actions/checkout@v3
