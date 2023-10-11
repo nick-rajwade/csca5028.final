@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,10 @@ namespace csca5028.lib
         private string dbName = "sales_db";
         //calculate the total sales performance for all stores
 
-        public SalesAnalyzer()
+        public SalesAnalyzer(string dbName, string connnectionString)
         {
+            this.dbName = dbName;
+            this.connectionString = connnectionString;
         }
 
         public async Task<Dictionary<string, Tuple<int, decimal>>> LoadSalesPerformance()
@@ -54,7 +57,10 @@ namespace csca5028.lib
         {
             decimal revenueForStore = 0;
             var storeSalesPerf = await LoadSalesPerformance();
-            revenueForStore = storeSalesPerf[storeName].Item2;
+            if(storeSalesPerf.ContainsKey(storeName))
+            {
+                revenueForStore = storeSalesPerf[storeName].Item2;
+            }
             return revenueForStore;
         }
 
@@ -62,7 +68,8 @@ namespace csca5028.lib
         {
             int transactionsPerMinuteForStore = 0;
             var storeSalesPerf = await LoadSalesPerformance();
-            transactionsPerMinuteForStore = storeSalesPerf[storeName].Item1;
+            if (storeSalesPerf.ContainsKey(storeName))
+                transactionsPerMinuteForStore = storeSalesPerf[storeName].Item1;
             return transactionsPerMinuteForStore;
         }
 
@@ -71,43 +78,42 @@ namespace csca5028.lib
 
         }
 
-        public Task SetSalesPerformance(Dictionary<string, Tuple<int, decimal>> salesPerformance)
+        public async Task SetSalesPerformance(Dictionary<string, Tuple<int, decimal>> salesPerformance)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
 
         public async Task<Dictionary<string, Tuple<decimal, decimal>>> GetStoreLocations()
         {
             StoreDBController storeDBController = new StoreDBController(connectionString);
-            Hashtable storeAndTerminals = await storeDBController.GetStoresAndTerminalsAsync(dbName);
+            Dictionary<string,Tuple<Store,List<POSTerminal>>> storeAndTerminals = await storeDBController.GetStoresAndTerminalsAsync(dbName);
             Dictionary<string, Tuple<decimal, decimal>> storeLocations = new();
-            foreach (Store store in storeAndTerminals.Keys)
+            foreach (string storeName in storeAndTerminals.Keys)
             {
-                storeLocations.Add(store.Name, new Tuple<decimal, decimal>(store.StoreLocation.Lat, store.StoreLocation.Long));
+                storeLocations.Add(storeName, new Tuple<decimal, decimal>(
+                    storeAndTerminals[storeName].Item1.StoreLocation.Lat,
+                    storeAndTerminals[storeName].Item1.StoreLocation.Long));
             }
             return storeLocations;
         }
 
-        public Task SetStoreLocations(Dictionary<string, Tuple<decimal, decimal>> storeLocations)
+        public async Task SetStoreLocations(Dictionary<string, Tuple<decimal, decimal>> storeLocations)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
 
         public async Task<Dictionary<string, Tuple<Store, List<POSTerminal>>>> GetStoresAndTerminals()
         {
             StoreDBController storeDBController = new StoreDBController(connectionString);
-            Hashtable _storeAndTerminals = await storeDBController.GetStoresAndTerminalsAsync(dbName);
-            Dictionary<string, Tuple<Store, List<POSTerminal>>> storesAndTerminals = new();
-            foreach (Store store in _storeAndTerminals.Keys)
-            {
-                storesAndTerminals.Add(store.Name, new Tuple<Store, List<POSTerminal>>(store, (List<POSTerminal>)_storeAndTerminals[store]));
-            }
+            
+            Dictionary<string, Tuple<Store, List<POSTerminal>>> storesAndTerminals = await storeDBController.GetStoresAndTerminalsAsync(dbName);
+            
             return storesAndTerminals;
         }
 
         public async Task SetStoresAndTerminals(Dictionary<string, Tuple<Store, List<POSTerminal>>> storesAndTerminals)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
 
         public async Task<decimal> GetTotalSalesRevenue()
@@ -116,9 +122,9 @@ namespace csca5028.lib
             return await salesDBController.GetTotalSalesRevenue(dbName);
         }
 
-        public Task SetTotalSalesRevenue(decimal totalSalesRevenue)
+        public async Task SetTotalSalesRevenue(decimal totalSalesRevenue)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask;
         }
     }
 }

@@ -29,14 +29,16 @@ namespace csca5028.lib
 
         public async Task Initialise(string dbName)
         {
-            if(dbName.IsNullOrEmpty())
+            await Task.CompletedTask; //we are no longer using this function. all uses should just complete.
+            
+            /*if(dbName.IsNullOrEmpty())
             {
                 throw new ArgumentException("dbName cannot be null or empty");
             }
             StoreDBController storeDBController = new StoreDBController(connectionString);
             await storeDBController.Initialise(dbName);
             //await CreateDatabase(dbName);
-            //await CreateTables(dbName);
+            //await CreateTables(dbName);*/
         }
 
         /*public async Task CreateDatabase(string dbName)

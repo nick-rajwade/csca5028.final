@@ -15,8 +15,9 @@ namespace sales_collector
         public static string hostname = "host.docker.internal";
         private static string queueName = "salesq";
         private RabbitMQ.Client.IConnectionFactory connectionFactory = new ConnectionFactory() { HostName = hostname };
-        private IConnection? connection = null;
-        private IModel? channel = null;
+        private readonly IConnection? connection = null;
+        private readonly IModel? channel = null;
+        private readonly EventingBasicConsumer? consumer = null;
 
         private csca5028.lib.SalesDBController salesDBController = new(connectionString);
 
@@ -26,20 +27,25 @@ namespace sales_collector
             salesDBController.Initialise(dbName).Wait();
             connection = connectionFactory.CreateConnection();
             channel = connection.CreateModel();
+            
             _logger.LogInformation("Connect to sales-exchange...");
             channel.ExchangeDeclare("sales-exchange", "x-consistent-hash", true, false);
             //bind weight at 10% to the queue
             _logger.LogInformation($"bind to {queueName} queue");
             channel.QueueBind(queue: queueName, exchange: "sales-exchange", "42", new Dictionary<string, object>() { { "x-weight", 10 } });
             //create a consumer to consume messages from the queue
+            consumer = new EventingBasicConsumer(channel);
 
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+
+            if (channel != null && consumer != null)
             {
-                    BasicGetResult? result = channel?.BasicGet(queueName, false);
+                consumer.Received += async (model, result) =>
+                {
+
                     if (result != null)
                     {
                         var summary = Metrics.CreateSummary("sales_collector_db_insert", "Summary for sales_collector Database insert", new SummaryConfiguration
@@ -48,11 +54,11 @@ namespace sales_collector
                             SuppressInitialValue = true,
                             Objectives = new[]
                             {
-                                    new QuantileEpsilonPair(0.5, 0.05),
-                                    new QuantileEpsilonPair(0.9, 0.05),
-                                    new QuantileEpsilonPair(0.95, 0.01),
-                                    new QuantileEpsilonPair(0.99, 0.005),
-                                },
+                                        new QuantileEpsilonPair(0.5, 0.05),
+                                        new QuantileEpsilonPair(0.9, 0.05),
+                                        new QuantileEpsilonPair(0.95, 0.01),
+                                        new QuantileEpsilonPair(0.99, 0.005),
+                                    },
                         });
 
                         Stopwatch stopwatch = new Stopwatch();
@@ -79,28 +85,34 @@ namespace sales_collector
                         stopwatch.Stop();
                         summary.WithLabels("MQ Receive", "salesq").Observe(stopwatch.ElapsedMilliseconds);
                     }
-                    else
-                    {
-                        _logger.LogInformation("No message received...");
-                        await Task.Delay(1000, stoppingToken); //wait for 1 second before checking again
-                        continue;
-                    }
-                }
+                };
+
+                channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
                 //start consuming messages
                 _logger.LogInformation("Start consuming messages...");
-            
+            }
+            else
+            {
+                _logger.LogError("Cannot start event collaboration messaging handler");
+            }
+            await Task.CompletedTask;
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
             //throw new NotImplementedException();
+            if (channel.IsOpen)
+                channel.Close();
+            if (connection.IsOpen)
+                connection.Close();
+
             await Task.CompletedTask;
         }
 
         public override void Dispose()
         {
-            channel?.Close();
-            connection?.Close();
+            channel?.Dispose();
+            connection?.Dispose();
         }
     }
 }

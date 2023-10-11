@@ -15,7 +15,7 @@ namespace point_of_sale_app
         private readonly string dbName = "sales_db";
         private static string hostName = "host.docker.internal";
         private StoreDBController storeDb = new(connectionString);
-        private Hashtable storeAndTerminals = new();
+        private Dictionary<string,Tuple<Store,List<POSTerminal>>> storeAndTerminals = new();
         private List<System.Threading.Timer> checkOutTimers = new();
         private IConnectionFactory connectionFactory = new ConnectionFactory() { HostName = hostName };
         Gauge storesOnline = Metrics.CreateGauge("point_of_sale_app_stores_online", "Number of stores running point-of-sale");
@@ -26,14 +26,14 @@ namespace point_of_sale_app
             _logger = logger;
             _taskQueue = taskQueue;
             storeDb.Initialise(dbName).Wait();
-            storeAndTerminals = (Hashtable)storeDb.GetStoresAndTerminalsAsync(dbName).Result;
-            //start queueing up the checkout timers
+            storeAndTerminals = storeDb.GetStoresAndTerminalsAsync(dbName).Result;   //start queueing up the checkout timers
             
             storesOnline.Set(storeAndTerminals.Count);
             
-            foreach (Store store in storeAndTerminals.Keys)
+            foreach (string storeName in storeAndTerminals.Keys)
             {
-                foreach (POSTerminal terminal in (List<POSTerminal>)storeAndTerminals[store])
+                List<POSTerminal> terminals = storeAndTerminals[storeName].Item2;
+                foreach (POSTerminal terminal in terminals)
                 {
                     _taskQueue.EnqueueTask(terminal, connectionFactory.CreateConnection()); //1st Task to be queued and timer to be started
                     Timer checkoutIntervalTimer = new Timer(OnCheckOutIntervalExpired,terminal,0, terminal.checkoutTime * 1000);

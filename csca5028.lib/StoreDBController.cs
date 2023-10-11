@@ -345,14 +345,14 @@ namespace csca5028.lib
             }
         }
 
-        public async Task<Hashtable> GetStoresAndTerminalsAsync(string dbName)
+        public async Task<Dictionary<string, Tuple<Store,List<POSTerminal>>>> GetStoresAndTerminalsAsync(string dbName)
         {
             var stores = (List<Store>)await GetStoresAsync(dbName);
-            var storesAndTerminals = new Hashtable();
-            foreach(var store in stores)
+            var storesAndTerminals = new Dictionary<string, Tuple<Store, List<POSTerminal>>>();
+            foreach (var store in stores)
             {
                 var terminals = (List<POSTerminal>)await GetTerminalsAsync(store.ID, dbName);
-                storesAndTerminals.Add(store, terminals);
+                storesAndTerminals.Add(store.Name, new Tuple<Store, List<POSTerminal>>(store, terminals));
             }
             return storesAndTerminals;
         }

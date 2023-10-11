@@ -37,22 +37,16 @@ services:
         dockerfile: sales-collector/Dockerfile.local
     ports:
     - '9003:80'
-    depends_on:
-        - pos
     restart: always
-  saleswebapp:
+  blazorwebapp:
     container_name: csca5028-saleswebapp
-    image: nikhilrajwade/csca5028.final.sales-web-app:latest
+    image: nikhilrajwade/csca5028.final.csca5028.blazor.webapp:latest
     build:
         context: .  
         dockerfile: csca5028.blazor.webapp/Dockerfile.local
     ports:
     - '80:80'
     - '443:443'
-    depends_on:
-        - salescollector
-        - pos
-        - creditcard
     restart: always
   
     #networks:

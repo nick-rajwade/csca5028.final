@@ -58,7 +58,7 @@ namespace csca5028.blazor.webapp.Data.SalesAnalyser
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await Task.Delay(Timeout.Infinite, stoppingToken);
+            await Task.CompletedTask;
         }
     }
 }
