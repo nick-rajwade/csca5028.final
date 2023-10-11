@@ -1,4 +1,6 @@
-﻿using csca5028.lib;
+﻿
+using csca5028.final.project.components;
+using System.Data.Common;
 
 namespace csca5028.blazor.webapp.Data.SalesAnalyser
 {
@@ -6,14 +8,17 @@ namespace csca5028.blazor.webapp.Data.SalesAnalyser
     {
         private readonly ILogger<SalesBackgroundService> _logger;
         private readonly ISalesAnalyzer _salesAnalyser;
-        private readonly ISalesAnalyzer _cache;
+        private readonly RedisCachingService _cache;
+        private readonly string _dbConnectionString = string.Empty;
+
         private readonly int _intervalInMinutes = 1;
         private Timer _timer;
 
-        public SalesBackgroundService(ILogger<SalesBackgroundService> logger, ISalesAnalyzer cache)
+        public SalesBackgroundService(ILogger<SalesBackgroundService> logger, RedisCachingService cache, IConfiguration config)
         {
             _logger = logger;
-            _salesAnalyser = new SalesAnalyzer();
+            _dbConnectionString = config["ConnectionStrings:AzureDB"];
+            _salesAnalyser = new SalesAnalyzer("sales_db",_dbConnectionString);
             _cache = cache;
         }
 
@@ -35,10 +40,11 @@ namespace csca5028.blazor.webapp.Data.SalesAnalyser
             CancellationToken token = (CancellationToken)state;
             if (!token.IsCancellationRequested)
             {   
-                await _cache.SetSalesPerformance(await _salesAnalyser.LoadSalesPerformance());
-                await _cache.SetStoreLocations(await _salesAnalyser.GetStoreLocations());
-                await _cache.SetStoresAndTerminals(await _salesAnalyser.GetStoresAndTerminals());
-                await _cache.SetTotalSalesRevenue(await _salesAnalyser.GetTotalSalesRevenue());
+                await _cache.SetAsync("SalesPerformance", await _salesAnalyser.LoadSalesPerformance());
+                await _cache.SetAsync("StoreLocations",await _salesAnalyser.GetStoreLocations());
+                await _cache.SetAsync("StoresAndTerminals", await _salesAnalyser.GetStoresAndTerminals());
+                await _cache.SetAsync("TotalSalesRevenue",await _salesAnalyser.GetTotalSalesRevenue());
+                await _cache.SetAsync("TotalRevenueForTimeInterval", await _salesAnalyser.GetTotalRevenueForTimeInterval());
             }
         }
 

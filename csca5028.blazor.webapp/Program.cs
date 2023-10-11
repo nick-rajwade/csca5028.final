@@ -2,11 +2,19 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor;
- using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Serialization;
 using csca5028.blazor.webapp.Data.SalesAnalyser;
-using csca5028.lib;
+using Azure.Identity;
+using csca5028.final.project.components;
+using Azure.Security.KeyVault.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+var client = new SecretClient(keyVaultEndpoint, new DefaultAzureCredential());
+
+
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();
@@ -19,12 +27,15 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddServerSideBlazor().AddHubOptions(o => { o.MaximumReceiveMessageSize = 102400000; });
 
 builder.Services.AddHostedService<SalesBackgroundService>();
-builder.Services.AddMemoryCache();
-builder.Services.AddSingleton<ISalesAnalyzer, SalesAnalyzerWithCache>();
+builder.Services.AddSingleton<RedisCachingService>();
+builder.Services.AddDistributedRedisCache(option =>
+{
+    option.Configuration = builder.Configuration["CacheConnection"];
+});
 
 var app = builder.Build();
 //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9ed3VQQ2lcWUZ1W0c=");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["syncfusion"]) ;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

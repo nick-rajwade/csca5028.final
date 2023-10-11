@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace csca5028.blazor.webapp.Controllers
 {
     [ApiController]
-    [Route("/ping")]
+    [Route("api/ping")]
     public class HealthController : Controller
     {
         private readonly ILogger<HealthController> _logger;

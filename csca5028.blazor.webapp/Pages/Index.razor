@@ -2,11 +2,12 @@
 
 @using Syncfusion.Blazor.Maps
 @using System.Collections;
-@using csca5028.lib
 @using Syncfusion.Blazor.Notifications
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Charts
-@inject ISalesAnalyzer SalesAnalyzer
+@using csca5028.blazor.webapp.Data;
+@using csca5028.final.project.components;
+@inject RedisCachingService cache
 
 
 <PageTitle>Index</PageTitle>
@@ -256,9 +257,9 @@
     private async Task<List<MarkerData>> GetStoreMarkerData()
     {
         List<MarkerData> markerDataList = new List<MarkerData>();
-        Dictionary<string, Tuple<int, decimal>> perfData = await SalesAnalyzer.LoadSalesPerformance();
-        Dictionary<string, Tuple<decimal, decimal>> locationData = await SalesAnalyzer.GetStoreLocations();
-        var storesAndTerminals = await SalesAnalyzer.GetStoresAndTerminals();
+        Dictionary<string, Tuple<int, decimal>> perfData = await cache.GetAsync<Dictionary<string, Tuple<int, decimal>>>("SalesPerformance");
+        Dictionary<string, Tuple<decimal, decimal>> locationData = await cache.GetAsync<Dictionary<string, Tuple<decimal, decimal>>>("StoreLocations");
+        var storesAndTerminals = await cache.GetAsync <Dictionary<string, Tuple<Store, List<POSTerminal>>>>("StoresAndTerminals");
 
         if(perfData == null || perfData.Count == 0 || locationData == null ||locationData.Count ==0)
         {
@@ -290,7 +291,7 @@
     {
 
 
-        Dictionary<string, Tuple<int, decimal>> perfData = await SalesAnalyzer.LoadSalesPerformance();
+        Dictionary<string, Tuple<int, decimal>> perfData = await cache.GetAsync<Dictionary<string, Tuple<int, decimal>>>("SalesPerformance");
 
         List<List<StackedChartData>> stores = current;
 
@@ -338,7 +339,7 @@
             totalRevenue = new List<TotalRevenueTimeSeriesData>();
         }
         TotalRevenueTimeSeriesData item = new TotalRevenueTimeSeriesData();
-        item.salesPerf = await SalesAnalyzer.GetTotalRevenueForTimeInterval();
+        item.salesPerf = await cache.GetAsync<decimal>("TotalRevenueForTimeInterval");
         TotalRevenue = item.salesPerf;
         item.xAxis = DateTime.Now;
         totalRevenueString = $@"Total Revenue: {TotalRevenue.ToString("C")}";
